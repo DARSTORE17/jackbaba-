@@ -1,0 +1,511 @@
+/* Kids Shop Color Variables - Pink + Aqua Only */
+/* Modern Color Variables - Pink + Aqua (Names NOT changed) */
+:root {
+    --blue-600: #FF89A0;     /* Pink Accent */
+    --blue-700: #FFB6C1;     /* Baby Pink */
+    --blue-800: #FF6F91;     /* Strong Pink */
+
+    --cyan-500: #A7F3D0;     /* Soft Mint */
+    --cyan-600: #5ED1C7;     /* Aqua Primary */
+
+    --aqua-400: #2FA39A;     /* Darker Mint/Aqua BG */
+    --aqua-500: #1C7F78;     /* Deep Dark Aqua */
+
+    --slate-50: #FFFFFF;     /* Clean White */
+    --slate-100: #F8FAFC;    /* Soft Grey */
+    --slate-200: #E2E8F0;    /* Light Border */
+
+    --slate-800: #475569;    /* Dark Grey */
+    --slate-900: #1E293B;    /* Deep Grey */
+
+    --white: #FFFFFF;
+    --black: #000000;
+}
+
+
+
+
+/* Base Header Styles with Blue/Cyan/Aqua Gradient */
+.header {
+    background: linear-gradient(
+        135deg,
+        var(--aqua-400) 0%,
+        var(--cyan-600) 50%,
+        var(--blue-800) 100%
+    );
+    border-bottom: none;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    font-family: "Inter", "Segoe UI", sans-serif;
+    overflow: visible;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 70px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Brand Section */
+.brand-section {
+    flex: 0 0 auto;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-main {
+    width: 70px; /* Match header height */
+    height: 70px; /* Match header height */
+    background: linear-gradient(135deg, var(--blue-600), var(--cyan-500));
+    border-radius: 50%; /* Perfect circle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+}
+
+.logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.mobile-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.school-name {
+    font-size: 1.2rem; /* Slightly smaller for better fit */
+    font-weight: 700;
+    color: var(--white);
+    margin: 0;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.school-subtitle {
+    font-size: 0.7rem; /* Slightly smaller for better fit */
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Right Section - Navigation and Actions */
+.header-right-section {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Right Navigation */
+.navigation-right {
+    flex: 0 0 auto;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 0;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    font-size: 0.9rem;
+    border: none;
+    background: transparent;
+}
+
+.nav-link:hover {
+    color: var(--white);
+    transform: translateY(-1px);
+}
+
+.nav-link.active {
+    color: var(--white);
+    font-weight: 600;
+}
+
+/* Underline Animation for Active Nav */
+.nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--aqua-400),
+        transparent
+    );
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-link i {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.nav-link:hover i {
+    transform: scale(1.1);
+}
+
+/* Dropdown Menu Styles */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 9999; /* Very high z-index to appear above all main content */
+    display: none;
+    min-width: 220px;
+    padding: 0.5rem 0;
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--slate-900);
+    text-align: left;
+    background-color: var(--white);
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    margin-top: 10px; /* Add some spacing from header */
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: var(--slate-700);
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    color: var(--slate-900);
+    text-decoration: none;
+    background-color: var(--slate-100);
+}
+
+.dropdown-item i {
+    width: 18px;
+    margin-right: 8px;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.dropdown-divider {
+    height: 0;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    border-top: 1px solid var(--slate-200);
+}
+
+/* Mobile category links styling */
+.mobile-category-links {
+    border-left: 3px solid rgba(255, 255, 255, 0.2);
+    margin-left: 15px;
+    padding-left: 15px;
+}
+
+/* Particle Network Background */
+.particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.particle-line {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.15);
+    transform-origin: 0 0;
+    pointer-events: none;
+}
+
+/* Mobile Toggle Button */
+.mobile-toggle {
+    display: none;
+    flex-direction: column;
+    background: transparent;
+    border: none;
+    width: 30px;
+    height: 24px;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 0;
+}
+
+.mobile-toggle span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: var(--white);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(
+        135deg,
+        var(--blue-800) 0%,
+        var(--cyan-600) 50%,
+        var(--aqua-400) 100%
+    );
+    z-index: 1001;
+    transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+}
+
+.mobile-nav.active {
+    left: 0;
+}
+
+.mobile-particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.mobile-nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 2;
+}
+
+.mobile-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+}
+
+.mobile-logo-main {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--blue-600), var(--cyan-500));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+}
+
+.mobile-close {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    font-size: 1.5rem;
+    color: var(--white);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 2;
+}
+
+.mobile-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.mobile-nav-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 8px;
+    position: relative;
+    z-index: 2;
+}
+
+.mobile-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: none;
+    background: transparent;
+    position: relative;
+    z-index: 2;
+}
+
+.mobile-nav-link:hover {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.mobile-nav-link i {
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+/* Responsive dropdown behavior on smaller screens */
+@media (max-width: 1200px) {
+    .dropdown-menu {
+        min-width: 200px;
+        left: -50px; /* Center dropdown better on smaller screens */
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .header-right-section {
+        display: none;
+    }
+
+    .mobile-toggle {
+        display: flex;
+    }
+
+    .header-container {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-container {
+        padding: 0 1rem;
+        height: 65px;
+    }
+
+    .logo-main {
+        width: 65px;
+        height: 65px;
+    }
+
+    .school-name {
+        font-size: 1.1rem;
+    }
+
+    .school-subtitle {
+        font-size: 0.65rem;
+    }
+}
+
+/* Animation for mobile menu */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.mobile-nav-link {
+    animation: slideIn 0.3s ease forwards;
+    opacity: 0;
+}
+
+.mobile-nav-link:nth-child(1) {
+    animation-delay: 0.1s;
+}
+.mobile-nav-link:nth-child(2) {
+    animation-delay: 0.15s;
+}
+.mobile-nav-link:nth-child(3) {
+    animation-delay: 0.2s;
+}
+.mobile-nav-link:nth-child(4) {
+    animation-delay: 0.25s;
+}
+.mobile-nav-link:nth-child(5) {
+    animation-delay: 0.3s;
+}
+.mobile-nav-link:nth-child(6) {
+    animation-delay: 0.35s;
+}

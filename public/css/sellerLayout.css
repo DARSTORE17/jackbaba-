@@ -1,0 +1,13 @@
+/*
+|--------------------------------------------------------------------------
+| O-Level Dashboard Layout Styles
+|--------------------------------------------------------------------------
+*/
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: var(--header-height);
+    padding-left: var(--sidebar-width);
+    transition: padding-left 0.3s ease;
+}

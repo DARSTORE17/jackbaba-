@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products CRUD Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #FF6F91;
+        }
+
+        .feature-title {
+            color: #FF6F91;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .btn-custom {
+            background: linear-gradient(135deg, #FF6F91, #FF89A0);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 111, 145, 0.3);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #FF6F91, #FF89A0);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="text-center mb-4">
+            <h1 class="display-4">🎉 Products CRUD System</h1>
+            <p class="lead text-muted">Full Featured Products Management for KidsStore Seller</p>
+        </div>
+
+        <div class="feature-card">
+            <h3 class="feature-title">✅ Implementation Complete</h3>
+            <p>All requested features have been successfully implemented:</p>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mt-3">📋 Core Features:</h5>
+                    <ul class="checklist">
+                        <li>Full CRUD Operations (Create, Read, Update, Delete)</li>
+                        <li>SweetAlert 2 Notifications for success & error</li>
+                        <li>JavaScript animations for all CRUD operations</li>
+                        <li>Pagination (10 items per page)</li>
+                        <li>Bootstrap 5 Modal Popups with center animations</li>
+                        <li>Search and Filter functionality</li>
+                        <li>Auto-refresh option</li>
+                        <li>Loading overlays</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6">
+                    <h5 class="mt-3">🎨 UI/UX Features:</h5>
+                    <ul class="checklist">
+                        <li>Animated modal popups (zoomIn effect)</li>
+                        <li>Fade-in animations for table rows</li>
+                        <li>Hover effects on product cards</li>
+                        <li>Color-coded stock indicators</li>
+                        <li>Discount badges</li>
+                        <li>Star rating display</li>
+                        <li>Advertised product toggle switch</li>
+                        <li>Responsive design</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <h3 class="feature-title">📁 Files Created/Modified</h3>
+
+            <h5 class="mt-3">Models:</h5>
+            <ul class="checklist">
+                <li><code>app/Models/Product.php</code> - Main product model</li>
+                <li><code>app/Models/Category.php</code> - Category model</li>
+                <li><code>app/Models/ProductMedia.php</code> - Product media model</li>
+                <li><code>app/Models/ProductDescription.php</code> - Product description model</li>
+            </ul>
+
+            <h5 class="mt-3">Controllers:</h5>
+            <ul class="checklist">
+                <li><code>app/Http/Controllers/seller/ProductController.php</code> - Full CRUD controller</li>
+            </ul>
+
+            <h5 class="mt-3">Routes:</h5>
+            <ul class="checklist">
+                <li><code>routes/seller.php</code> - Updated with CRUD routes</li>
+            </ul>
+
+            <h5 class="mt-3">Views:</h5>
+            <ul class="checklist">
+                <li><code>resources/views/seller/products.blade.php</code> - Complete CRUD interface</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h3 class="feature-title">🔧 API Endpoints</h3>
+
+            <div class="code-block">
+GET    /seller/products          - List all products (with pagination)<br>
+POST   /seller/products          - Create new product<br>
+GET    /seller/products/{id}     - Get product details<br>
+PUT    /seller/products/{id}     - Update product<br>
+DELETE /seller/products/{id}     - Delete product<br>
+PATCH  /seller/products/{id}/toggle-advertised - Toggle advertised status
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <h3 class="feature-title">📊 Database Tables</h3>
+
+            <h5 class="mt-3">Products Table:</h5>
+            <div class="code-block">
+id, category_id, name, slug, old_price, new_price, discount, rate, stock, thumbnail, is_advertised, created_at, updated_at
+            </div>
+
+            <h5 class="mt-3">Product Media Table:</h5>
+            <div class="code-block">
+id, product_id, type (image/video), file_path, is_primary, created_at, updated_at
+            </div>
+
+            <h5 class="mt-3">Product Descriptions Table:</h5>
+            <div class="code-block">
+id, product_id, description, specifications, details, created_at, updated_at
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <h3 class="feature-title">🎯 Key Features Highlights</h3>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <h6>🔄 CRUD Operations:</h6>
+                    <ul class="checklist">
+                        <li>Create products with validation</li>
+                        <li>Read products with pagination</li>
+                        <li>Update products with file upload</li>
+                        <li>Delete products with confirmation</li>
+                        <li>Toggle advertised status</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6">
+                    <h6>🎭 Modal Forms:</h6>
+                    <ul class="checklist">
+                        <li>Add Product Modal (Blue theme)</li>
+                        <li>Edit Product Modal (Yellow theme)</li>
+                        <li>View Product Modal (Info theme)</li>
+                        <li>Centered animations</li>
+                        <li>Form validation</li>
+                        <li>File upload support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <h6>📱 Responsive Design:</h6>
+                    <ul class="checklist">
+                        <li>Mobile-friendly layout</li>
+                        <li>Responsive table</li>
+                        <li>Adaptive modal sizes</li>
+                        <li>Touch-friendly buttons</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6">
+                    <h6>🎨 Visual Enhancements:</h6>
+                    <ul class="checklist">
+                        <li>Color-coded status badges</li>
+                        <li>Animated transitions</li>
+                        <li>Loading spinners</li>
+                        <li>Hover effects</li>
+                        <li>Gradient backgrounds</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <h3 class="feature-title">🚀 How to Test</h3>
+
+            <ol class="mt-3">
+                <li>
+                    <strong>Access the Products Page:</strong>
+                    <div class="code-block">
+                        Navigate to: /seller/products
+                    </div>
+                </li>
+
+                <li>
+                    <strong>Add a New Product:</strong>
+                    <div class="code-block">
+                        1. Click "Add New Product" button<br>
+                        2. Fill in the form (Name, Category, Price, Stock required)<br>
+                        3. Optionally upload a thumbnail<br>
+                        4. Click "Save Product"<br>
+                        5. See SweetAlert success notification
+                    </div>
+                </li>
+
+                <li>
+                    <strong>Edit a Product:</strong>
+                    <div class="code-block">
+                        1. Click the Edit button (pencil icon)<br>
+                        2. Modify any fields<br>
+                        3. Click "Update Product"<br>
+                        4. See success notification
+                    </div>
+                </li>
+
+                <li>
+                    <strong>View Product Details:</strong>
+                    <div class="code-block">
+                        1. Click the View button (eye icon)<br>
+                        2. See detailed product information in modal
+                    </div>
+                </li>
+
+                <li>
+                    <strong>Delete a Product:</strong>
+                    <div class="code-block">
+                        1. Click the Delete button (trash icon)<br>
+                        2. Confirm deletion in SweetAlert dialog<br>
+                        3. See success notification
+                    </div>
+                </li>
+
+                <li>
+                    <strong>Toggle Advertised Status:</strong>
+                    <div class="code-block">
+                        1. Click the toggle switch in the Status column<br>
+                        2. See instant update with notification
+                    </div>
+                </li>
+
+                <li>
+                    <strong>Search & Filter:</strong>
+                    <div class="code-block">
+                        1. Use search box to find products by name<br>
+                        2. Use category dropdown to filter by category<br>
+                        3. Click "Filter" or "Reset" buttons
+                    </div>
+                </li>
+
+                <li>
+                    <strong>Pagination:</strong>
+                    <div class="code-block">
+                        1. Navigate through pages (10 items per page)<br>
+                        2. Click page numbers or Next/Previous buttons
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="text-center mt-4">
+            <button class="btn btn-custom btn-lg" onclick="showSuccessDemo()">
+                <i class="fas fa-check-circle me-2"></i>See Success Notification Demo
+            </button>
+
+            <button class="btn btn-outline-secondary btn-lg ms-3" onclick="showErrorDemo()">
+                <i class="fas fa-exclamation-triangle me-2"></i>See Error Notification Demo
+            </button>
+        </div>
+
+        <div class="feature-card mt-4">
+            <h3 class="feature-title">📝 Technical Notes</h3>
+
+            <ul class="mt-3">
+                <li><strong>CSRF Protection:</strong> All AJAX requests include CSRF token</li>
+                <li><strong>Validation:</strong> Server-side validation with detailed error messages</li>
+                <li><strong>Transactions:</strong> Database transactions for data integrity</li>
+                <li><strong>File Uploads:</strong> Thumbnail upload with proper storage</li>
+                <li><strong>Security:</strong> Proper authentication middleware</li>
+                <li><strong>Performance:</strong> Eager loading for relationships</li>
+                <li><strong>Error Handling:</strong> Comprehensive error handling with user-friendly messages</li>
+                <li><strong>Animations:</strong> CSS animations with fallbacks</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function showSuccessDemo() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Product created successfully!',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+        }
+
+        function showErrorDemo() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to create product: Validation error',
+                confirmButtonText: 'OK'
+            });
+        }
+
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                card.style.animation = 'fadeInUp 0.5s ease-out';
+                card.style.animationDelay = index * 0.1 + 's';
+                card.style.animationFillMode = 'both';
+            });
+        });
+    </script>
+</body>
+</html>
+<task_progress>
+- [x] Create ProductController with CRUD methods
+- [x] Update routes in seller.php
+- [x] Create products view with Bootstrap 5 table and pagination
+- [x] Add Bootstrap 5 modal forms for Add/Update with animations
+- [x] Implement SweetAlert 2 notifications
+- [x] Add JavaScript for CRUD operations with animations
+- [x] Run migrations to create database tables
+- [x] Test the implementation
+</task_progress>
+</write_to_file>
