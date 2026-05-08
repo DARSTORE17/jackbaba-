@@ -255,8 +255,10 @@ class CustomerController extends Controller
     {
         $user = Auth::user();
 
-        // For now, return empty addresses until we implement addresses functionality
-        $addresses = collect();
+        $addresses = $user->addresses()
+            ->orderByDesc('is_default')
+            ->latest()
+            ->get();
 
         return view('customer.addresses', compact('addresses'));
     }

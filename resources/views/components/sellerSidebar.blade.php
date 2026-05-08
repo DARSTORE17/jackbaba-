@@ -2,8 +2,8 @@
     <div class="p-3">
         <!-- Logo Section -->
         <div class="text-center mb-4">
-            <img src="{{ asset('img/logo.png') }}" alt="Kids Shop Logo" class="img-fluid mb-2" style="height: 50px; border-radius: 50%;">
-            <h6 class="text-primary fw-bold mb-3">Kids Shop Panel</h6>
+            <img src="{{ asset('img/logo.png') }}" alt="Bravus Market Logo" class="img-fluid mb-2" style="height: 50px; border-radius: 50%;">
+            <h6 class="text-primary fw-bold mb-3">Bravus Market Panel</h6>
         </div>
         <ul class="nav flex-column">
 

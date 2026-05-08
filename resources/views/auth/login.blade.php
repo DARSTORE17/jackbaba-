@@ -5,7 +5,7 @@
 @section('content')
 <section class="auth-section" style="min-height: 100vh; position: relative; overflow: hidden;">
     <!-- Background Gradient and Decorations -->
-    <div class="auth-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--aqua-500) 0%, var(--cyan-600) 50%, var(--blue-600) 100%); z-index: -2;"></div>
+    <div class="auth-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-600) 100%); z-index: -2;"></div>
 
     <!-- Floating Particles -->
     <div class="floating-particles" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;">
@@ -33,19 +33,19 @@
                     </div>
                     <h1 class="welcome-title" style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; text-shadow: 0 4px 20px rgba(0,0,0,0.3); animation: slideInLeft 1s ease-out 0.3s both;">Welcome Back!</h1>
                     <p class="welcome-subtitle" style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.9; animation: slideInLeft 1s ease-out 0.5s both;">
-                        Ready to continue your magical shopping journey? We're thrilled to have you back at KidzStore365! ✨
+                        Ready to continue your electronics shopping journey? We're thrilled to have you back at Bravus Market.
                     </p>
                     <div class="welcome-features text-left" style="max-width: 400px; margin: 0 auto; animation: slideInLeft 1s ease-out 0.7s both;">
                         <div class="feature-item" style="display: flex; align-items: center; margin-bottom: 1rem;">
-                            <i class="bi bi-check-circle-fill" style="color: var(--cyan-500); font-size: 1.5rem; margin-right: 1rem;"></i>
+                            <i class="bi bi-check-circle-fill" style="color: var(--blue-600); font-size: 1.5rem; margin-right: 1rem;"></i>
                             <span style="font-weight: 500;">Access your saved items</span>
                         </div>
                         <div class="feature-item" style="display: flex; align-items: center; margin-bottom: 1rem;">
-                            <i class="bi bi-check-circle-fill" style="color: var(--cyan-500); font-size: 1.5rem; margin-right: 1rem;"></i>
+                            <i class="bi bi-check-circle-fill" style="color: var(--blue-600); font-size: 1.5rem; margin-right: 1rem;"></i>
                             <span style="font-weight: 500;">Track your orders</span>
                         </div>
                         <div class="feature-item" style="display: flex; align-items: center; margin-bottom: 1rem;">
-                            <i class="bi bi-check-circle-fill" style="color: var(--cyan-500); font-size: 1.5rem; margin-right: 1rem;"></i>
+                            <i class="bi bi-check-circle-fill" style="color: var(--blue-600); font-size: 1.5rem; margin-right: 1rem;"></i>
                             <span style="font-weight: 500;">Manage your account</span>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                         </div>
 
                         @if($errors->any())
-                            <div class="alert alert-danger" style="border-radius: 10px; border: none; background: linear-gradient(135deg, #ff6b6b, #ff8e53); color: white;">
+                            <div class="alert alert-danger" style="border-radius: 10px; border: none; background: linear-gradient(135deg, #2563EB, #1D4ED8); color: white;">
                                 <ul class="mb-0">
                                     @foreach($errors->all() as $error)
                                         <li>{{ $error }}</li>
@@ -111,14 +111,14 @@
 
                                 @if (Route::has('password.request'))
                                     <a href="{{ route('password.request') }}" style="color: var(--blue-600); font-weight: 500; text-decoration: none;"
-                                       onmouseover="this.style.color='var(--aqua-500)'" onmouseout="this.style.color='var(--blue-600)'">
+                                       onmouseover="this.style.color='var(--blue-700)'" onmouseout="this.style.color='var(--blue-600)'">
                                         Forgot password?
                                     </a>
                                 @endif
                             </div>
 
                             <button type="submit" class="btn btn-primary w-100"
-                                    style="background: linear-gradient(135deg, var(--blue-600), var(--aqua-500)); border: none; border-radius: 12px; padding: 1rem; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);">
+                                    style="background: linear-gradient(135deg, var(--blue-600), var(--blue-700)); border: none; border-radius: 12px; padding: 1rem; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);">
                                 <span style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
                                     <i class="bi bi-box-arrow-in-right"></i> Sign In
                                 </span>
@@ -128,7 +128,7 @@
                         <div class="text-center mt-4">
                             <p style="color: var(--slate-600); margin-bottom: 0;">
                                 Don't have an account? <a href="{{ route('register') }}" style="color: var(--blue-600); font-weight: 600; text-decoration: none;"
-                                                          onmouseover="this.style.color='var(--aqua-500)'" onmouseout="this.style.color='var(--blue-600)'">Sign up here</a>
+                                                          onmouseover="this.style.color='var(--blue-700)'" onmouseout="this.style.color='var(--blue-600)'">Sign up here</a>
                             </p>
                         </div>
                     </div>

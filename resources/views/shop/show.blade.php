@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', $product->name . ' - KidsStore')
+@section('title', $product->name . ' - Bravus Market')
 @section('css')
     <style>
         :root {
-            --primary-color: #FF6F91;
+            --primary-color: #2563EB;
             --secondary-color: #764ba2;
             --accent-color: #667eea;
             --success-color: #22c55e;
@@ -909,7 +909,7 @@
                         title: 'Stock Limit Reached!',
                         text: `Maximum stock available is ${max}`,
                         icon: 'warning',
-                        confirmButtonColor: '#FF6F91',
+                        confirmButtonColor: '#2563EB',
                         confirmButtonText: 'OK'
                     });
                     input.value = max; // Set to maximum stock
@@ -1024,7 +1024,7 @@
                             title: 'Session Expired',
                             text: 'Please refresh the page and try again',
                             icon: 'warning',
-                            confirmButtonColor: '#FF6F91',
+                            confirmButtonColor: '#2563EB',
                             confirmButtonText: 'Refresh Page'
                         }).then(() => {
                             window.location.reload();
@@ -1058,7 +1058,7 @@
                             icon: 'success',
                             color: '#1f2937',
                             background: '#ffffff',
-                            confirmButtonColor: '#FF6F91',
+                            confirmButtonColor: '#2563EB',
                             cancelButtonColor: '#6b7280',
                             confirmButtonText: 'View Cart',
                             showCancelButton: true,
@@ -1076,7 +1076,7 @@
                                 // Custom progress bar color
                                 const progressBar = popup.querySelector('.swal2-timer-progress-bar');
                                 if (progressBar) {
-                                    progressBar.style.setProperty('--swal2-timer-progress-bar-background', '#FF6F91');
+                                    progressBar.style.setProperty('--swal2-timer-progress-bar-background', '#2563EB');
                                 }
                             }
                         }).then((result) => {
@@ -1093,7 +1093,7 @@
                             icon: 'info',
                             color: '#1f2937',
                             background: '#ffffff',
-                            confirmButtonColor: '#FF6F91',
+                            confirmButtonColor: '#2563EB',
                             cancelButtonColor: '#6b7280',
                             confirmButtonText: 'View Cart',
                             showCancelButton: true,
@@ -1118,7 +1118,7 @@
                             icon: 'error',
                             color: '#1f2937',
                             background: '#ffffff',
-                            confirmButtonColor: '#FF6F91',
+                            confirmButtonColor: '#2563EB',
                             confirmButtonText: 'Try Again',
                             showCloseButton: true,
                             customClass: {
@@ -1155,7 +1155,7 @@
                         icon: 'info',
                         showCancelButton: true,
                         showCloseButton: true,
-                        confirmButtonColor: '#FF6F91',
+                        confirmButtonColor: '#2563EB',
                         cancelButtonColor: '#28a745',
                         confirmButtonText: '<i class="bi bi-box-arrow-in-right me-2"></i>Login',
                         cancelButtonText: '<i class="bi bi-person-plus me-2"></i>Register',
@@ -1213,7 +1213,7 @@
                             title: 'Session Expired',
                             text: 'Please refresh the page and try again',
                             icon: 'warning',
-                            confirmButtonColor: '#FF6F91',
+                            confirmButtonColor: '#2563EB',
                             confirmButtonText: 'Refresh Page'
                         }).then(() => {
                             window.location.reload();
@@ -1266,7 +1266,7 @@
                             title: 'Error',
                             text: data.message || 'Failed to update wishlist',
                             icon: 'error',
-                            confirmButtonColor: '#FF6F91',
+                            confirmButtonColor: '#2563EB',
                             confirmButtonText: 'Try Again'
                         });
                     }

@@ -1,15 +1,15 @@
-/* Kids Shop Color Variables - Pink + Aqua Only */
-/* Modern Color Variables - Pink + Aqua (Names NOT changed) */
+/* Blue/White Site Palette */
+/* Color variable names kept for compatibility with existing styles. */
 :root {
-    --blue-600: #FF89A0;     /* Pink Accent */
-    --blue-700: #FFB6C1;     /* Baby Pink */
-    --blue-800: #FF6F91;     /* Strong Pink */
+    --blue-600: #2563EB;     /* Strong Blue */
+    --blue-700: #1D4ED8;     /* Deep Blue */
+    --blue-800: #1E40AF;     /* Dark Blue */
 
-    --cyan-500: #A7F3D0;     /* Soft Mint */
-    --cyan-600: #5ED1C7;     /* Aqua Primary */
+    --cyan-500: #BFDBFE;     /* Light Sky */
+    --cyan-600: #93C5FD;     /* Medium Sky */
 
-    --aqua-400: #2FA39A;     /* Darker Mint/Aqua BG */
-    --aqua-500: #1C7F78;     /* Deep Dark Aqua */
+    --aqua-400: #3B82F6;     /* Bright Blue */
+    --aqua-500: #2563EB;     /* Solid Blue */
 
     --slate-50: #FFFFFF;     /* Clean White */
     --slate-100: #F8FAFC;    /* Soft Grey */
@@ -30,7 +30,7 @@
     background: linear-gradient(
         135deg,
         var(--aqua-400) 0%,
-        var(--cyan-600) 50%,
+        var(--blue-700) 50%,
         var(--blue-800) 100%
     );
     border-bottom: none;
@@ -68,7 +68,7 @@
 .logo-main {
     width: 70px; /* Match header height */
     height: 70px; /* Match header height */
-    background: linear-gradient(135deg, var(--blue-600), var(--cyan-500));
+    background: linear-gradient(135deg, var(--blue-600), var(--blue-600));
     border-radius: 50%; /* Perfect circle */
     display: flex;
     align-items: center;
@@ -320,7 +320,7 @@
     background: linear-gradient(
         135deg,
         var(--blue-800) 0%,
-        var(--cyan-600) 50%,
+        var(--blue-700) 50%,
         var(--aqua-400) 100%
     );
     z-index: 1001;
@@ -365,7 +365,7 @@
 .mobile-logo-main {
     width: 50px;
     height: 50px;
-    background: linear-gradient(135deg, var(--blue-600), var(--cyan-500));
+    background: linear-gradient(135deg, var(--blue-600), var(--blue-600));
     border-radius: 50%;
     display: flex;
     align-items: center;

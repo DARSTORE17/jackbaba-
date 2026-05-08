@@ -41,7 +41,9 @@ class AuthController extends Controller
                 $this->handleIntendedProductAddition($user, $request);
             }
 
-            if ($user->role === 'customer') {
+            if ($user->role === 'seller') {
+                return redirect()->intended(route('seller.dashboard'));
+            } elseif ($user->role === 'customer') {
                 // Check for intended URL (like checkout) or default to shop
                 $intendedUrl = $request->session()->get('intended');
                 if ($intendedUrl && $intendedUrl !== url('/')) {
@@ -49,10 +51,8 @@ class AuthController extends Controller
                     return redirect($intendedUrl);
                 }
                 return redirect()->intended(route('shop'));
-            } elseif ($user->role === 'seller') {
-                return redirect()->intended('seller/dashboard');
             } else {
-                // Default to customer or handle error
+                // Default to shop or handle error
                 return redirect()->intended(route('shop'));
             }
         }
@@ -92,7 +92,9 @@ class AuthController extends Controller
             $this->handleIntendedProductAddition($user, $request);
         }
 
-        if ($user->role === 'customer') {
+        if ($user->role === 'seller') {
+            return redirect()->intended(route('seller.dashboard'));
+        } elseif ($user->role === 'customer') {
             // Check for intended URL (like checkout) or default to shop
             $intendedUrl = $request->session()->get('intended');
             if ($intendedUrl && $intendedUrl !== url('/')) {
@@ -100,8 +102,6 @@ class AuthController extends Controller
                 return redirect($intendedUrl);
             }
             return redirect()->intended(route('shop'));
-        } elseif ($user->role === 'seller') {
-            return redirect()->intended('seller/dashboard');
         } else {
             return redirect()->intended(route('shop'));
         }

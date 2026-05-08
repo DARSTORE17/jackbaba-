@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Shop - KidsStore')
+@section('title', 'Shop - Bravus Market')
 
 @section('css')
 <style>
     :root {
-        --primary-color: #FF6F91;
+        --primary-color: #2563EB;
         --secondary-color: #764ba2;
         --accent-color: #667eea;
         --success-color: #22c55e;
@@ -155,7 +155,7 @@
     }
 
     .badge-advertised {
-        background: linear-gradient(135deg, #ff9a56, #ff6b6b);
+        background: linear-gradient(135deg, #2563EB, #2563EB);
         color: white;
     }
 
@@ -346,18 +346,17 @@
 
     .categories-grid {
         display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
         gap: 10px;
-        justify-content: flex-start;
         overflow-x: auto;
-        overflow-y: hidden;
         padding: 10px 0;
+        width: 100%;
         scrollbar-width: thin;
-        scrollbar-color: var(--primary-color) transparent;
-        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
     }
 
     .categories-grid::-webkit-scrollbar {
-        height: 4px;
+        height: 6px;
     }
 
     .categories-grid::-webkit-scrollbar-track {

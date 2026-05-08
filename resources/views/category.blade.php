@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $category->name . ' - KidsStore365')
+@section('title', $category->name . ' - Bravus Market')
 
 @section('css')
 <style>
@@ -52,7 +52,7 @@
     .bg-bubble {
         position: absolute;
         border-radius: 50%;
-        background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(94, 209, 199, 0.08));
+        background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.08));
         animation: floatBubble 8s ease-in-out infinite;
     }
 
@@ -102,7 +102,7 @@
 
     .particle {
         position: absolute;
-        background: radial-gradient(circle, rgba(59, 130, 246, 0.6) 0%, rgba(94, 209, 199, 0.3) 100%);
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.6) 0%, rgba(37, 99, 235, 0.3) 100%);
         border-radius: 50%;
         animation: particleFloat 12s linear infinite;
     }
@@ -297,7 +297,7 @@
     }
 
     .breadcrumb-custom .breadcrumb-item + .breadcrumb-item::before {
-        color: var(--aqua-500);
+        color: var(--blue-700);
         font-weight: bold;
     }
 
@@ -525,7 +525,7 @@
     }
 
     .badge-advertised {
-        background: linear-gradient(135deg, #ff9a56, #ff6b6b);
+        background: linear-gradient(135deg, #2563EB, #2563EB);
         color: white;
     }
 
@@ -825,7 +825,7 @@
         right: 15%;
         animation-delay: 2s;
         animation-duration: 14s;
-        color: rgba(94, 209, 199, 0.3);
+        color: rgba(37, 99, 235, 0.3);
     }
 
     .decoration-2 i {
@@ -1090,13 +1090,13 @@
                         style="min-width: 200px; border-radius: 15px; border: 2px solid rgba(59, 130, 246, 0.2);
                                background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);
                                box-shadow: var(--shadow-sm); transition: all 0.3s ease; font-weight: 500;">
-                    <option value="" style="color: var(--slate-700);">🎯 Sort By</option>
-                    <option value="name-asc" {{ request('sort_by') == 'name' && request('sort_order') == 'asc' ? 'selected' : '' }}>📝 Name (A-Z)</option>
-                    <option value="name-desc" {{ request('sort_by') == 'name' && request('sort_order') == 'desc' ? 'selected' : '' }}>📝 Name (Z-A)</option>
-                    <option value="new_price-asc" {{ request('sort_by') == 'new_price' && request('sort_order') == 'asc' ? 'selected' : '' }}>💰 Price (Low to High)</option>
-                    <option value="new_price-desc" {{ request('sort_by') == 'new_price' && request('sort_order') == 'desc' ? 'selected' : '' }}>💰 Price (High to Low)</option>
-                    <option value="created_at-desc" {{ request('sort_by') == 'created_at' && request('sort_order') == 'desc' ? 'selected' : '' }}>✨ Newest First</option>
-                    <option value="rate-desc" {{ request('sort_by') == 'rate' && request('sort_order') == 'desc' ? 'selected' : '' }}>⭐ Highest Rated</option>
+                    <option value="" style="color: var(--slate-700);">Sort By</option>
+                    <option value="name-asc" {{ request('sort_by') == 'name' && request('sort_order') == 'asc' ? 'selected' : '' }}>Name (A-Z)</option>
+                    <option value="name-desc" {{ request('sort_by') == 'name' && request('sort_order') == 'desc' ? 'selected' : '' }}>Name (Z-A)</option>
+                    <option value="new_price-asc" {{ request('sort_by') == 'new_price' && request('sort_order') == 'asc' ? 'selected' : '' }}>Price (Low to High)</option>
+                    <option value="new_price-desc" {{ request('sort_by') == 'new_price' && request('sort_order') == 'desc' ? 'selected' : '' }}>Price (High to Low)</option>
+                    <option value="created_at-desc" {{ request('sort_by') == 'created_at' && request('sort_order') == 'desc' ? 'selected' : '' }}>Newest First</option>
+                    <option value="rate-desc" {{ request('sort_by') == 'rate' && request('sort_order') == 'desc' ? 'selected' : '' }}>Highest Rated</option>
                 </select>
             </div>
 
@@ -1114,16 +1114,16 @@
                     <i class="bi bi-check-circle-fill me-1"></i>✓ In Stock Only
                 </a>
                 <a href="{{ $currentUrl }}?{{ http_build_query(array_merge($queryParams, ['on_sale' => '1'])) }}"
-                   class="btn btn-outline-warning btn-sm {{ request('on_sale') == '1' ? 'btn-warning' : '' }}"
-                   style="border-radius: 20px; border: 2px solid rgba(251, 191, 36, 0.3); font-weight: 600;
-                          transition: all 0.3s ease; backdrop-filter: blur(10px); {{ request('on_sale') == '1' ? 'color: white; background: linear-gradient(135deg, var(--warning-color), #ff6b6b);' : 'color: var(--warning-color); background: rgba(251, 191, 36, 0.05);' }}">
-                    <i class="bi bi-percent me-1"></i>🏷️ On Sale
+                   class="btn btn-outline-primary btn-sm {{ request('on_sale') == '1' ? 'btn-primary' : '' }}"
+                   style="border-radius: 20px; border: 2px solid rgba(59, 130, 246, 0.3); font-weight: 600;
+                          transition: all 0.3s ease; backdrop-filter: blur(10px); {{ request('on_sale') == '1' ? 'color: white; background: linear-gradient(135deg, var(--blue-600), var(--blue-700));' : 'color: var(--blue-600); background: rgba(59, 130, 246, 0.05);' }}">
+                    <i class="bi bi-percent me-1"></i>On Sale
                 </a>
                 <a href="{{ $currentUrl }}?{{ http_build_query(array_merge($queryParams, ['rating' => '4'])) }}"
-                   class="btn btn-outline-success btn-sm {{ request('rating') == '4' ? 'btn-success' : '' }}"
-                   style="border-radius: 20px; border: 2px solid rgba(34, 197, 94, 0.3); font-weight: 600;
-                          transition: all 0.3s ease; backdrop-filter: blur(10px); {{ request('rating') == '4' ? 'color: white; background: linear-gradient(135deg, var(--success-color), #22c55e);' : 'color: var(--success-color); background: rgba(34, 197, 94, 0.05);' }}">
-                    <i class="bi bi-star-fill me-1"></i>⭐ 4+ Stars
+                   class="btn btn-outline-primary btn-sm {{ request('rating') == '4' ? 'btn-primary' : '' }}"
+                   style="border-radius: 20px; border: 2px solid rgba(59, 130, 246, 0.3); font-weight: 600;
+                          transition: all 0.3s ease; backdrop-filter: blur(10px); {{ request('rating') == '4' ? 'color: white; background: linear-gradient(135deg, var(--blue-600), var(--blue-700));' : 'color: var(--blue-600); background: rgba(59, 130, 246, 0.05);' }}">
+                    <i class="bi bi-star-fill me-1"></i>4+ Stars
                 </a>
 
                 @if(count(array_filter($queryParams, fn($v, $k) => in_array($k, ['in_stock', 'on_sale', 'rating']) && $v, ARRAY_FILTER_USE_BOTH)))
@@ -1132,7 +1132,7 @@
                        style="border-radius: 20px; border: 2px solid rgba(107, 114, 128, 0.3); font-weight: 600;
                               transition: all 0.3s ease; backdrop-filter: blur(10px); color: var(--slate-600);
                               background: rgba(107, 114, 128, 0.05);">
-                        <i class="bi bi-x-circle-fill me-1"></i>🔄 Clear Filters
+                        <i class="bi bi-x-circle-fill me-1"></i>Clear Filters
                     </a>
                 @endif
             </div>

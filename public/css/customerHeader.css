@@ -24,7 +24,7 @@ header#main-header {
 }
 
 .profile-avatar:hover {
-    border-color: #FF6F91;
+    border-color: #2563EB;
     transition: border-color 0.3s ease;
 }
 
@@ -42,19 +42,19 @@ header#main-header {
 }
 
 .dropdown-item:hover {
-    background-color: rgba(255, 111, 145, 0.1);
-    color: #FF6F91;
+    background-color: rgba(37, 99, 235, 0.1);
+    color: #2563EB;
 }
 
 /* Mobile Toggle Button */
 @media (max-width: 768px) {
     .btn-outline-secondary {
-        border-color: #FF6F91 !important;
-        color: #FF6F91 !important;
+        border-color: #2563EB !important;
+        color: #2563EB !important;
     }
 
     .btn-outline-secondary:hover {
-        background-color: #FF6F91 !important;
+        background-color: #2563EB !important;
         color: white !important;
     }
 }

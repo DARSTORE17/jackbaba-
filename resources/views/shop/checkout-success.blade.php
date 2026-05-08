@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Order Confirmed - KidsStore')
+@section('title', 'Order Confirmed - Bravus Market')
 
 @section('css')
 <style>
@@ -30,12 +30,12 @@
     }
 
     ::-webkit-scrollbar-thumb {
-        background: #FF6F91;
+        background: #2563EB;
         border-radius: 10px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: #ff4d7c;
+        background: #1D4ED8;
     }
 
     /* Success card styling */
@@ -86,7 +86,7 @@
     }
 
     .order-number {
-        background: linear-gradient(135deg, #FF6F91, #ff4d7c);
+        background: linear-gradient(135deg, #2563EB, #1D4ED8);
         color: white;
         padding: 1rem;
         border-radius: 10px;
@@ -142,7 +142,7 @@
     }
 
     .product-item:hover {
-        border-color: #FF6F91;
+        border-color: #2563EB;
         box-shadow: 0 2px 8px rgba(255, 111, 145, 0.1);
     }
 
@@ -175,7 +175,7 @@
         margin-top: 1rem;
         font-size: 1.2rem;
         font-weight: bold;
-        color: #FF6F91;
+        color: #2563EB;
     }
 
     /* Address information */
@@ -192,7 +192,7 @@
     }
 
     .address-card h5 {
-        color: #FF6F91;
+        color: #2563EB;
         margin-bottom: 1rem;
         font-weight: 600;
     }
@@ -204,7 +204,7 @@
     }
 
     .btn-primary-custom {
-        background: linear-gradient(135deg, #FF6F91, #ff4d7c);
+        background: linear-gradient(135deg, #2563EB, #1D4ED8);
         border: none;
         border-radius: 25px;
         padding: 12px 30px;
@@ -224,8 +224,8 @@
     }
 
     .btn-outline-custom {
-        border: 2px solid #FF6F91;
-        color: #FF6F91;
+        border: 2px solid #2563EB;
+        color: #2563EB;
         background: transparent;
         border-radius: 25px;
         padding: 12px 30px;
@@ -237,7 +237,7 @@
     }
 
     .btn-outline-custom:hover {
-        background: #FF6F91;
+        background: #2563EB;
         color: white;
         text-decoration: none;
         transform: translateY(-2px);
@@ -259,7 +259,7 @@
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #FF6F91, #ff4d7c);
+        background: linear-gradient(135deg, #2563EB, #1D4ED8);
         color: white;
         display: flex;
         align-items: center;

@@ -88,8 +88,8 @@
     }
 
     .pagination .page-item.active .page-link {
-        background: linear-gradient(135deg, #FF6F91, #FF89A0);
-        border-color: #FF6F91;
+        background: linear-gradient(135deg, #2563EB, #2563EB);
+        border-color: #2563EB;
     }
 
     .table-responsive {
@@ -123,8 +123,8 @@
     }
 
     .page-item.active .page-link {
-        background: linear-gradient(135deg, #FF6F91, #FF89A0);
-        border-color: #FF6F91;
+        background: linear-gradient(135deg, #2563EB, #2563EB);
+        border-color: #2563EB;
         color: white;
         box-shadow: 0 2px 6px rgba(255, 111, 145, 0.3);
     }
@@ -162,7 +162,7 @@
 
     .search-filter .form-control:focus,
     .search-filter .form-select:focus {
-        border-color: #FF6F91;
+        border-color: #2563EB;
         box-shadow: 0 0 0 0.2rem rgba(255, 111, 145, 0.25);
     }
 

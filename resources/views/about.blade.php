@@ -5,12 +5,12 @@
 
 <!-- ================= About Hero Section ================= -->
 <section class="about-hero-section position-relative"
-    style="background: linear-gradient(135deg, var(--aqua-500), var(--blue-600)); color: var(--white); padding: 120px 0; overflow: hidden;">
+    style="background: linear-gradient(135deg, var(--blue-700), var(--blue-600)); color: var(--white); padding: 120px 0; overflow: hidden;">
     <div class="container text-center position-relative" style="z-index: 2;">
-        <h1 class="hero-title" style="font-size: 3.5rem; font-weight: bold;">About KidzStore365</h1>
+        <h1 class="hero-title" style="font-size: 3.5rem; font-weight: bold;">About Bravus Market</h1>
         <p class="hero-subtitle"
             style="font-size: 1.75rem; margin: 20px 0; max-width: 800px; margin-left:auto; margin-right:auto;">
-            Creating joyful moments for children everywhere with safe, fun, and adorable products that spark imagination and love.
+            Bringing affordable, original electronics to Tanzania with a focus on phones, laptops, and smart accessories.
         </p>
     </div>
 
@@ -35,10 +35,10 @@
                 <div class="story-content">
                     <h2 class="section-title" style="color: var(--slate-900); margin-bottom: 30px; font-size: 2.5rem;">Our Story</h2>
                     <p style="font-size: 1.1rem; line-height: 1.6; color: var(--slate-800); margin-bottom: 20px;">
-                        Founded in 2025, KidzStore365 was born from a simple belief: every child deserves access to products that are not just safe and fun, but also spark joy and creativity. What started as a small online store has grown into a beloved destination for parents and caregivers seeking the best for their little ones.
+                        Founded in 2025, Bravus Market was created to deliver premium electronics across Tanzania. We believe everyone should access original phones, laptops, and accessories at affordable prices.
                     </p>
                     <p style="font-size: 1.1rem; line-height: 1.6; color: var(--slate-800); margin-bottom: 20px;">
-                        We carefully curate our collection to ensure every product meets the highest safety standards while being irresistibly cute and engaging. From soft, cozy baby clothes to imaginative toys that inspire play, we believe in creating magic for every age and stage of childhood.
+                        Our team hand-selects every device for quality, trust, and performance—whether you need a new smartphone, laptop, or everyday tech accessory.
                     </p>
                     <div class="story-stats" style="display: flex; gap: 30px; margin-top: 40px;">
                         <div class="stat-item text-center">
@@ -46,7 +46,7 @@
                             <div style="font-size: 0.9rem; color: var(--slate-600);">Days a Year</div>
                         </div>
                         <div class="stat-item text-center">
-                            <div style="font-size: 2rem; font-weight: bold; color: var(--aqua-500);">1000+</div>
+                            <div style="font-size: 2rem; font-weight: bold; color: var(--blue-700);">1000+</div>
                             <div style="font-size: 0.9rem; color: var(--slate-600);">Happy Customers</div>
                         </div>
                         <div class="stat-item text-center">
@@ -59,7 +59,7 @@
             <div class="col-lg-6">
                 <div class="story-image-wrapper" style="position: relative;">
                     <div class="story-image-placeholder"
-                        style="height: 400px; background: linear-gradient(135deg, var(--cyan-500), var(--blue-700)); border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;">
+                        style="height: 400px; background: linear-gradient(135deg, var(--blue-600), var(--blue-700)); border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;">
                         <div style="text-align: center; color: var(--white);">
                             <i class="bi bi-images" style="font-size: 4rem;"></i>
                             <p style="margin-top: 20px; font-size: 1.2rem; font-weight: bold;">Our Store Image</p>
@@ -83,7 +83,7 @@
                     style="padding: 25px; background-color: var(--slate-50); border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; height: 100%;"
                     onmouseover="this.style.transform='translateY(-5px)'"
                     onmouseout="this.style.transform='translateY(0)'">
-                    <i class="bi bi-shield-check" style="font-size: 2.5rem; color: var(--aqua-500);"></i>
+                    <i class="bi bi-shield-check" style="font-size: 2.5rem; color: var(--blue-700);"></i>
                     <h4 class="value-title" style="margin-top: 20px; margin-bottom: 15px; color: var(--slate-900);">Safety First</h4>
                     <p style="color: var(--slate-700); line-height: 1.5;">Every product is rigorously tested for safety standards, ensuring peace of mind for parents.</p>
                 </div>
@@ -116,7 +116,7 @@
                     style="padding: 25px; background-color: var(--slate-50); border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; height: 100%;"
                     onmouseover="this.style.transform='translateY(-5px)'"
                     onmouseout="this.style.transform='translateY(0)'">
-                    <i class="bi bi-globe" style="font-size: 2.5rem; color: var(--cyan-600);"></i>
+                    <i class="bi bi-globe" style="font-size: 2.5rem; color: var(--blue-700);"></i>
                     <h4 class="value-title" style="margin-top: 20px; margin-bottom: 15px; color: var(--slate-900);">Global Standards</h4>
                     <p style="color: var(--slate-700); line-height: 1.5;">We source the best quality products from around the world while maintaining ethical practices.</p>
                 </div>
@@ -126,7 +126,7 @@
 </section>
 
 <!-- ================= What We Do Section ================= -->
-<section class="what-we-do-section" style="padding: 80px 0; background: linear-gradient(135deg, var(--cyan-500), var(--blue-600)); color: var(--white);">
+<section class="what-we-do-section" style="padding: 80px 0; background: linear-gradient(135deg, var(--blue-600), var(--blue-600)); color: var(--white);">
     <div class="container text-center">
         <h2 class="section-title" style="margin-bottom: 60px; font-size: 2.5rem;">What We Do</h2>
 
@@ -188,7 +188,7 @@
 
         <div class="community-cta">
             <a href="/shop" class="btn btn-primary me-3"
-                style="background: linear-gradient(135deg, var(--blue-600), var(--aqua-500)); border: none; border-radius: 12px; padding: 15px 40px; font-weight: bold; font-size: 1.1rem;">
+                style="background: linear-gradient(135deg, var(--blue-600), var(--blue-700)); border: none; border-radius: 12px; padding: 15px 40px; font-weight: bold; font-size: 1.1rem;">
                 Start Shopping <i class="bi bi-arrow-right"></i>
             </a>
             <a href="/contact" class="btn btn-outline-primary"
@@ -208,14 +208,14 @@
                 </div>
                 <div class="col-md-4">
                     <div style="padding: 20px; background-color: var(--white); border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-                        <i class="bi bi-star-fill" style="font-size: 2rem; color: var(--aqua-500);"></i>
+                        <i class="bi bi-star-fill" style="font-size: 2rem; color: var(--blue-700);"></i>
                         <h5 style="margin-top: 15px; color: var(--slate-900);">Loyalty Program</h5>
                         <p style="color: var(--slate-700);">Earn points and unlock special rewards with every purchase.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div style="padding: 20px; background-color: var(--white); border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
-                        <i class="bi bi-people-fill" style="font-size: 2rem; color: var(--cyan-600);"></i>
+                        <i class="bi bi-people-fill" style="font-size: 2rem; color: var(--blue-700);"></i>
                         <h5 style="margin-top: 15px; color: var(--slate-900);">Parent Community</h5>
                         <p style="color: var(--slate-700);">Connect with other parents and share experiences.</p>
                     </div>

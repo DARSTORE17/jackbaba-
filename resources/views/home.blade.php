@@ -4,7 +4,7 @@
 @section('content')
     <!-- ================= Hero Section ================= -->
     <section class="hero-section position-relative"
-        style="background: linear-gradient(135deg, var(--aqua-500) 0%, var(--cyan-600) 50%, var(--blue-600) 100%); color: var(--white); padding: 120px 0; overflow: hidden;">
+        style="background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-600) 100%); color: var(--white); padding: 120px 0; overflow: hidden;">
         <!-- Hero Particles Background -->
         <div class="hero-particles-container" id="heroParticles">
             <div class="particle particle-1"></div>
@@ -18,25 +18,25 @@
             <div class="hero-content" style="animation: slideUp 1s ease-out;">
                 <h1 class="hero-title"
                     style="font-size: 4rem; font-weight: 800; margin-bottom: 20px; text-shadow: 0 4px 20px rgba(0,0,0,0.3); animation: slideUp 1s ease-out 0.2s both;">
-                    <span class="title-accent" style="color: var(--cyan-500);">Welcome to</span> KidzStore365
+                    <span class="title-accent" style="color: rgba(255,255,255,0.9);">Welcome to</span> Bravus Market
                 </h1>
                 <p class="hero-subtitle"
                     style="font-size: 1.25rem; margin: 30px 0; max-width: 750px; margin-left:auto; margin-right:auto; line-height: 1.6; opacity: 0.95; animation: slideUp 1s ease-out 0.4s both;">
-                    ✨ Everything Cute, Fun & Safe for Your Little Ones ✨<br>
-                    <span style="font-size: 1.1rem;">Explore toys, clothes, accessories, and more that spark imagination and
-                        love!</span>
+                    Premium Electronics Store<br>
+                    Phones | Laptops | Accessories<br>
+                    Trusted • Affordable • Original
                 </p>
 
                 <!-- CTA Buttons -->
                 <div class="hero-cta" style="margin-top: 40px; animation: slideUp 1s ease-out 0.6s both;">
                     <a href="/shop" class="btn btn-primary btn-lg hero-btn-primary"
-                        style="border: none; border-radius: 25px; padding: 18px 45px; font-weight: 700; font-size: 1.1rem; box-shadow: 0 8px 25px rgba(255, 56, 147, 0.3); transform: translateY(0); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
-                        🛍️ Shop Now
+                        style="border: none; border-radius: 25px; padding: 18px 45px; font-weight: 700; font-size: 1.1rem; box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3); transform: translateY(0); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+                        Shop Now
                         <span class="btn-arrow">→</span>
                     </a>
                     <a href="/categories" class="btn btn-outline-light btn-lg hero-btn-outline"
                         style="border-radius: 25px; padding: 18px 45px; font-weight: 700; font-size: 1.1rem; border-width: 2px; backdrop-filter: blur(10px);">
-                        🌈 Explore Categories
+                        Explore Categories
                         <span class="btn-arrow">→</span>
                     </a>
                 </div>
@@ -48,7 +48,7 @@
                         <div class="col-auto">
                             <div class="trust-item"
                                 style="display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(255,255,255,0.1); border-radius: 20px; backdrop-filter: blur(10px);">
-                                <i class="bi bi-shield-check-fill" style="color: var(--cyan-500); font-size: 1.2rem;"></i>
+                                <i class="bi bi-shield-check-fill" style="color: var(--blue-600); font-size: 1.2rem;"></i>
                                 <span style="font-weight: 600;">100% Safe</span>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
             style="position: absolute; bottom: 10%; right: 8%; z-index: 2; animation: floatUp 6s ease-in-out infinite;">
             <div class="toy-circle-frame"
                 style="width: 180px; height: 180px; border-radius: 50%; background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,250,252,0.8)); display: flex; align-items: center; justify-content: center; box-shadow: 0 15px 35px rgba(0,0,0,0.15); border: 3px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px); overflow: hidden;">
-                <img src="{{ asset('img/hero-toys.png') }}" alt="Kids Toys"
+                <img src="{{ asset('img/hero-toys.png') }}" alt="Electronics Showcase"
                     style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; animation: bounceIn 2s ease-out 1s both;">
             </div>
         </div>
@@ -381,7 +381,7 @@
 
         .hero-btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(255, 56, 147, 0.4);
+            box-shadow: 0 12px 35px rgba(37, 99, 235, 0.4);
         }
 
         .hero-btn-outline:hover {
@@ -403,9 +403,9 @@
 
 
 <!-- ================= What We Do Section ================= -->
-<section class="what-we-do-section" style="padding: 80px 0; background: linear-gradient(135deg, var(--cyan-500), var(--blue-600)); color: var(--white);">
+<section class="what-we-do-section" style="padding: 80px 0; background: linear-gradient(135deg, var(--blue-600), var(--blue-600)); color: var(--white);">
     <div class="container text-center">
-        <h2 class="section-title" style="margin-bottom: 60px; font-size: 2.5rem;">What We Do?</h2>
+        <h2 class="section-title" style="margin-bottom: 60px; font-size: 2.5rem;">What We Offer</h2>
 
         <div class="row g-4">
             <div class="col-md-6 col-lg-3">
@@ -413,9 +413,9 @@
                     style="padding: 30px 20px; background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); transition: transform 0.3s ease;"
                     onmouseover="this.style.transform='scale(1.05)'"
                     onmouseout="this.style.transform='scale(1)'">
-                    <i class="bi bi-bag-heart-fill" style="font-size: 3rem;"></i>
-                    <h4 class="service-title" style="margin-top: 20px; margin-bottom: 15px;">Curated Shopping</h4>
-                    <p style="line-height: 1.5; opacity: 0.9;">Hand-picked baby essentials and toys that meet our strict quality standards.</p>
+                    <i class="bi bi-phone-fill" style="font-size: 3rem;"></i>
+                    <h4 class="service-title" style="margin-top: 20px; margin-bottom: 15px;">Premium Phones</h4>
+                    <p style="line-height: 1.5; opacity: 0.9;">Original smartphones from top brands, with trusted warranties and fast delivery.</p>
                 </div>
             </div>
 
@@ -424,9 +424,9 @@
                     style="padding: 30px 20px; background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); transition: transform 0.3s ease;"
                     onmouseover="this.style.transform='scale(1.05)'"
                     onmouseout="this.style.transform='scale(1)'">
-                    <i class="bi bi-truck" style="font-size: 3rem;"></i>
-                    <h4 class="service-title" style="margin-top: 20px; margin-bottom: 15px;">Fast Delivery</h4>
-                    <p style="line-height: 1.5; opacity: 0.9;">Swift and secure shipping to get your orders to you as quickly as possible.</p>
+                    <i class="bi bi-laptop-fill" style="font-size: 3rem;"></i>
+                    <h4 class="service-title" style="margin-top: 20px; margin-bottom: 15px;">Top Laptops</h4>
+                    <p style="line-height: 1.5; opacity: 0.9;">High-performance laptops for work, study, and gaming at competitive prices.</p>
                 </div>
             </div>
 
@@ -435,9 +435,9 @@
                     style="padding: 30px 20px; background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); transition: transform 0.3s ease;"
                     onmouseover="this.style.transform='scale(1.05)'"
                     onmouseout="this.style.transform='scale(1)'">
-                    <i class="bi bi-headset" style="font-size: 3rem;"></i>
-                    <h4 class="service-title" style="margin-top: 20px; margin-bottom: 15px;">24/7 Support</h4>
-                    <p style="line-height: 1.5; opacity: 0.9;">Our friendly team is always here to help with any questions or concerns.</p>
+                    <i class="bi bi-headphones" style="font-size: 3rem;"></i>
+                    <h4 class="service-title" style="margin-top: 20px; margin-bottom: 15px;">Accessories</h4>
+                    <p style="line-height: 1.5; opacity: 0.9;">Audio, chargers, cases, and smart tech accessories for every device.</p>
                 </div>
             </div>
 
@@ -446,9 +446,9 @@
                     style="padding: 30px 20px; background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); transition: transform 0.3s ease;"
                     onmouseover="this.style.transform='scale(1.05)'"
                     onmouseout="this.style.transform='scale(1)'">
-                    <i class="bi bi-arrow-repeat" style="font-size: 3rem;"></i>
-                    <h4 class="service-title" style="margin-top: 20px; margin-bottom: 15px;">Easy Returns</h4>
-                    <p style="line-height: 1.5; opacity: 0.9;">Hassle-free returns and exchanges if you're not completely satisfied.</p>
+                    <i class="bi bi-shield-check" style="font-size: 3rem;"></i>
+                    <h4 class="service-title" style="margin-top: 20px; margin-bottom: 15px;">Trusted Quality</h4>
+                    <p style="line-height: 1.5; opacity: 0.9;">Authentic electronics sourced from verified suppliers and brands.</p>
                 </div>
             </div>
         </div>
@@ -463,78 +463,76 @@
         <!-- Section Background Pattern -->
         <div class="categories-bg-pattern">
             <div class="bg-circle bg-circle-1"
-                style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: linear-gradient(45deg, rgba(47, 163, 154, 0.1), rgba(94, 209, 199, 0.05)); border-radius: 50%; animation: floatBg 8s ease-in-out infinite;">
+                style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: linear-gradient(45deg, rgba(37, 99, 235, 0.1), rgba(37, 99, 235, 0.05)); border-radius: 50%; animation: floatBg 8s ease-in-out infinite;">
             </div>
             <div class="bg-circle bg-circle-2"
-                style="position: absolute; bottom: -30px; left: -30px; width: 150px; height: 150px; background: linear-gradient(45deg, rgba(255, 137, 160, 0.08), rgba(255, 109, 145, 0.04)); border-radius: 50%; animation: floatBg 6s ease-in-out infinite reverse;">
+                style="position: absolute; bottom: -30px; left: -30px; width: 150px; height: 150px; background: linear-gradient(45deg, rgba(37, 99, 235, 0.08), rgba(37, 99, 235, 0.04)); border-radius: 50%; animation: floatBg 6s ease-in-out infinite reverse;">
             </div>
             <div class="bg-circle bg-circle-3"
-                style="position: absolute; top: 50%; left: 10%; width: 80px; height: 80px; background: linear-gradient(45deg, rgba(94, 209, 199, 0.06), rgba(255, 182, 193, 0.03)); border-radius: 50%; animation: floatBg 7s ease-in-out infinite;">
+                style="position: absolute; top: 50%; left: 10%; width: 80px; height: 80px; background: linear-gradient(45deg, rgba(37, 99, 235, 0.06), rgba(255, 182, 193, 0.03)); border-radius: 50%; animation: floatBg 7s ease-in-out infinite;">
             </div>
         </div>
 
         <div class="container text-center position-relative" style="z-index: 2;">
             <h2 class="section-title fs-5 fs-lg-1"
                 style="margin-bottom: 60px; color: var(--slate-900); font-weight: 800; animation: fadeInUp 1s ease-out;">
-                <span style="color: var(--blue-600);">🛍️ Shop by Categories</span>
+                <span style="color: var(--blue-600);">Shop by Categories</span>
                 <div
-                    style="width: 80px; height: 4px; background: linear-gradient(90deg, var(--blue-600), var(--aqua-500)); border-radius: 2px; margin: 15px auto 0;">
+                    style="width: 80px; height: 4px; background: linear-gradient(90deg, var(--blue-600), var(--blue-700)); border-radius: 2px; margin: 15px auto 0;">
                 </div>
             </h2>
             <div class="row g-4">
                 <div class="col-lg-4 col-sm-6 col-12">
-                    <a href="{{ route('category.show', 'baby-clothes') }}" class="text-decoration-none">
+                    <a href="/shop" class="text-decoration-none">
                         <div class="category-card"
                             style="background-color: var(--white); border-radius: 20px; padding: 40px 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(255,255,255,0.8); position: relative; overflow: hidden; animation: slideInUp 1s ease-out 0.1s both;">
                             <div class="category-icon"
-                                style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--blue-600), var(--blue-800)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 8px 25px rgba(255, 56, 147, 0.3);">
-                                <i class="bi bi-t-shirt" style="font-size: 2.5rem; color: var(--white);"></i>
+                                style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--blue-600), var(--blue-800)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);">
+                                <i class="bi bi-phone-fill" style="font-size: 2.5rem; color: var(--white);"></i>
                             </div>
                             <h3 class="category-title"
-                                style="margin-bottom: 15px; color: var(--slate-900); font-weight: 700; font-size: 1.3rem;">Baby
-                                Clothes</h3>
+                                style="margin-bottom: 15px; color: var(--slate-900); font-weight: 700; font-size: 1.3rem;">Phones</h3>
                             <p class="category-desc" style="color: var(--slate-700); font-size: 1rem; line-height: 1.6;">
-                                Adorable outfits for newborns and toddlers with premium comfort and style.</p>
+                                Premium smartphones from Samsung, iPhone, and other top brands.</p>
                             <div class="category-hover-bg"
-                                style="position: absolute; bottom: 0; left: 0; width: 100%; height: 0; background: linear-gradient(135deg, var(--cyan-500), var(--blue-600)); transition: height 0.3s ease; opacity: 0.1;">
+                                style="position: absolute; bottom: 0; left: 0; width: 100%; height: 0; background: linear-gradient(135deg, var(--blue-600), var(--blue-600)); transition: height 0.3s ease; opacity: 0.1;">
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col-lg-4 col-sm-6 col-12">
-                    <a href="{{ route('category.show', 'kids-toys') }}" class="text-decoration-none">
+                    <a href="/shop" class="text-decoration-none">
                         <div class="category-card"
                             style="background-color: var(--white); border-radius: 20px; padding: 40px 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(255,255,255,0.8); position: relative; overflow: hidden; animation: slideInUp 1s ease-out 0.3s both;">
                             <div class="category-icon"
-                                style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--cyan-600), var(--aqua-500)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 8px 25px rgba(47, 163, 154, 0.3);">
-                                <i class="bi bi-capsule" style="font-size: 2.5rem; color: var(--white);"></i>
+                                style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--blue-700), var(--blue-700)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);">
+                                <i class="bi bi-laptop-fill" style="font-size: 2.5rem; color: var(--white);"></i>
                             </div>
                             <h3 class="category-title"
-                                style="margin-bottom: 15px; color: var(--slate-900); font-weight: 700; font-size: 1.3rem;">Kids
-                                Toys</h3>
-                            <p class="category-desc" style="color: var(--slate-700); font-size: 1rem; line-height: 1.6;">Fun
-                                and safe toys designed to inspire imagination and learning adventures.</p>
+                                style="margin-bottom: 15px; color: var(--slate-900); font-weight: 700; font-size: 1.3rem;">Laptops</h3>
+                            <p class="category-desc" style="color: var(--slate-700); font-size: 1rem; line-height: 1.6;">Powerful laptops for work, study, and gaming, selected for performance and value.</p>
                             <div class="category-hover-bg"
-                                style="position: absolute; bottom: 0; left: 0; width: 100%; height: 0; background: linear-gradient(135deg, var(--blue-600), var(--cyan-500)); transition: height 0.3s ease; opacity: 0.1;">
+                                style="position: absolute; bottom: 0; left: 0; width: 100%; height: 0; background: linear-gradient(135deg, var(--blue-600), var(--blue-600)); transition: height 0.3s ease; opacity: 0.1;">
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col-lg-4 col-sm-6 col-12">
-                    <a href="{{ route('category.show', 'gifts-hampers') }}" class="text-decoration-none">
+                    <a href="/shop" class="text-decoration-none">
                         <div class="category-card"
                             style="background-color: var(--white); border-radius: 20px; padding: 40px 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(255,255,255,0.8); position: relative; overflow: hidden; animation: slideInUp 1s ease-out 0.5s both;">
                             <div class="category-icon"
-                                style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--blue-700), var(--cyan-600)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 8px 25px rgba(255, 109, 145, 0.3);">
-                                <i class="bi bi-gift" style="font-size: 2.5rem; color: var(--white);"></i>
+                                style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--blue-700), var(--blue-700)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);">
+                                <i class="bi bi-headphones"></i>
                             </div>
                             <h3 class="category-title"
                                 style="margin-bottom: 15px; color: var(--slate-900); font-weight: 700; font-size: 1.3rem;">
-                                Gifts & Hampers</h3>
+                                Accessories</h3>
                             <p class="category-desc" style="color: var(--slate-700); font-size: 1rem; line-height: 1.6;">
-                                Perfect presents for creating magical moments and lasting memories.</p>
+                                Chargers, audio gear, cases, and smart accessories for every device.
+                            </p>
                             <div class="category-hover-bg"
-                                style="position: absolute; bottom: 0; left: 0; width: 100%; height: 0; background: linear-gradient(135deg, var(--cyan-500), var(--blue-700)); transition: height 0.3s ease; opacity: 0.1;">
+                                style="position: absolute; bottom: 0; left: 0; width: 100%; height: 0; background: linear-gradient(135deg, var(--blue-600), var(--blue-700)); transition: height 0.3s ease; opacity: 0.1;">
                             </div>
                         </div>
                     </a>
@@ -556,9 +554,9 @@
         <div class="container text-center position-relative" style="z-index: 2;">
             <h2 class="section-title fs-5 fs-lg-1"
                 style="margin-bottom: 70px; color: var(--slate-900); font-weight: 800; animation: fadeInUp 1s ease-out;">
-                <span style="color: var(--aqua-500);">✨ Why Choose KidzStore365?</span>
+                <span style="color: var(--blue-600);">Why Choose Bravus Market?</span>
                 <div
-                    style="width: 80px; height: 4px; background: linear-gradient(90deg, var(--aqua-500), var(--blue-600)); border-radius: 2px; margin: 15px auto 0;">
+                    style="width: 80px; height: 4px; background: linear-gradient(90deg, var(--blue-700), var(--blue-600)); border-radius: 2px; margin: 15px auto 0;">
                 </div>
             </h2>
 
@@ -567,7 +565,7 @@
                     <div class="feature-card"
                         style="padding: 40px 30px; background-color: var(--white); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); animation: slideInLeft 1s ease-out 0.1s both; position: relative; border: 1px solid rgba(255,255,255,0.8);">
                         <div class="feature-icon"
-                            style="width: 90px; height: 90px; background: linear-gradient(135deg, var(--aqua-500), var(--cyan-600)); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 10px 30px rgba(47, 163, 154, 0.3); transform: rotate(-5deg); transition: transform 0.3s ease;">
+                            style="width: 90px; height: 90px; background: linear-gradient(135deg, var(--blue-700), var(--blue-700)); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3); transform: rotate(-5deg); transition: transform 0.3s ease;">
                             <i class="bi bi-shield-check" style="font-size: 2.8rem; color: var(--white);"></i>
                         </div>
                         <h4 class="feature-title"
@@ -582,7 +580,7 @@
                     <div class="feature-card"
                         style="padding: 40px 30px; background-color: var(--white); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); animation: slideInUp 1s ease-out 0.3s both; position: relative; border: 1px solid rgba(255,255,255,0.8);">
                         <div class="feature-icon"
-                            style="width: 90px; height: 90px; background: linear-gradient(135deg, var(--blue-600), var(--blue-800)); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 10px 30px rgba(255, 56, 147, 0.3); transform: rotate(5deg); transition: transform 0.3s ease;">
+                            style="width: 90px; height: 90px; background: linear-gradient(135deg, var(--blue-600), var(--blue-800)); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3); transform: rotate(5deg); transition: transform 0.3s ease;">
                             <i class="bi bi-rocket" style="font-size: 2.8rem; color: var(--white);"></i>
                         </div>
                         <h4 class="feature-title"
@@ -597,7 +595,7 @@
                     <div class="feature-card"
                         style="padding: 40px 30px; background-color: var(--white); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); animation: slideInRight 1s ease-out 0.5s both; position: relative; border: 1px solid rgba(255,255,255,0.8);">
                         <div class="feature-icon"
-                            style="width: 90px; height: 90px; background: linear-gradient(135deg, var(--cyan-600), var(--blue-700)); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 10px 30px rgba(255, 109, 145, 0.3); transform: rotate(-5deg); transition: transform 0.3s ease;">
+                            style="width: 90px; height: 90px; background: linear-gradient(135deg, var(--blue-700), var(--blue-700)); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3); transform: rotate(-5deg); transition: transform 0.3s ease;">
                             <i class="bi bi-heart-fill" style="font-size: 2.8rem; color: var(--white);"></i>
                         </div>
                         <h4 class="feature-title"
@@ -615,17 +613,16 @@
                     style="display: inline-block; padding: 25px 40px; background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248, 250, 252, 0.9)); border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3);">
                     <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
                         <div
-                            style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--aqua-500), var(--cyan-600)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(47, 163, 154, 0.3);">
+                            style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--blue-700), var(--blue-700)); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);">
                             <i class="bi bi-person-fill" style="color: var(--white); font-size: 1.2rem;"></i>
                         </div>
                         <div>
                             <div style="font-weight: 700; color: var(--slate-900);">Happy Parent</div>
-                            <div style="font-size: 0.9rem; color: var(--cyan-600);">⭐⭐⭐⭐⭐</div>
+                            <div style="font-size: 0.9rem; color: var(--blue-600);">5.0 Customer Rating</div>
                         </div>
                     </div>
                     <p style="color: var(--slate-700); font-style: italic; font-size: 1rem; margin: 0;">
-                        "KidzStore365 has made shopping for our little ones so magical! Everything is safe, beautiful, and
-                        delivered with love! 💖"
+                        "Bravus Market delivered my phone fast and exactly as described. Great prices and excellent service in Tanzania!"
                     </p>
                 </div>
             </div>

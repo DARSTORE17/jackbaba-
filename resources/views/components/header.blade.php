@@ -1,4 +1,4 @@
-<!-- Header Component for Kids Shop - Modern Pink/Aqua Theme -->
+<!-- Header Component for Bravus Market - Modern Electronics Theme -->
 <header class="header">
     <!-- Particle Network Background -->
     <div class="particles-container" id="particlesContainer"></div>
@@ -8,11 +8,11 @@
         <div class="brand-section">
             <div class="logo-container">
                 <div class="logo-main">
-                    <img src="{{ asset('img/logo.png') }}" alt="Kids Shop Logo" class="logo-img">
+                    <img src="{{ asset('img/logo.png') }}" alt="Bravus Market Logo" class="logo-img">
                 </div>
                 <div class="logo-text">
-                    <h1 class="school-name">KidsStore365</h1>
-                    <p class="school-subtitle">“Cute • Fun • Safe for Every Child”</p>
+                    <h1 class="school-name">Bravus Market</h1>
+                    <p class="school-subtitle">Premium Electronics Store in Tanzania</p>
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@
                         @guest
                             <a href="/login" class="nav-link {{ request()->is('login') ? 'active' : '' }}">
                                 <i class="bi bi-person-circle"></i>
-                                <span>Login</span>
+                                <span>Login / Sign Up</span>
                             </a>
                         @else
                             <form action="{{ route('logout') }}" method="POST" class="d-inline" id="logout-form">
@@ -100,9 +100,9 @@
         <div class="mobile-nav-header">
             <div class="mobile-logo">
                 <div class="mobile-logo-main">
-                    <img src="{{ asset('img/logo.png') }}" alt="Kids Shop Logo" class="mobile-logo-img">
+                    <img src="{{ asset('img/logo.png') }}" alt="Bravus Market Logo" class="mobile-logo-img">
                 </div>
-                <span>KidsStore365</span>
+                <span>Bravus Market</span>
             </div>
             <button class="mobile-close" id="mobileClose">
                 <i class="bi bi-x-lg"></i>

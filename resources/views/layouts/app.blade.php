@@ -32,6 +32,33 @@
             padding-top: 0;
             /* optional: hero padding top */
         }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #25D366;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.18);
+            z-index: 9999;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 22px 45px rgba(0, 0, 0, 0.22);
+        }
+
+        .whatsapp-float i {
+            font-size: 1.4rem;
+        }
     </style>
     {{-- Extra CSS from pages --}}
     @yield('css')
@@ -50,6 +77,10 @@
 
     {{-- Footer Component --}}
     @include('components.footer')
+
+    <a href="https://wa.me/255754321987?text=Hello%2C%20I%20want%20to%20order%20a%20product" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+        <i class="bi bi-whatsapp"></i>
+    </a>
 
     {{-- Bootstrap JS Bundle --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

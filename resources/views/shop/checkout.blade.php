@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Checkout - KidsStore')
+@section('title', 'Checkout - Bravus Market')
 
 <style>
     /* Full page height */
@@ -72,7 +72,7 @@
 
     .order-summary-card .card-header {
         background: #ffffff !important;
-        color: #FF6F91 !important;
+        color: #2563EB !important;
         border-bottom: 2px solid #ffeef2 !important;
         padding: 20px !important;
     }
@@ -84,7 +84,7 @@
     }
 
     .order-total .total-amount {
-        color: #FF6F91 !important;
+        color: #2563EB !important;
         font-size: 1.5rem !important;
         font-weight: bold !important;
     }
@@ -110,7 +110,7 @@
     }
 
     .form-control:focus, .form-select:focus {
-        border-color: #FF6F91 !important;
+        border-color: #2563EB !important;
         box-shadow: 0 0 0 3px rgba(255, 111, 145, 0.1) !important;
         outline: none !important;
     }
@@ -138,7 +138,7 @@
 
     /* Button styling */
     .btn-place-order {
-        background: linear-gradient(135deg, #FF6F91, #ff4d7c) !important;
+        background: linear-gradient(135deg, #2563EB, #1D4ED8) !important;
         border: none !important;
         border-radius: 25px !important;
         padding: 16px 30px !important;
@@ -155,7 +155,7 @@
     .btn-place-order:hover {
         transform: translateY(-3px) !important;
         box-shadow: 0 8px 25px rgba(255, 111, 145, 0.4) !important;
-        background: linear-gradient(135deg, #ff4d7c, #FF6F91) !important;
+        background: linear-gradient(135deg, #1D4ED8, #2563EB) !important;
     }
 
     .btn-place-order:active {
@@ -185,7 +185,7 @@
     }
 
     .product-item .text-primary {
-        color: #FF6F91 !important;
+        color: #2563EB !important;
     }
 
     /* Form text styling */
@@ -228,7 +228,7 @@
     }
 
     .spinner-border {
-        color: #FF6F91 !important;
+        color: #2563EB !important;
         width: 3rem !important;
         height: 3rem !important;
         border-width: 0.3em !important;
@@ -246,12 +246,12 @@
 
     /* Checkbox styling */
     .form-check-input:checked {
-        background-color: #FF6F91 !important;
-        border-color: #FF6F91 !important;
+        background-color: #2563EB !important;
+        border-color: #2563EB !important;
     }
 
     .form-check-input:focus {
-        border-color: #FF6F91 !important;
+        border-color: #2563EB !important;
         box-shadow: 0 0 0 0.2rem rgba(255, 111, 145, 0.25) !important;
     }
 
@@ -262,7 +262,7 @@
 
     /* Heading styling */
     h1.h2 {
-        color: #FF6F91 !important;
+        color: #2563EB !important;
         font-weight: 700 !important;
         margin-bottom: 30px !important;
         font-size: 2rem !important;
@@ -276,8 +276,8 @@
 
     /* Back button */
     .btn-outline-primary {
-        border-color: #FF6F91 !important;
-        color: #FF6F91 !important;
+        border-color: #2563EB !important;
+        color: #2563EB !important;
         border-radius: 25px !important;
         padding: 8px 20px !important;
         font-weight: 600 !important;
@@ -285,8 +285,8 @@
     }
 
     .btn-outline-primary:hover {
-        background-color: #FF6F91 !important;
-        border-color: #FF6F91 !important;
+        background-color: #2563EB !important;
+        border-color: #2563EB !important;
         color: white !important;
         transform: translateY(-2px) !important;
     }
@@ -670,7 +670,7 @@
     }
 
     .order-confirmation-modal .modal-header {
-        background: #FF6F91 !important;
+        background: #2563EB !important;
         color: white !important;
         border-radius: 10px 10px 0 0 !important;
         border: none !important;
@@ -687,7 +687,7 @@
 
     .order-confirmation-modal .confirmation-title {
         font-size: 1.5rem !important;
-        color: #FF6F91 !important;
+        color: #2563EB !important;
         text-align: center !important;
         margin-bottom: 15px !important;
         font-weight: bold !important;
@@ -721,7 +721,7 @@
     }
 
     .order-confirmation-modal .info-card h5 {
-        color: #FF6F91 !important;
+        color: #2563EB !important;
         margin-bottom: 10px !important;
         font-size: 1rem !important;
         font-weight: bold !important;
@@ -1249,8 +1249,8 @@
                             <div class="info-item">
                                 <div><strong>Shipping:</strong> ${shippingCost > 0 ? 'Tsh' + shippingCost.toLocaleString() : 'FREE!'}</div>
                             </div>
-                            <div class="info-item" style="border-top: 2px solid #FF6F91; padding-top: 12px; margin-top: 8px;">
-                                <div><strong style="color: #FF6F91; font-size: 1.1rem;">Total: Tsh${total.toLocaleString()}</strong></div>
+                            <div class="info-item" style="border-top: 2px solid #2563EB; padding-top: 12px; margin-top: 8px;">
+                                <div><strong style="color: #2563EB; font-size: 1.1rem;">Total: Tsh${total.toLocaleString()}</strong></div>
                             </div>
                         </div>
                     `;
@@ -1298,7 +1298,7 @@
                             title: 'Session Expired',
                             text: 'Please refresh the page and try again',
                             icon: 'warning',
-                            confirmButtonColor: '#FF6F91',
+                            confirmButtonColor: '#2563EB',
                             confirmButtonText: 'Refresh Page'
                         }).then(() => {
                             window.location.reload();

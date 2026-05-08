@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Kids Shop</title>
+    <title>Bravus Market</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap 5 -->
@@ -40,7 +40,7 @@
 
     <!-- FOOTER -->
    <footer class="fixed-bottom text-center text-muted small py-3 bg-white border-top px-3" style="margin-left: 190px;">
-        <span>© 2025 Kids Shop | Seller Dashboard V 1.0 | Developed by HN</span>
+        <span>© 2026 Bravus Market | Seller Dashboard V 1.0 | Developed by HN</span>
     </footer>
 
     <style>

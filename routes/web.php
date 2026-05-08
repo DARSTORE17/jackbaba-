@@ -30,3 +30,4 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 require __DIR__.'/shop.php';
 require __DIR__.'/seller.php';
 require __DIR__.'/customer.php';
+require __DIR__.'/admin.php';

@@ -1,4 +1,4 @@
-<!-- Footer Component - Kids Shop Edition -->
+<!-- Footer Component - Bravus Market Edition -->
 <footer class="footer">
     <div class="footer-container">
         
@@ -9,14 +9,13 @@
             <div class="footer-brand">
                 <div class="footer-logo">
                     <div class="footer-logo-text">
-                        <h3 class="footer-school-name">myKidsShop365</h3>
-                        <p class="footer-school-subtitle">“Everything Cute for Little Ones”</p>
+                        <h3 class="footer-school-name">Bravus Market</h3>
+                        <p class="footer-school-subtitle">Premium electronics, phones, laptops, and accessories</p>
                     </div>
                 </div>
 
                 <p class="footer-description">
-                    Your #1 trusted store for baby clothes, toys, accessories, maternity items,
-                    and every adorable thing your child deserves.
+                    Bravus Market brings trusted, original electronics to Tanzania with fast delivery and great prices.
                 </p>
 
                 <div class="footer-social-links">
@@ -52,13 +51,13 @@
 
                 <!-- Programs (Replaced with Shop Categories) -->
                 <div class="footer-column footer-programs">
-                    <h4 class="footer-column-title">Kids Categories</h4>
+                    <h4 class="footer-column-title">Top Categories</h4>
                     <ul class="footer-menu">
-                        <li><a href="#" class="footer-link">Baby Clothes</a></li>
-                        <li><a href="#" class="footer-link">Kids Toys</a></li>
-                        <li><a href="#" class="footer-link">Newborn Essentials</a></li>
-                        <li><a href="#" class="footer-link">School Items</a></li>
-                        <li><a href="#" class="footer-link">Gifts & Hampers</a></li>
+                        <li><a href="/categories" class="footer-link">Phones</a></li>
+                        <li><a href="/categories" class="footer-link">Laptops</a></li>
+                        <li><a href="/categories" class="footer-link">Accessories</a></li>
+                        <li><a href="/shop" class="footer-link">All Products</a></li>
+                        <li><a href="/contact" class="footer-link">Contact</a></li>
                     </ul>
                 </div>
 
@@ -74,12 +73,12 @@
 
                         <div class="footer-contact-item">
                             <i class="bi bi-telephone"></i>
-                            <span>+255 712 345 678</span>
+                            <span>+255 754 321 987</span>
                         </div>
 
                         <div class="footer-contact-item">
                             <i class="bi bi-envelope"></i>
-                            <span>support@mykidsshop365.com</span>
+                            <span>support@bravusmarket.co.tz</span>
                         </div>
 
                         <div class="footer-contact-item">
@@ -97,7 +96,7 @@
         <div class="footer-bottom">
             <div class="footer-bottom-content">
                 <p class="footer-copyright">
-                    &copy; 2025 myKidsShop365. All rights reserved.
+                    &copy; 2026 Bravus Market. All rights reserved.
                 </p>
 
                 <div class="footer-bottom-links">

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Shopping Cart - KidsStore')
+@section('title', 'Shopping Cart - Bravus Market')
 
 @section('css')
 <style>
@@ -72,12 +72,12 @@
     }
 
     ::-webkit-scrollbar-thumb {
-        background: #FF6F91;
+        background: #2563EB;
         border-radius: 10px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: #ff4d7c;
+        background: #1D4ED8;
     }
 
     /* Ensure full width for row */
@@ -364,7 +364,7 @@
                     title: 'Stock Limit Reached!',
                     text: `Maximum stock available is ${stock}`,
                     icon: 'warning',
-                    confirmButtonColor: '#FF6F91',
+                    confirmButtonColor: '#2563EB',
                     confirmButtonText: 'OK'
                 });
                 const input = cartItem.querySelector('.quantity-input');
@@ -425,7 +425,7 @@
                     title: 'Stock Limit Reached!',
                     text: `Maximum stock available is ${stock}`,
                     icon: 'warning',
-                    confirmButtonColor: '#FF6F91',
+                    confirmButtonColor: '#2563EB',
                     confirmButtonText: 'OK'
                 });
             }
@@ -492,7 +492,7 @@
                                     title: 'Cart is Empty!',
                                     text: 'All items have been removed from your cart.',
                                     icon: 'info',
-                                    confirmButtonColor: '#FF6F91',
+                                    confirmButtonColor: '#2563EB',
                                     timer: 2000,
                                     showConfirmButton: false
                                 }).then(() => {

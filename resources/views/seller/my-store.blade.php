@@ -25,7 +25,7 @@
                 <div class="card-body">
                     <div class="text-center">
                         <img src="{{ asset('img/logo.png') }}" alt="Store Logo" class="img-fluid mb-3" style="max-height: 120px;">
-                        <h5 class="mb-1">Kids Shop</h5>
+                        <h5 class="mb-1">Bravus Market</h5>
                         <p class="text-muted mb-3">Your trusted online kids store</p>
                         <div class="row text-center">
                             <div class="col-sm-6 mb-3">

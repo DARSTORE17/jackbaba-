@@ -5,7 +5,7 @@
 @section('content')
 <section class="auth-section" style="min-height: 100vh; position: relative; overflow: hidden;">
     <!-- Background Gradient and Decorations -->
-    <div class="auth-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--aqua-500) 0%, var(--cyan-600) 50%, var(--blue-600) 100%); z-index: -2;"></div>
+    <div class="auth-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-600) 100%); z-index: -2;"></div>
 
     <!-- Floating Particles -->
     <div class="floating-particles" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;">
@@ -28,12 +28,12 @@
                 <div class="register-form-wrapper" style="width: 100%; max-width: 500px; margin: 0 auto;">
                     <div class="register-card" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-radius: 25px; padding: 3rem; box-shadow: 0 25px 60px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.3); animation: slideInUp 1s ease-out; min-height: auto;">
                         <div class="form-header text-center mb-4">
-                            <h2 class="form-title" style="color: var(--slate-800); font-weight: 700; font-size: 2rem; margin-bottom: 0.5rem;">Join KidzStore365</h2>
+                            <h2 class="form-title" style="color: var(--slate-800); font-weight: 700; font-size: 2rem; margin-bottom: 0.5rem;">Join Bravus Market</h2>
                             <p style="color: var(--slate-600); font-size: 1rem;">Create your account and discover endless possibilities</p>
                         </div>
 
                         @if($errors->any())
-                            <div class="alert alert-danger" style="border-radius: 10px; border: none; background: linear-gradient(135deg, #ff6b6b, #ff8e53); color: white;">
+                            <div class="alert alert-danger" style="border-radius: 10px; border: none; background: linear-gradient(135deg, #2563EB, #1D4ED8); color: white;">
                                 <ul class="mb-0">
                                     @foreach($errors->all() as $error)
                                         <li>{{ $error }}</li>
@@ -95,7 +95,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary w-100"
-                                    style="background: linear-gradient(135deg, var(--blue-600), var(--aqua-500)); border: none; border-radius: 12px; padding: 1rem; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);">
+                                    style="background: linear-gradient(135deg, var(--blue-600), var(--blue-700)); border: none; border-radius: 12px; padding: 1rem; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);">
                                 <span style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
                                     <i class="bi bi-person-plus"></i> Create Account
                                 </span>
@@ -105,7 +105,7 @@
                         <div class="text-center mt-4">
                             <p style="color: var(--slate-600); margin-bottom: 0;">
                                 Already have an account? <a href="{{ route('login') }}" style="color: var(--blue-600); font-weight: 600; text-decoration: none;"
-                                                             onmouseover="this.style.color='var(--aqua-500)'" onmouseout="this.style.color='var(--blue-600)'">Sign in here</a>
+                                                             onmouseover="this.style.color='var(--blue-700)'" onmouseout="this.style.color='var(--blue-600)'">Sign in here</a>
                             </p>
                         </div>
                     </div>
@@ -122,19 +122,19 @@
                     </div>
                     <h1 class="welcome-title" style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; text-shadow: 0 4px 20px rgba(0,0,0,0.3); animation: slideInRight 1s ease-out 0.3s both;">Join Our Family!</h1>
                     <p class="welcome-subtitle" style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.9; animation: slideInRight 1s ease-out 0.5s both;">
-                        Start your magical adventure with KidzStore365. Discover cute products crafted with love and care! 🎉
+                        Start your shopping journey at Bravus Market. Discover premium electronics, original devices, and fast local delivery! 
                     </p>
                     <div class="welcome-features text-left" style="max-width: 400px; margin: 0 auto; animation: slideInRight 1s ease-out 0.7s both;">
                         <div class="feature-item" style="display: flex; align-items: center; margin-bottom: 1rem;">
-                            <i class="bi bi-check-circle-fill" style="color: var(--cyan-500); font-size: 1.5rem; margin-right: 1rem;"></i>
+                            <i class="bi bi-check-circle-fill" style="color: var(--blue-600); font-size: 1.5rem; margin-right: 1rem;"></i>
                             <span style="font-weight: 500;">Exclusive member deals</span>
                         </div>
                         <div class="feature-item" style="display: flex; align-items: center; margin-bottom: 1rem;">
-                            <i class="bi bi-check-circle-fill" style="color: var(--cyan-500); font-size: 1.5rem; margin-right: 1rem;"></i>
+                            <i class="bi bi-check-circle-fill" style="color: var(--blue-600); font-size: 1.5rem; margin-right: 1rem;"></i>
                             <span style="font-weight: 500;">Personalized recommendations</span>
                         </div>
                         <div class="feature-item" style="display: flex; align-items: center; margin-bottom: 1rem;">
-                            <i class="bi bi-check-circle-fill" style="color: var(--cyan-500); font-size: 1.5rem; margin-right: 1rem;"></i>
+                            <i class="bi bi-check-circle-fill" style="color: var(--blue-600); font-size: 1.5rem; margin-right: 1rem;"></i>
                             <span style="font-weight: 500;">Priority customer support</span>
                         </div>
                     </div>

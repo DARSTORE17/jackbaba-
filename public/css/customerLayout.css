@@ -54,12 +54,11 @@
 }
 
 .table-hover tbody tr:hover {
-    background-color: rgba(255, 111, 145, 0.02);
-}
+    background-color: rgba(37, 99, 235, 0.08);
 
 /* Buttons */
 .btn-primary-custom {
-    background: linear-gradient(135deg, #FF6F91, #ff4d7c);
+    background: linear-gradient(135deg, #2563EB, #1D4ED8);
     border: none;
     border-radius: 25px;
     padding: 12px 30px;
@@ -73,14 +72,14 @@
 
 .btn-primary-custom:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 111, 145, 0.4);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
     color: white;
     text-decoration: none;
 }
 
 .btn-outline-custom {
-    border: 2px solid #FF6F91;
-    color: #FF6F91;
+    border: 2px solid #2563EB;
+    color: #2563EB;
     background: transparent;
     border-radius: 25px;
     padding: 12px 30px;
@@ -92,12 +91,11 @@
 }
 
 .btn-outline-custom:hover {
-    background: #FF6F91;
+    background: #2563EB;
     color: white;
     text-decoration: none;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 111, 145, 0.4);
-}
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
 
 /* Stats Cards */
 .card .fs-1 {
@@ -122,9 +120,8 @@
 }
 
 .form-control:focus {
-    border-color: #FF6F91;
-    box-shadow: 0 0 0 3px rgba(255, 111, 145, 0.1);
-}
+    border-color: #2563EB;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 
 /* Product Cards */
 .product-item {
@@ -133,7 +130,7 @@
 }
 
 .product-item:hover {
-    border-color: #FF6F91 !important;
+    border-color: #2563EB !important;
     box-shadow: 0 4px 12px rgba(255, 111, 145, 0.2) !important;
 }
 
@@ -215,12 +212,12 @@
 /* Stats Cards Grid */
 .stats-card {
     background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-    border-left: 4px solid #FF6F91;
+    border-left: 4px solid #2563EB;
 }
 
 /* Welcome Section */
 .welcome-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
     border-radius: 15px;
     color: white;
 }

@@ -1,7 +1,7 @@
-<!-- Categories Page - Kids Shop Kids Store365 -->
+<!-- Categories Page - Bravus Market -->
 @extends('layouts.app')
 
-@section('title', 'Categories - KidsStore365')
+@section('title', 'Categories - Bravus Market')
 
 @section('css')
 <style>
@@ -48,7 +48,7 @@
     .bg-bubble {
         position: absolute;
         border-radius: 50%;
-        background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(94, 209, 199, 0.08));
+        background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.08));
         animation: floatBubble 8s ease-in-out infinite;
     }
 
@@ -98,7 +98,7 @@
 
     .particle {
         position: absolute;
-        background: radial-gradient(circle, rgba(59, 130, 246, 0.6) 0%, rgba(94, 209, 199, 0.3) 100%);
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.6) 0%, rgba(37, 99, 235, 0.3) 100%);
         border-radius: 50%;
         animation: particleFloat 12s linear infinite;
     }
@@ -168,7 +168,7 @@
     .page-title {
         font-size: 3.5rem;
         font-weight: 800;
-        background: linear-gradient(135deg, var(--blue-600), var(--cyan-500));
+        background: linear-gradient(135deg, var(--blue-600), var(--blue-600));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -186,7 +186,7 @@
         transform: translateX(-50%);
         width: 100px;
         height: 4px;
-        background: linear-gradient(90deg, var(--blue-600), var(--aqua-500));
+        background: linear-gradient(90deg, var(--blue-600), var(--blue-700));
         border-radius: 2px;
         animation: growWidth 1.2s ease-out 0.5s forwards;
         animation-fill-mode: both;
@@ -220,7 +220,7 @@
 
     .breadcrumb-item + .breadcrumb-item::before {
         content: "→";
-        color: var(--cyan-500);
+        color: var(--blue-600);
         font-weight: bold;
     }
 
@@ -231,7 +231,7 @@
     }
 
     .breadcrumb-item a:hover {
-        color: var(--cyan-500);
+        color: var(--blue-600);
     }
 
     .breadcrumb-item.active {
@@ -315,8 +315,8 @@
 
     .categories-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 40px;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 30px;
     }
 
     .category-card {
@@ -324,47 +324,150 @@
         border-radius: 25px;
         overflow: hidden;
         box-shadow: var(--shadow-md);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.3s ease;
         text-decoration: none;
         color: inherit;
         display: block;
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
+        border: 1px solid rgba(229, 231, 235, 0.8);
         position: relative;
         animation: slideInUp 0.8s ease-out both;
-        cursor: pointer;
     }
-
-    .category-card:nth-child(1) { animation-delay: 0.1s; }
-    .category-card:nth-child(2) { animation-delay: 0.2s; }
-    .category-card:nth-child(3) { animation-delay: 0.3s; }
-    .category-card:nth-child(4) { animation-delay: 0.4s; }
 
     .category-card:hover {
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-        transform: translateY(-10px) scale(1.02);
-        border-color: var(--blue-600);
-    }
-
-    .category-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(45deg, rgba(59, 130, 246, 0.05), rgba(94, 209, 199, 0.05));
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        z-index: -1;
-    }
-
-    .category-card:hover::before {
-        opacity: 1;
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
     }
 
     .category-header {
-        background: linear-gradient(135deg, var(--blue-600), var(--cyan-500));
+        background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+        padding: 40px 25px;
+        text-align: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .category-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.1) 0deg 90deg, transparent 90deg 180deg);
+        animation: rotatePattern 20s linear infinite;
+    }
+
+    .category-icon {
+        width: 80px;
+        height: 80px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-size: 2rem;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255,255,255,0.3);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 2;
+    }
+
+    .category-card:hover .category-icon {
+        transform: scale(1.05);
+        background: rgba(255,255,255,0.3);
+    }
+
+    .category-name {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 2;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .category-description {
+        font-size: 1rem;
+        opacity: 0.95;
+        margin-bottom: 20px;
+        line-height: 1.6;
+        position: relative;
+        z-index: 2;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .category-stats {
+        position: relative;
+        z-index: 2;
+    }
+
+    .category-stats span {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 8px 16px;
+        border-radius: 9999px;
+        font-size: 0.95rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .category-footer {
+        padding: 25px;
+        text-align: center;
+        background: #ffffff;
+    }
+
+    .explore-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+        color: white;
+        padding: 12px 25px;
+        border-radius: 9999px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .explore-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.2);
+    }
+
+    .explore-btn i {
+        font-size: 1rem;
+    }
+
+    @media (max-width: 960px) {
+        .categories-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .categories-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .category-header {
+            padding: 30px 20px;
+        }
+
+        .category-name {
+            font-size: 1.5rem;
+        }
+    }
+
+    .category-header {
+        background: linear-gradient(135deg, var(--blue-600), var(--blue-600));
         padding: 40px 25px;
         text-align: center;
         color: white;
@@ -405,6 +508,28 @@
         transform: scale(1.1) rotateY(180deg);
         background: rgba(255,255,255,0.3);
         box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+    }
+
+    .category-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        border: 3px solid rgba(255,255,255,0.4);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 2;
+        overflow: hidden;
+    }
+
+    .category-card:hover .category-image {
+        transform: scale(1.1);
+        box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+        border-color: rgba(255,255,255,0.6);
     }
 
     .category-name {
@@ -449,7 +574,7 @@
     }
 
     .explore-btn {
-        background: linear-gradient(135deg, var(--cyan-500), var(--aqua-500));
+        background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
         color: white;
         padding: 12px 30px;
         border-radius: 25px;
@@ -459,7 +584,7 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        box-shadow: 0 4px 15px rgba(94, 209, 199, 0.3);
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
         border: 2px solid transparent;
         position: relative;
         overflow: hidden;
@@ -481,11 +606,11 @@
     }
 
     .explore-btn:hover {
-        background: linear-gradient(135deg, var(--cyan-600), var(--aqua-500));
+        background: linear-gradient(135deg, var(--blue-700), var(--blue-700));
         color: white;
         text-decoration: none;
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(94, 209, 199, 0.4);
+        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
     }
 
     .explore-btn i {
@@ -524,7 +649,7 @@
 
     .empty-state i {
         font-size: 5rem;
-        background: linear-gradient(135deg, var(--blue-600), var(--cyan-500));
+        background: linear-gradient(135deg, var(--blue-600), var(--blue-600));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -591,7 +716,7 @@
 
     .floating-decoration.decoration-2 i {
         font-size: 4rem;
-        color: rgba(94, 209, 199, 0.25);
+        color: rgba(37, 99, 235, 0.25);
     }
 
     .floating-decoration.decoration-3 {
@@ -613,7 +738,7 @@
 
     .floating-decoration.decoration-4 i {
         font-size: 4.2rem;
-        color: rgba(94, 209, 199, 0.3);
+        color: rgba(37, 99, 235, 0.3);
     }
 
     /* Animations */
@@ -842,12 +967,12 @@
     <div class="page-header">
         <h1 class="page-title">
             <i class="bi bi-grid-3x3-gap me-3"></i>
-            🎨 Shop by Category
+            Shop by Category
         </h1>
         <p class="page-subtitle">
-            ✨ Discover amazing collections specially curated for your little ones ✨<br>
-            <span style="font-size: 1rem; color: var(--cyan-500); font-weight: 600;">
-                🌈 Toys • 👕 Clothing • 🎁 Gifts & More
+            Discover amazing collections specially curated for your little ones<br>
+            <span style="font-size: 1rem; color: var(--blue-600); font-weight: 600;">
+                Toys • Gifts & More
             </span>
         </p>
     </div>
@@ -857,7 +982,7 @@
         <form method="GET" action="{{ route('categories') }}">
             <div class="search-bar">
                 <input type="text" name="search"
-                       placeholder="🔍 Search for categories like 'toys', 'clothes', 'gifts'..."
+                       placeholder="Search for categories like 'toys', 'clothes', 'gifts'..."
                        value="{{ request('search') }}">
                 <button type="submit" title="Search Categories">
                     <i class="bi bi-search"></i>
@@ -920,7 +1045,7 @@
                 </a>
                 <br><br>
                 <a href="{{ route('categories') }}" class="text-decoration-none">
-                    <small style="color: var(--cyan-500); font-weight: 500;">
+                    <small style="color: var(--blue-600); font-weight: 500;">
                         <i class="bi bi-arrow-counterclockwise me-1"></i>Clear search & show all categories
                     </small>
                 </a>
@@ -931,19 +1056,19 @@
     <!-- Fun Footer Call-to-Action -->
     @if($categories->isNotEmpty())
     <div style="text-align: center; margin-top: 80px; padding: 40px 20px; animation: fadeInUp 1s ease-out 1s both;">
-        <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(94, 209, 199, 0.08));
+        <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.04));
                     border-radius: 25px; padding: 40px; backdrop-filter: blur(10px);
                     border: 1px solid rgba(255, 255, 255, 0.2); max-width: 600px; margin: 0 auto;
                     box-shadow: var(--shadow-lg);">
             <h3 style="color: var(--slate-900); margin-bottom: 15px; font-weight: 700;">
-                🎈 Can't find what you're looking for?
+                Can't find what you're looking for?
             </h3>
             <p style="color: var(--slate-700); margin-bottom: 25px; line-height: 1.6;">
                 Browse our complete collection of amazing kids' products!
             </p>
             <a href="{{ route('shop') }}" class="explore-btn"
                style="background: linear-gradient(135deg, var(--blue-600), var(--blue-700)); color: white;">
-                🛍️ Explore All Products
+                Explore All Products
                 <i class="bi bi-arrow-right"></i>
             </a>
         </div>

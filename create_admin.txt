@@ -1,0 +1,10 @@
+php artisan tinker
+
+User::create([
+    'name' => 'Admin',
+    'email' => 'admin@bravusmarket.com',
+    'password' => Hash::make('admin123'),
+    'role' => 'admin'
+]);
+
+exit();

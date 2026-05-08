@@ -78,7 +78,7 @@
         position: absolute;
         top: 10px;
         left: 10px;
-        background: linear-gradient(135deg, #FF6F91, #FF89A0);
+        background: linear-gradient(135deg, #2563EB, #2563EB);
         color: white;
         padding: 3px 8px;
         border-radius: 12px;

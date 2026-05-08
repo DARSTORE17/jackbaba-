@@ -3,7 +3,7 @@
     background: linear-gradient(
         135deg,
         var(--aqua-400) 0%,
-        var(--cyan-600) 50%,
+        var(--blue-700) 50%,
         var(--blue-800) 100%
     );
     color: rgba(255, 255, 255, 0.9);

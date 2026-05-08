@@ -1,6 +1,6 @@
 @extends('layouts.customer')
 
-@section('title', 'My Wishlist - KidsStore')
+@section('title', 'My Wishlist - Bravus Market')
 
 @section('styles')
 <style>
@@ -18,7 +18,7 @@
     .wishlist-title {
         font-size: 2.5rem;
         font-weight: 700;
-        color: #FF6F91;
+        color: #2563EB;
         margin-bottom: 10px;
     }
 
@@ -107,7 +107,7 @@
     .wishlist-price {
         font-size: 1.3rem;
         font-weight: 700;
-        color: #FF6F91;
+        color: #2563EB;
         margin-bottom: 15px;
     }
 
@@ -118,7 +118,7 @@
     }
 
     .btn-add-to-cart {
-        background: linear-gradient(135deg, #FF6F91, #ff4d7c);
+        background: linear-gradient(135deg, #2563EB, #1D4ED8);
         border: none;
         border-radius: 8px;
         padding: 10px 15px;
@@ -137,13 +137,13 @@
     .btn-add-to-cart:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 15px rgba(255, 111, 145, 0.4);
-        background: linear-gradient(135deg, #ff4d7c, #FF6F91);
+        background: linear-gradient(135deg, #1D4ED8, #2563EB);
     }
 
     .btn-view-product {
         background: white;
-        border: 2px solid #FF6F91;
-        color: #FF6F91;
+        border: 2px solid #2563EB;
+        color: #2563EB;
         border-radius: 8px;
         padding: 10px 15px;
         font-weight: 600;
@@ -157,7 +157,7 @@
     }
 
     .btn-view-product:hover {
-        background: #FF6F91;
+        background: #2563EB;
         color: white;
         transform: translateY(-2px);
     }
@@ -187,7 +187,7 @@
     }
 
     .btn-shop-now {
-        background: linear-gradient(135deg, #FF6F91, #ff4d7c);
+        background: linear-gradient(135deg, #2563EB, #1D4ED8);
         border: none;
         border-radius: 25px;
         padding: 12px 30px;
@@ -203,7 +203,7 @@
     .btn-shop-now:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(255, 111, 145, 0.4);
-        background: linear-gradient(135deg, #ff4d7c, #FF6F91);
+        background: linear-gradient(135deg, #1D4ED8, #2563EB);
         color: white;
     }
 
@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: 'Please login to add items to your cart',
                 icon: 'info',
                 showCancelButton: true,
-                confirmButtonColor: '#FF6F91',
+                confirmButtonColor: '#2563EB',
                 cancelButtonColor: '#6b7280',
                 confirmButtonText: 'Login',
                 cancelButtonText: 'Cancel'
@@ -456,7 +456,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     title: 'Already in Cart',
                     text: productName + ' is already in your cart',
                     icon: 'info',
-                    confirmButtonColor: '#FF6F91',
+                    confirmButtonColor: '#2563EB',
                     confirmButtonText: 'View Cart'
                 }).then(() => {
                     window.location.href = '/cart';

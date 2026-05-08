@@ -7,7 +7,7 @@
 
                 <!-- Title -->
         <span class="subheading ms-2 fs-5 fw-bold text-primary">
-            Kids Shop - Seller Dashboard
+            Bravus Market - Seller Dashboard
         </span>
     </div>
 
