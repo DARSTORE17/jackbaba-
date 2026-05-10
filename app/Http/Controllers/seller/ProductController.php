@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\ProductMedia;
 use App\Models\ProductDescription;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,21 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Auth::check() || Auth::user()->role !== 'seller') {
+                abort(403);
+            }
+            return $next($request);
+        });
+    }
+
+    protected function findSellerProduct($id)
+    {
+        return Product::where('seller_id', Auth::id())->find($id);
+    }
+
     // Display all products with pagination
     public function index(Request $request)
     {
@@ -22,6 +38,7 @@ class ProductController extends Controller
         $category_id = $request->input('category_id');
 
         $query = Product::with(['category', 'media'])
+            ->where('seller_id', Auth::id())
             ->when($search, function ($q) use ($search) {
                 $q->where('name', 'like', '%' . $search . '%')
                   ->orWhere('slug', 'like', '%' . $search . '%');
@@ -33,7 +50,10 @@ class ProductController extends Controller
 
         $products = $query->paginate(5);
 
-        $categories = Category::all();
+        $categories = Category::where(function ($q) {
+            $q->where('seller_id', Auth::id())
+              ->orWhereNull('seller_id');
+        })->get();
 
         return view('seller.products', compact('products', 'categories'));
     }
@@ -76,6 +96,7 @@ class ProductController extends Controller
 
             // Create product
             $product = Product::create([
+                'seller_id' => Auth::id(),
                 'category_id' => $request->category_id,
                 'name' => $request->name,
                 'slug' => $slug,
@@ -121,7 +142,7 @@ class ProductController extends Controller
     // Show product details
     public function show($id)
     {
-        $product = Product::with(['category', 'media', 'description'])->find($id);
+        $product = $this->findSellerProduct($id);
 
         if (!$product) {
             return response()->json([
@@ -129,6 +150,8 @@ class ProductController extends Controller
                 'message' => 'Product not found'
             ], 404);
         }
+
+        $product->load(['category', 'media', 'description']);
 
         return response()->json([
             'success' => true,
@@ -139,7 +162,7 @@ class ProductController extends Controller
     // Update product
     public function update(Request $request, $id)
     {
-        $product = Product::find($id);
+        $product = $this->findSellerProduct($id);
 
         if (!$product) {
             return response()->json([
@@ -261,7 +284,7 @@ class ProductController extends Controller
     // Delete product
     public function destroy($id)
     {
-        $product = Product::find($id);
+        $product = $this->findSellerProduct($id);
 
         if (!$product) {
             return response()->json([
@@ -306,7 +329,7 @@ class ProductController extends Controller
     // Show product media management page
     public function media($id)
     {
-        $product = Product::with(['media'])->find($id);
+        $product = $this->findSellerProduct($id);
 
         if (!$product) {
             abort(404, 'Product not found');
@@ -323,7 +346,7 @@ class ProductController extends Controller
             'type' => 'required|string|in:image,video'
         ]);
 
-        $product = Product::find($productId);
+        $product = $this->findSellerProduct($productId);
         if (!$product) {
             return response()->json(['success' => false, 'message' => 'Product not found'], 404);
         }
@@ -364,7 +387,7 @@ class ProductController extends Controller
     // Set media as primary
     public function setPrimaryMedia(Request $request, $productId, $mediaId)
     {
-        $product = Product::find($productId);
+        $product = $this->findSellerProduct($productId);
         if (!$product) {
             return response()->json(['success' => false, 'message' => 'Product not found'], 404);
         }
@@ -397,7 +420,7 @@ class ProductController extends Controller
     // Delete media
     public function deleteMedia($productId, $mediaId)
     {
-        $product = Product::find($productId);
+        $product = $this->findSellerProduct($productId);
         if (!$product) {
             return response()->json(['success' => false, 'message' => 'Product not found'], 404);
         }
@@ -432,7 +455,7 @@ class ProductController extends Controller
     // Toggle advertised status
     public function toggleAdvertised($id)
     {
-        $product = Product::find($id);
+        $product = $this->findSellerProduct($id);
 
         if (!$product) {
             return response()->json([

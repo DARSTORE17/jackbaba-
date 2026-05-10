@@ -5,6 +5,14 @@
     <!-- ================= Hero Section ================= -->
     <section class="hero-section position-relative"
         style="background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-600) 100%); color: var(--white); padding: 120px 0; overflow: hidden;">
+        <!-- Video Background -->
+        <video class="hero-bg-video" autoplay muted loop playsinline preload="metadata">
+            <source src="{{ asset('videos/hero-electronics.mp4') }}" type="video/mp4">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-technological-innovation-10367-large.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-video-overlay"></div>
+
         <!-- Hero Particles Background -->
         <div class="hero-particles-container" id="heroParticles">
             <div class="particle particle-1"></div>
@@ -14,7 +22,7 @@
             <div class="particle particle-5"></div>
         </div>
 
-        <div class="container text-center position-relative" style="z-index: 3;">
+        <div class="container text-center position-relative" style="z-index: 5;">
             <div class="hero-content" style="animation: slideUp 1s ease-out;">
                 <h1 class="hero-title"
                     style="font-size: 4rem; font-weight: 800; margin-bottom: 20px; text-shadow: 0 4px 20px rgba(0,0,0,0.3); animation: slideUp 1s ease-out 0.2s both;">
@@ -357,7 +365,34 @@
             }
         }
 
-        /* Hero Button Enhancements */
+        /* Hero Video Background */
+        .hero-section .hero-bg-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(0.75) saturate(1.05);
+        }
+
+        .hero-section .hero-video-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(34, 123, 255, 0.22), transparent 35%), linear-gradient(180deg, rgba(2, 8, 28, 0.45), rgba(2, 8, 28, 0.75));
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-section .hero-particles-container {
+            z-index: 2;
+        }
+
+        .hero-section .hero-decorations {
+            position: relative;
+            z-index: 4;
+        }
+
         .hero-btn-primary {
             background: linear-gradient(135deg, var(--blue-600), var(--blue-800));
             position: relative;
@@ -408,49 +443,67 @@
         <h2 class="section-title" style="margin-bottom: 60px; font-size: 2.5rem;">What We Offer</h2>
 
         <div class="row g-4">
-            <div class="col-md-6 col-lg-3">
-                <div class="service-card"
-                    style="padding: 30px 20px; background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); transition: transform 0.3s ease;"
-                    onmouseover="this.style.transform='scale(1.05)'"
-                    onmouseout="this.style.transform='scale(1)'">
-                    <i class="bi bi-phone-fill" style="font-size: 3rem;"></i>
-                    <h4 class="service-title" style="margin-top: 20px; margin-bottom: 15px;">Premium Phones</h4>
-                    <p style="line-height: 1.5; opacity: 0.9;">Original smartphones from top brands, with trusted warranties and fast delivery.</p>
-                </div>
-            </div>
+            @php
+                $defaultServiceCards = collect([
+                    (object) [
+                        'name' => 'Premium Phones',
+                        'description' => 'Original smartphones from top brands, with trusted warranties and fast delivery.',
+                        'icon' => 'bi-phone-fill',
+                        'image' => null,
+                    ],
+                    (object) [
+                        'name' => 'Top Laptops',
+                        'description' => 'High-performance laptops for work, study, and gaming at competitive prices.',
+                        'icon' => 'bi-laptop-fill',
+                        'image' => null,
+                    ],
+                    (object) [
+                        'name' => 'Accessories',
+                        'description' => 'Audio, chargers, cases, and smart tech accessories for every device.',
+                        'icon' => 'bi-headphones',
+                        'image' => null,
+                    ],
+                    (object) [
+                        'name' => 'Trusted Quality',
+                        'description' => 'Authentic electronics sourced from verified suppliers and brands.',
+                        'icon' => 'bi-shield-check',
+                        'image' => null,
+                    ],
+                ]);
 
-            <div class="col-md-6 col-lg-3">
-                <div class="service-card"
-                    style="padding: 30px 20px; background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); transition: transform 0.3s ease;"
-                    onmouseover="this.style.transform='scale(1.05)'"
-                    onmouseout="this.style.transform='scale(1)'">
-                    <i class="bi bi-laptop-fill" style="font-size: 3rem;"></i>
-                    <h4 class="service-title" style="margin-top: 20px; margin-bottom: 15px;">Top Laptops</h4>
-                    <p style="line-height: 1.5; opacity: 0.9;">High-performance laptops for work, study, and gaming at competitive prices.</p>
-                </div>
-            </div>
+                $serviceCards = isset($featuredCategories) && $featuredCategories->count()
+                    ? $featuredCategories
+                    : $defaultServiceCards;
+            @endphp
 
+            @foreach($serviceCards as $card)
             <div class="col-md-6 col-lg-3">
                 <div class="service-card"
-                    style="padding: 30px 20px; background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); transition: transform 0.3s ease;"
+                    style="position: relative; overflow: hidden; border-radius: 20px; box-shadow: 0 12px 35px rgba(0,0,0,0.18); transition: transform 0.3s ease;"
                     onmouseover="this.style.transform='scale(1.05)'"
                     onmouseout="this.style.transform='scale(1)'">
-                    <i class="bi bi-headphones" style="font-size: 3rem;"></i>
-                    <h4 class="service-title" style="margin-top: 20px; margin-bottom: 15px;">Accessories</h4>
-                    <p style="line-height: 1.5; opacity: 0.9;">Audio, chargers, cases, and smart tech accessories for every device.</p>
-                </div>
-            </div>
 
-            <div class="col-md-6 col-lg-3">
-                <div class="service-card"
-                    style="padding: 30px 20px; background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); transition: transform 0.3s ease;"
-                    onmouseover="this.style.transform='scale(1.05)'"
-                    onmouseout="this.style.transform='scale(1)'">
-                    <i class="bi bi-shield-check" style="font-size: 3rem;"></i>
-                    <h4 class="service-title" style="margin-top: 20px; margin-bottom: 15px;">Trusted Quality</h4>
-                    <p style="line-height: 1.5; opacity: 0.9;">Authentic electronics sourced from verified suppliers and brands.</p>
+                    @php
+                        $imageUrl = isset($featuredCategories) && $featuredCategories->count() && $card->image ? asset('storage/' . $card->image) : '';
+                    @endphp
+                    <div style="height: 280px; background: radial-gradient(circle at top, rgba(255,255,255,0.18), rgba(0,0,0,0.45)), linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.55)); background-size: cover; background-position: center; background-image: url('{{ $imageUrl }}');">
+                    </div>
+
+                    <div style="position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px; color: #fff; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.82) 100%);">
+                        <div style="font-size: 2.5rem; opacity: 0.95; margin-bottom: 0.75rem;">
+                            <i class="bi {{ isset($featuredCategories) && $featuredCategories->count() && $card->image ? 'bi-image' : ($card->icon ?? 'bi-star-fill') }}"></i>
+                        </div>
+                        <h4 class="service-title" style="margin-bottom: 10px;">{{ $card->name }}</h4>
+                        <p style="line-height: 1.5; opacity: 0.95; margin-bottom: 12px;">{{ $card->description }}</p>
+                        @if(isset($featuredCategories) && $featuredCategories->count())
+                            <span class="badge bg-info text-dark" style="font-size: 0.8rem;">Managed by System Admin</span>
+                        @else
+                            <span class="badge bg-secondary" style="font-size: 0.8rem;">Preview</span>
+                        @endif
+                    </div>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
 </section>

@@ -4,7 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\AuthController;
 
 Route::get('/', function () {
-    return view('home');
+    $featuredCategories = \App\Models\Category::whereNull('seller_id')
+        ->orderBy('name')
+        ->take(4)
+        ->get();
+
+    return view('home', compact('featuredCategories'));
 });
 
 

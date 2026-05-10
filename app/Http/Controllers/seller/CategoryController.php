@@ -5,16 +5,36 @@ namespace App\Http\Controllers\seller;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
-    // Display all categories
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Auth::check() || Auth::user()->role !== 'seller') {
+                abort(403);
+            }
+            return $next($request);
+        });
+    }
+
+    protected function findSellerCategory($id)
+    {
+        return Category::withCount('products')
+            ->where('seller_id', Auth::id())
+            ->find($id);
+    }
+
+    // Display seller's categories
     public function index()
     {
         $categories = Category::with('products')
+            ->where('seller_id', Auth::id())
             ->withCount('products')
             ->orderBy('name')
             ->paginate(12);
@@ -26,8 +46,9 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:191|unique:categories,name',
+            'name' => 'required|string|max:191|unique:categories,name,NULL,id,seller_id,' . Auth::id(),
             'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
         ]);
 
         if ($validator->fails()) {
@@ -39,10 +60,16 @@ class CategoryController extends Controller
 
         try {
             $category = Category::create([
+                'seller_id' => Auth::id(),
                 'name' => $request->name,
                 'slug' => Str::slug($request->name),
                 'description' => $request->description,
             ]);
+
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('categories/images', 'public');
+                $category->update(['image' => $imagePath]);
+            }
 
             return response()->json([
                 'success' => true,
@@ -61,7 +88,7 @@ class CategoryController extends Controller
     // Show category details
     public function show($id)
     {
-        $category = Category::with('products')->withCount('products')->find($id);
+        $category = $this->findSellerCategory($id);
 
         if (!$category) {
             return response()->json([
@@ -79,7 +106,7 @@ class CategoryController extends Controller
     // Update category
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
+        $category = $this->findSellerCategory($id);
 
         if (!$category) {
             return response()->json([
@@ -89,8 +116,9 @@ class CategoryController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:191|unique:categories,name,' . $id,
+            'name' => 'required|string|max:191|unique:categories,name,' . $id . ',id,seller_id,' . Auth::id(),
             'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
         ]);
 
         if ($validator->fails()) {
@@ -106,6 +134,15 @@ class CategoryController extends Controller
                 'slug' => Str::slug($request->name),
                 'description' => $request->description,
             ]);
+
+            if ($request->hasFile('image')) {
+                if ($category->image && Storage::disk('public')->exists($category->image)) {
+                    Storage::disk('public')->delete($category->image);
+                }
+
+                $imagePath = $request->file('image')->store('categories/images', 'public');
+                $category->update(['image' => $imagePath]);
+            }
 
             return response()->json([
                 'success' => true,
@@ -124,7 +161,7 @@ class CategoryController extends Controller
     // Delete category
     public function destroy($id)
     {
-        $category = Category::withCount('products')->find($id);
+        $category = $this->findSellerCategory($id);
 
         if (!$category) {
             return response()->json([

@@ -5,11 +5,22 @@ namespace App\Http\Controllers\seller;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Auth::check() || Auth::user()->role !== 'seller') {
+                abort(403);
+            }
+            return $next($request);
+        });
+    }
+
     // Display all customers with pagination
     public function index(Request $request)
     {

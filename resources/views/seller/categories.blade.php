@@ -78,13 +78,13 @@
                                     </td>
                                     <td>{{ $category->created_at->format('d M Y') }}</td>
                                     <td class="text-center">
-                                        <button class="btn btn-sm btn-outline-info me-1" onclick="showCategory({{ $category->id }})">
+                                        <button class="btn btn-sm btn-outline-info me-1 category-action" data-action="show" data-id="{{ $category->id }}">
                                             <i class="bi bi-eye"></i>
                                         </button>
-                                        <button class="btn btn-sm btn-outline-warning me-1" onclick="editCategory({{ $category->id }})">
+                                        <button class="btn btn-sm btn-outline-warning me-1 category-action" data-action="edit" data-id="{{ $category->id }}">
                                             <i class="bi bi-pencil"></i>
                                         </button>
-                                        <button class="btn btn-sm btn-outline-danger" onclick="deleteCategory({{ $category->id }}, '{{ $category->name }}')">
+                                        <button class="btn btn-sm btn-outline-danger category-action" data-action="delete" data-id="{{ $category->id }}" data-name="{{ $category->name }}">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </td>
@@ -110,7 +110,7 @@
 <!-- Create Category Modal -->
 <div class="modal zoom-modal" id="createCategoryModal" tabindex="-1" aria-labelledby="createCategoryModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form id="createCategoryForm">
+        <form id="createCategoryForm" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="createCategoryModalLabel">Add New Category</h5>
@@ -125,6 +125,12 @@
                     <div class="mb-3">
                         <label for="create_description" class="form-label">Description</label>
                         <textarea class="form-control" id="create_description" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="create_image" class="form-label">Category Image</label>
+                        <input type="file" class="form-control" id="create_image" name="image" accept="image/*">
+                        <div class="invalid-feedback">Please upload a valid image file.</div>
+                        <img id="create_image_preview" class="img-fluid rounded mt-3 d-none" style="max-height: 200px; object-fit: cover;" alt="Image preview">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -142,7 +148,7 @@
 <!-- Edit Category Modal -->
 <div class="modal zoom-modal" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form id="editCategoryForm">
+        <form id="editCategoryForm" enctype="multipart/form-data">
             <input type="hidden" id="edit_category_id" name="category_id">
             <div class="modal-content">
                 <div class="modal-header">
@@ -158,6 +164,12 @@
                     <div class="mb-3">
                         <label for="edit_description" class="form-label">Description</label>
                         <textarea class="form-control" id="edit_description" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_image" class="form-label">Category Image</label>
+                        <input type="file" class="form-control" id="edit_image" name="image" accept="image/*">
+                        <div class="invalid-feedback">Please upload a valid image file.</div>
+                        <img id="edit_image_preview" class="img-fluid rounded mt-3 d-none" style="max-height: 200px; object-fit: cover;" alt="Image preview">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -301,20 +313,20 @@ $(document).ready(function() {
 
         const submitBtn = $(this).find('button[type="submit"]');
         const spinner = submitBtn.find('.spinner-border');
-        const originalText = submitBtn.text().trim();
+        const formData = new FormData(this);
 
-        // Show loading
         submitBtn.prop('disabled', true);
         spinner.removeClass('d-none');
 
-        // Clear previous errors
         $(this).find('.is-invalid').removeClass('is-invalid');
         $(this).find('.invalid-feedback').hide();
 
         $.ajax({
             url: '{{ route("seller.categories.store") }}',
             method: 'POST',
-            data: $(this).serialize(),
+            data: formData,
+            processData: false,
+            contentType: false,
             success: function(response) {
                 if (response.success) {
                     $('#createCategoryModal').modal('hide');
@@ -351,6 +363,28 @@ $(document).ready(function() {
         });
     });
 
+    $('#create_image').on('change', function() {
+        const file = this.files[0];
+        const preview = $('#create_image_preview');
+        if (file) {
+            preview.attr('src', URL.createObjectURL(file)).removeClass('d-none');
+        } else {
+            preview.attr('src', '').addClass('d-none');
+        }
+    });
+
+    $('#edit_image').on('change', function() {
+        const file = this.files[0];
+        const preview = $('#edit_image_preview');
+        if (file) {
+            preview.attr('src', URL.createObjectURL(file)).removeClass('d-none');
+        } else {
+            preview.attr('src', '').addClass('d-none');
+        }
+    });
+
+    const storageRoot = '{{ asset("storage") }}';
+
     // Edit Category
     window.editCategory = function(id) {
         $.ajax({
@@ -362,6 +396,12 @@ $(document).ready(function() {
                     $('#edit_category_id').val(category.id);
                     $('#edit_name').val(category.name);
                     $('#edit_description').val(category.description || '');
+
+                    if (category.image) {
+                        $('#edit_image_preview').attr('src', storageRoot + '/' + category.image).removeClass('d-none');
+                    } else {
+                        $('#edit_image_preview').attr('src', '').addClass('d-none');
+                    }
 
                     $('#editCategoryModal').modal('show');
                 }
@@ -383,19 +423,21 @@ $(document).ready(function() {
         const categoryId = $('#edit_category_id').val();
         const submitBtn = $(this).find('button[type="submit"]');
         const spinner = submitBtn.find('.spinner-border');
+        const formData = new FormData(this);
+        formData.append('_method', 'PUT');
 
-        // Show loading
         submitBtn.prop('disabled', true);
         spinner.removeClass('d-none');
 
-        // Clear previous errors
         $(this).find('.is-invalid').removeClass('is-invalid');
         $(this).find('.invalid-feedback').hide();
 
         $.ajax({
             url: '{{ route("seller.categories.update", ":id") }}'.replace(':id', categoryId),
-            method: 'PUT',
-            data: $(this).serialize(),
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
             success: function(response) {
                 if (response.success) {
                     $('#editCategoryModal').modal('hide');
@@ -505,11 +547,27 @@ $(document).ready(function() {
         });
     };
 
+    // Category button actions
+    $(document).on('click', '.category-action', function() {
+        const action = $(this).data('action');
+        const id = $(this).data('id');
+        const name = $(this).data('name');
+
+        if (action === 'show') {
+            showCategory(id);
+        } else if (action === 'edit') {
+            editCategory(id);
+        } else if (action === 'delete') {
+            deleteCategory(id, name);
+        }
+    });
+
     // Reset forms when modals are hidden
     $('.modal').on('hidden.bs.modal', function() {
         $(this).find('form')[0]?.reset();
         $(this).find('.is-invalid').removeClass('is-invalid');
         $(this).find('.invalid-feedback').hide();
+        $(this).find('img[id$="_image_preview"]').attr('src', '').addClass('d-none');
     });
 
     // Add zoom animation class to modals when they are about to show

@@ -5,9 +5,20 @@ namespace App\Http\Controllers\seller;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!Auth::check() || Auth::user()->role !== 'seller') {
+                abort(403);
+            }
+            return $next($request);
+        });
+    }
+
     public function index(Request $request)
     {
         $query = Order::with(['user', 'orderItems.product']);

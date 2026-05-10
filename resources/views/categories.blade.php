@@ -339,12 +339,16 @@
     }
 
     .category-header {
-        background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+        background: none;
         padding: 40px 25px;
         text-align: center;
         color: white;
         position: relative;
         overflow: hidden;
+        min-height: 320px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .category-header::before {
@@ -356,6 +360,15 @@
         height: 200%;
         background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.1) 0deg 90deg, transparent 90deg 180deg);
         animation: rotatePattern 20s linear infinite;
+        z-index: 1;
+    }
+
+    .category-header::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.35), rgba(15, 23, 42, 0.55));
+        z-index: 1;
     }
 
     .category-icon {
@@ -467,12 +480,16 @@
     }
 
     .category-header {
-        background: linear-gradient(135deg, var(--blue-600), var(--blue-600));
+        background: none;
         padding: 40px 25px;
         text-align: center;
         color: white;
         position: relative;
         overflow: hidden;
+        min-height: 320px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .category-header::before {
@@ -484,6 +501,15 @@
         height: 200%;
         background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.1) 0deg 90deg, transparent 90deg 180deg);
         animation: rotatePattern 20s linear infinite;
+        z-index: 1;
+    }
+
+    .category-header::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.35), rgba(15, 23, 42, 0.55));
+        z-index: 1;
     }
 
     .category-icon {
@@ -970,9 +996,9 @@
             Shop by Category
         </h1>
         <p class="page-subtitle">
-            Discover amazing collections specially curated for your little ones<br>
+           Chagua vifaa vya electronics vinavyorahisisha maisha yako ya kidigitali.<br>
             <span style="font-size: 1rem; color: var(--blue-600); font-weight: 600;">
-                Toys • Gifts & More
+               Smart Electronics • Accessories & More
             </span>
         </p>
     </div>
@@ -982,7 +1008,7 @@
         <form method="GET" action="{{ route('categories') }}">
             <div class="search-bar">
                 <input type="text" name="search"
-                       placeholder="Search for categories like 'toys', 'clothes', 'gifts'..."
+                       placeholder="Search for categories like 'laptop', 'cell phones', 'cameras'..."
                        value="{{ request('search') }}">
                 <button type="submit" title="Search Categories">
                     <i class="bi bi-search"></i>
@@ -1007,10 +1033,14 @@
                 ];
                 $icon = $icons[$category->slug] ?? 'bi-circle';
                 $gradient = $colors[$category->slug] ?? ['--blue-600', '--cyan-500'];
+                $categoryImageUrl = $category->image ? asset('storage/' . $category->image) : null;
+                $headerStyle = $categoryImageUrl
+                    ? "background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.35), rgba(15, 23, 42, 0.15)), url('" . $categoryImageUrl . "'); background-size: cover; background-position: center; background-repeat: no-repeat;"
+                    : "background: linear-gradient(135deg, " . $gradient[0] . ", " . $gradient[1] . ");";
             @endphp
 
             <a href="{{ route('category.show', $category->slug) }}" class="category-card">
-                <div class="category-header" style="background: linear-gradient(135deg, {{ $gradient[0] }}, {{ $gradient[1] }});">
+                <div class="category-header" data-bg-style="{{ $headerStyle }}">
                     <div class="category-icon">
                         <i class="bi {{ $icon }}"></i>
                     </div>
@@ -1116,6 +1146,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     searchInput.addEventListener('blur', function() {
         this.parentElement.classList.remove('search-focused');
+    });
+
+    // Apply dynamic category header backgrounds safely after Blade rendering
+    document.querySelectorAll('.category-header[data-bg-style]').forEach(function(header) {
+        header.style.cssText = header.dataset.bgStyle;
     });
 });
 </script>
