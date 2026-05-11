@@ -21,6 +21,11 @@
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
             <li>
+                <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.profile.edit') }}">
+                    <i class="bi bi-person-fill text-primary me-2"></i> Profile
+                </a>
+            </li>
+            <li>
                 <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.settings') }}">
                     <i class="bi bi-gear-fill text-primary me-2"></i> Settings
                 </a>

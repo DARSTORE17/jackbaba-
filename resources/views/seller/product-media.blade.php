@@ -152,7 +152,7 @@
                             <i class="bi bi-folder2-open me-2"></i>Browse Files
                         </button>
                         <button class="btn btn-outline-info" id="uploadSelectedBtn" style="display: none;">
-                            <i class="bi bi-upload me-2"></i>Upload Selected ({% raw %}span id="selectedCount">0</span>{% endraw %})
+                            <i class="bi bi-upload me-2"></i>Upload Selected (<span id="selectedCount">0</span>)
                         </button>
                     </div>
                 </div>
@@ -162,7 +162,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">
-                        <i class="bi bi-grid-3x3-gap me-2"></i>Media Gallery ({{ $product->media->count() }})
+                        <i class="bi bi-grid-3x3-gap me-2"></i>Media Gallery (<span id="mediaCount">{{ $product->media->count() }}</span>)
                     </h5>
                     <div class="btn-group" role="group">
                         <button class="btn btn-sm btn-outline-primary active" id="gridView">Grid</button>
@@ -370,17 +370,59 @@ $(document).ready(function() {
         const uploadPromises = selectedFiles.map(file => uploadSingleFile(file));
 
         Promise.all(uploadPromises)
-            .then(() => {
+            .then((responses) => {
                 Swal.close();
                 showAlert('success', 'All files uploaded successfully!');
+                responses.forEach(response => {
+                    if (response.success && response.media) {
+                        appendMediaItem(response.media);
+                    }
+                });
                 selectedFiles = [];
                 updateSelectedCount();
-                location.reload(); // Reload to show new media
             })
             .catch(error => {
                 Swal.close();
                 showAlert('error', `Upload failed: ${error}`);
             });
+    }
+
+    function appendMediaItem(media) {
+        $('.primary-badge').remove();
+
+        const src = `${window.location.origin}/storage/${media.file_path}`;
+        const mediaHtml = `
+            <div class="col-md-3 col-sm-6">
+                <div class="media-item" data-media-id="${media.id}">
+                    ${media.type === 'image'
+                        ? `<img src="${src}" alt="Product Media" class="media-preview" onclick="openMediaModal('${src}', '${media.type}')">`
+                        : `<div class="bg-dark d-flex align-items-center justify-content-center media-preview" onclick="openMediaModal('${src}', '${media.type}')">
+                                <i class="bi bi-play-circle-fill" style="font-size: 3rem; color: white;"></i>
+                           </div>`
+                    }
+
+                    ${media.is_primary ? '<div class="primary-badge">Primary</div>' : ''}
+
+                    <div class="media-overlay">
+                        ${media.is_primary ? '' : `<button class="btn btn-light btn-overlay me-1" onclick="setAsPrimary(${media.id})"><i class="bi bi-star"></i></button>`}
+                        <button class="btn btn-danger btn-overlay" onclick="deleteMedia(${media.id})"><i class="bi bi-trash"></i></button>
+                    </div>
+                </div>
+
+                <div class="media-info">
+                    <div class="media-type-badge">${media.type.charAt(0).toUpperCase() + media.type.slice(1)}</div>
+                    <small class="text-muted">${new Date(media.created_at).toLocaleDateString()}</small>
+                </div>
+            </div>
+        `;
+
+        if ($('.media-grid').length) {
+            $('.media-grid').append(mediaHtml);
+        } else {
+            $('#mediaGallery').html(`<div class="row g-3 media-grid">${mediaHtml}</div>`);
+        }
+
+        $('#mediaCount').text(parseInt($('#mediaCount').text()) + 1);
     }
 
     function uploadSingleFile(file) {

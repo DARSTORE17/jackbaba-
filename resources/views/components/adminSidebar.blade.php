@@ -11,8 +11,18 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="{{ route('admin.profile.edit') }}" class="nav-link {{ request()->is('admin/profile') ? 'active' : '' }}">
+                    <i class="bi bi-person-circle"></i> Profile
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('admin.sellers') }}" class="nav-link {{ request()->is('admin/sellers*') ? 'active' : '' }}">
                     <i class="bi bi-person-lines-fill"></i> Sellers
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.users') }}" class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}">
+                    <i class="bi bi-people-fill"></i> Customers
                 </a>
             </li>
             <li class="nav-item">
