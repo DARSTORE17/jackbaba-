@@ -37,15 +37,14 @@ class CheckoutController extends Controller
         }
 
         // Calculate totals
-        $cartItems = $cart->cartItems()->with('product.media')->get();
-        $subtotal = $cartItems->sum(function ($item) {
-            return $item->price * $item->quantity;
-        });
-
-        $taxRate = 0.18; // 18% VAT
-        $taxAmount = $subtotal * $taxRate;
-        $shippingCost = $subtotal >= 100000 ? 0 : 5000; // Free shipping over 100,000 TZS
-        $total = $subtotal + $taxAmount + $shippingCost;
+        $cartItems = $cart->cartItems()->with(['product.media', 'product.seller'])->get();
+        $totals = $this->calculateCheckoutTotals($cartItems);
+        $subtotal = $totals['subtotal'];
+        $taxAmount = $totals['tax_amount'];
+        $shippingCost = $totals['shipping_cost'];
+        $total = $totals['total'];
+        $taxSummary = $totals['tax_summary'];
+        $deliverySummary = $totals['delivery_summary'];
 
         // East African countries
         $eastAfricanCountries = [
@@ -86,6 +85,8 @@ class CheckoutController extends Controller
             'taxAmount',
             'shippingCost',
             'total',
+            'taxSummary',
+            'deliverySummary',
             'eastAfricanCountries',
             'countryRegions',
             'user'
@@ -138,7 +139,7 @@ class CheckoutController extends Controller
             ], 400);
         }
 
-        $cartItems = $cart->cartItems()->with('product')->get();
+        $cartItems = $cart->cartItems()->with('product.seller')->get();
 
         // Check stock availability
         foreach ($cartItems as $item) {
@@ -151,14 +152,11 @@ class CheckoutController extends Controller
         }
 
         // Calculate totals
-        $subtotal = $cartItems->sum(function ($item) {
-            return $item->price * $item->quantity;
-        });
-
-        $taxRate = 0.18;
-        $taxAmount = $subtotal * $taxRate;
-        $shippingCost = $subtotal >= 100000 ? 0 : 5000;
-        $totalAmount = $subtotal + $taxAmount + $shippingCost;
+        $totals = $this->calculateCheckoutTotals($cartItems);
+        $subtotal = $totals['subtotal'];
+        $taxAmount = $totals['tax_amount'];
+        $shippingCost = $totals['shipping_cost'];
+        $totalAmount = $totals['total'];
 
         // Country codes mapping for order storage
         $countryCodes = [
@@ -278,6 +276,65 @@ class CheckoutController extends Controller
             $sessionId = Session::getId();
             return Cart::where('session_id', $sessionId)->first();
         }
+    }
+
+    private function calculateCheckoutTotals($cartItems): array
+    {
+        $subtotal = $cartItems->sum(function ($item) {
+            return $item->price * $item->quantity;
+        });
+
+        $taxAmount = 0;
+        $shippingCost = 0;
+        $taxSummary = [];
+        $deliverySummary = [];
+        $sellerGroups = $cartItems->groupBy(function ($item) {
+            return $item->product->seller_id ?: 'store';
+        });
+
+        foreach ($sellerGroups as $sellerId => $items) {
+            $seller = $items->first()->product->seller;
+            $sellerName = $seller->name ?? 'Bravus Market';
+            $sellerTax = 0;
+
+            foreach ($items as $item) {
+                $lineSubtotal = $item->price * $item->quantity;
+                $sellerTax += $item->product->vat_enabled
+                    ? $lineSubtotal * (((float) $item->product->vat_rate) / 100)
+                    : 0;
+            }
+
+            $taxAmount += $sellerTax;
+
+            $taxSummary[] = [
+                'seller' => $sellerName,
+                'rate' => 'Product based',
+                'amount' => $sellerTax,
+            ];
+
+            $deliveryPayment = $items->contains(fn ($item) => $item->product->delivery_payment === 'customer')
+                ? 'customer'
+                : 'free';
+            $deliveryFee = $deliveryPayment === 'customer'
+                ? $items->where('product.delivery_payment', 'customer')->max(fn ($item) => (float) $item->product->delivery_fee)
+                : 0;
+            $shippingCost += $deliveryFee;
+
+            $deliverySummary[] = [
+                'seller' => $sellerName,
+                'payment' => $deliveryPayment,
+                'fee' => $deliveryFee,
+            ];
+        }
+
+        return [
+            'subtotal' => $subtotal,
+            'tax_amount' => $taxAmount,
+            'shipping_cost' => $shippingCost,
+            'total' => $subtotal + $taxAmount + $shippingCost,
+            'tax_summary' => $taxSummary,
+            'delivery_summary' => $deliverySummary,
+        ];
     }
 
     /**

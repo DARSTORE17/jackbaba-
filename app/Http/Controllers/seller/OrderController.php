@@ -21,7 +21,11 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-        $query = Order::with(['user', 'orderItems.product']);
+        $sellerId = Auth::id();
+        $query = Order::with(['user', 'orderItems.product'])
+            ->whereHas('orderItems.product', function ($productQuery) use ($sellerId) {
+                $productQuery->where('seller_id', $sellerId);
+            });
 
         // Search functionality
         if ($request->has('search') && !empty($request->search)) {
@@ -58,20 +62,30 @@ class OrderController extends Controller
     public function show($id)
     {
         try {
-            $order = Order::with(['user', 'orderItems.product'])->findOrFail($id);
+            $sellerId = Auth::id();
+            $order = Order::with(['user', 'orderItems.product', 'orderAddresses'])
+                ->whereHas('orderItems.product', function ($productQuery) use ($sellerId) {
+                    $productQuery->where('seller_id', $sellerId);
+                })
+                ->findOrFail($id);
 
             // Format order items safely
-            $formattedOrderItems = $order->orderItems->map(function($item) {
+            $sellerItems = $order->orderItems->filter(function ($item) use ($sellerId) {
+                return $item->product && (int) $item->product->seller_id === (int) $sellerId;
+            });
+            $formattedOrderItems = $sellerItems->map(function($item) {
                 return [
                     'id' => $item->id,
                     'product' => $item->product ? [
                         'name' => $item->product->name ?: 'Unknown Product'
                     ] : ['name' => 'Product Not Found'],
                     'quantity' => $item->quantity ?? 0,
-                    'price' => $item->price ?? 0,
-                    'total' => ($item->price ?? 0) * ($item->quantity ?? 0)
+                    'price' => $item->unit_price ?? 0,
+                    'total' => $item->total_price ?? (($item->unit_price ?? 0) * ($item->quantity ?? 0))
                 ];
             });
+            $shippingAddress = $order->orderAddresses->firstWhere('type', 'shipping');
+            $sellerSubtotal = $sellerItems->sum('total_price');
 
             return response()->json([
                 'success' => true,
@@ -86,14 +100,24 @@ class OrderController extends Controller
                 ] : ['name' => 'Unknown', 'email' => 'unknown@example.com', 'phone' => ''],
                     'order_items' => $formattedOrderItems->toArray(),
                     'total_amount' => $order->total_amount ?? 0,
+                    'seller_subtotal' => $sellerSubtotal,
                     'subtotal' => $order->subtotal ?? $order->total_amount ?? 0,
                     'shipping_cost' => $order->shipping_cost ?? 0,
                     'tax_amount' => $order->tax_amount ?? 0,
                     'status' => $order->status ?? 'pending',
                     'payment_status' => $order->payment_status ?? 'pending',
                     'created_at' => $order->created_at,
-                    'notes' => $order->notes ?? '',
-                    'order_address' => null // Temporarily set to null
+                    'notes' => $order->customer_notes ?? '',
+                    'order_address' => $shippingAddress ? [
+                        'first_name' => $shippingAddress->first_name,
+                        'last_name' => $shippingAddress->last_name,
+                        'address' => $shippingAddress->street_address,
+                        'city' => $shippingAddress->city,
+                        'state' => $shippingAddress->state,
+                        'zip_code' => $shippingAddress->postal_code,
+                        'country' => $shippingAddress->country,
+                        'phone' => $shippingAddress->phone,
+                    ] : null
                 ]
             ]);
         } catch (\Exception $e) {
@@ -107,11 +131,20 @@ class OrderController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:pending,processing,shipped,delivered,cancelled'
+            'status' => 'required|in:pending,confirmed,processing,preparing,ready_for_pickup,shipped,delivered,completed,cancelled'
         ]);
 
-        $order = Order::findOrFail($id);
-        $order->update(['status' => $request->status]);
+        $status = match ($request->status) {
+            'shipped' => 'ready_for_pickup',
+            'delivered' => 'completed',
+            default => $request->status,
+        };
+
+        $sellerId = Auth::id();
+        $order = Order::whereHas('orderItems.product', function ($productQuery) use ($sellerId) {
+            $productQuery->where('seller_id', $sellerId);
+        })->findOrFail($id);
+        $order->update(['status' => $status]);
 
         return response()->json([
             'success' => true,

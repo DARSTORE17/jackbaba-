@@ -54,20 +54,86 @@
         .whatsapp-float i {
             font-size: 1.4rem;
         }
+
+        [v-cloak] {
+            display: none;
+        }
+
+        .vue-page-shell {
+            min-height: 100vh;
+        }
+
+        .vue-page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 88px;
+            pointer-events: none;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0));
+        }
+
+        .vue-page-loader__bar {
+            width: min(280px, calc(100vw - 48px));
+            height: 4px;
+            overflow: hidden;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.12);
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.14);
+        }
+
+        .vue-page-loader__bar::after {
+            content: "";
+            display: block;
+            width: 42%;
+            height: 100%;
+            border-radius: inherit;
+            background: var(--primary-color, #0d6efd);
+            animation: vueLoaderSlide 0.8s ease-in-out infinite;
+        }
+
+        .vue-page-content {
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+
+        .vue-page-shell.is-loading .vue-page-content {
+            opacity: 0.45;
+            transform: translateY(4px);
+        }
+
+        @keyframes vueLoaderSlide {
+            0% {
+                transform: translateX(-110%);
+            }
+
+            100% {
+                transform: translateX(260%);
+            }
+        }
     </style>
     {{-- Extra CSS from pages --}}
+    <!-- vue-page-head-start -->
     @yield('css')
+    <!-- vue-page-head-end -->
 </head>
 
 <body>
+<div id="vue-layout-shell" class="vue-page-shell">
+    <div id="vue-navigation-status">
+        <div class="vue-page-loader" v-show="loading" v-cloak aria-live="polite" aria-label="Loading page">
+            <div class="vue-page-loader__bar"></div>
+        </div>
+    </div>
 
     {{-- Header Component --}}
     @include('components.header')
 
     {{-- Main Content --}}
-  <main>
-    @yield('content')
-</main>
+    <div id="vue-page-content" class="vue-page-content" data-vue-page>
+        @yield('content')
+    </div>
 
 
     {{-- Footer Component --}}
@@ -76,6 +142,7 @@
     <a href="https://wa.me/{{ preg_replace('/\D+/', '', $systemSettings['whatsapp'] ?? '255754321987') }}?text=Hello%2C%20I%20want%20to%20order%20a%20product" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
         <i class="bi bi-whatsapp"></i>
     </a>
+</div>
 
     {{-- Bootstrap JS Bundle --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -85,6 +152,8 @@
 
     {{-- Custom JS --}}
     <script src="{{ asset('js/header.js') }}"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="{{ asset('js/vue-layout.js') }}"></script>
 
     @auth
     {{-- Auto Logout on Inactivity --}}
@@ -138,7 +207,9 @@
     @endauth
 
     {{-- Extra JS from pages --}}
-    @yield('scripts')
+    <div id="vue-page-scripts" data-vue-page-scripts hidden>
+        @yield('scripts')
+    </div>
 
 </body>
 

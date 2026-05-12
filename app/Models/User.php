@@ -23,6 +23,10 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'seller_vat_enabled',
+        'seller_vat_rate',
+        'seller_delivery_payment',
+        'seller_delivery_fee',
     ];
 
     /**
@@ -45,6 +49,9 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'seller_vat_enabled' => 'boolean',
+            'seller_vat_rate' => 'decimal:2',
+            'seller_delivery_fee' => 'decimal:2',
         ];
     }
 

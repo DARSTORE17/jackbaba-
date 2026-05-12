@@ -300,13 +300,25 @@
                                             <span class="cart-summary-subtotal-amount">Tsh{{ number_format($subtotal, 2) }}</span>
                                         </div>
                                         <div class="d-flex justify-content-between mb-2">
-                                            <span>Tax (18% VAT)</span>
+                                            <span>Tax / VAT</span>
                                             <span class="cart-summary-tax">Tsh{{ number_format($taxAmount, 2) }}</span>
                                         </div>
                                         <div class="d-flex justify-content-between mb-2">
                                             <span>Shipping</span>
                                             <span class="cart-summary-shipping">{{ $shippingCost > 0 ? 'Tsh' . number_format($shippingCost, 2) : 'Free' }}</span>
                                         </div>
+                                        @if(!empty($taxSummary) || !empty($deliverySummary))
+                                            <div class="small text-muted mb-3">
+                                                @foreach($taxSummary as $taxLine)
+                                                    <div>{{ $taxLine['seller'] }} VAT: {{ is_numeric($taxLine['rate']) ? number_format($taxLine['rate'], 2) . '%' : $taxLine['rate'] }}</div>
+                                                @endforeach
+                                                @foreach($deliverySummary as $deliveryLine)
+                                                    <div>{{ $deliveryLine['seller'] }} delivery:
+                                                        {{ $deliveryLine['payment'] === 'free' ? 'Free' : 'Tsh' . number_format($deliveryLine['fee'], 2) }}
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @endif
                                         <hr>
                                         <div class="d-flex justify-content-between fw-bold fs-5">
                                             <span>Total</span>
@@ -372,7 +384,7 @@
                 return;
             }
 
-            const button = buttonElement.closest('.quantity-btn');
+            const button = buttonElement ? buttonElement.closest('.quantity-btn') : null;
             if (button) button.disabled = true;
 
             fetch(`/cart/update/${cartItemId}`, {
@@ -386,9 +398,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Update UI without refreshing
-                    updateCartUI(cartItemId, quantity);
-                    if (button) button.disabled = false;
+                    location.reload();
                 } else {
                     Swal.fire({
                         title: 'Update Failed',
@@ -499,16 +509,7 @@
                                     location.reload();
                                 });
                             } else {
-                                // Cart still has items, just recalculate totals
-                                calculateTotals();
-                                Swal.fire({
-                                    title: 'Removed!',
-                                    text: 'Item has been removed from your cart.',
-                                    icon: 'success',
-                                    confirmButtonColor: '#10b981',
-                                    timer: 2000,
-                                    showConfirmButton: false
-                                });
+                                location.reload();
                             }
                         } else {
                             Swal.fire({
@@ -676,8 +677,7 @@
                 });
             });
 
-            // Calculate totals on page load
-            calculateTotals();
+            // Totals come from seller checkout settings on the server.
         });
     </script>
 @endsection

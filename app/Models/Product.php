@@ -21,13 +21,20 @@ class Product extends Model
         'rate',
         'stock',
         'thumbnail',
-        'is_advertised'
+        'is_advertised',
+        'vat_enabled',
+        'vat_rate',
+        'delivery_payment',
+        'delivery_fee',
     ];
 
     protected $casts = [
         'is_advertised' => 'boolean',
+        'vat_enabled' => 'boolean',
         'old_price' => 'decimal:2',
         'new_price' => 'decimal:2',
+        'vat_rate' => 'decimal:2',
+        'delivery_fee' => 'decimal:2',
     ];
 
     public function category()

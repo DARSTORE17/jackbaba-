@@ -45,12 +45,18 @@
         color: #0066cc;
     }
 
-    .status-shipped {
+    .status-confirmed,
+    .status-ready_for_pickup {
         background-color: #d1ecf1;
         color: #0c5460;
     }
 
-    .status-delivered {
+    .status-preparing {
+        background-color: #e2e3ff;
+        color: #25237a;
+    }
+
+    .status-completed {
         background-color: #d4edda;
         color: #155724;
     }
@@ -226,8 +232,10 @@
                                     <option value="">All Status</option>
                                     <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
                                     <option value="processing" {{ request('status') == 'processing' ? 'selected' : '' }}>Processing</option>
-                                    <option value="shipped" {{ request('status') == 'shipped' ? 'selected' : '' }}>Shipped</option>
-                                    <option value="delivered" {{ request('status') == 'delivered' ? 'selected' : '' }}>Delivered</option>
+                                    <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
+                                    <option value="preparing" {{ request('status') == 'preparing' ? 'selected' : '' }}>Preparing</option>
+                                    <option value="ready_for_pickup" {{ request('status') == 'ready_for_pickup' ? 'selected' : '' }}>Out for Delivery</option>
+                                    <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Completed</option>
                                     <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                 </select>
                             </div>
@@ -294,11 +302,11 @@
                                         {{ $order->orderItems->count() }} item{{ $order->orderItems->count() > 1 ? 's' : '' }}
                                     </td>
                                     <td>
-                                        <strong>${{ number_format($order->total_amount, 2) }}</strong>
+                                        <strong>Tsh{{ number_format($order->total_amount, 2) }}</strong>
                                     </td>
                                     <td>
                                         <span class="order-status-badge status-{{ $order->status }}">
-                                            {{ ucfirst($order->status) }}
+                                            {{ $order->status === 'ready_for_pickup' ? 'Out for Delivery' : $order->status_text }}
                                         </span>
                                     </td>
                                     <td>
@@ -321,9 +329,11 @@
                                                     data-order-id="{{ $order->id }}"
                                                     style="width: 100px;">
                                                 <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                                <option value="confirmed" {{ $order->status == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
                                                 <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Processing</option>
-                                                <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>Shipped</option>
-                                                <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Delivered</option>
+                                                <option value="preparing" {{ $order->status == 'preparing' ? 'selected' : '' }}>Preparing</option>
+                                                <option value="ready_for_pickup" {{ $order->status == 'ready_for_pickup' ? 'selected' : '' }}>Out for Delivery</option>
+                                                <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>Completed</option>
                                                 <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                             </select>
                                         </div>
@@ -385,6 +395,16 @@
 
 <script>
 $(document).ready(function() {
+    function formatOrderStatus(status) {
+        if (status === 'ready_for_pickup') {
+            return 'Out for Delivery';
+        }
+
+        return status.replace(/_/g, ' ').replace(/\b\w/g, function(letter) {
+            return letter.toUpperCase();
+        });
+    }
+
     // Show loading overlay
     function showLoading() {
         if (!$('#loadingOverlay').length) {
@@ -443,7 +463,7 @@ $(document).ready(function() {
                 if (response.success) {
                     // Update the status badge
                     var statusElement = $(`.status-select[data-order-id="${orderId}"]`).closest('tr').find('.order-status-badge');
-                    statusElement.removeClass().addClass(`order-status-badge status-${newStatus}`).text(newStatus.charAt(0).toUpperCase() + newStatus.slice(1));
+                    statusElement.removeClass().addClass(`order-status-badge status-${newStatus}`).text(formatOrderStatus(newStatus));
 
                     // Update the select
                     $(`.status-select[data-order-id="${orderId}"]`).val(newStatus);
@@ -495,8 +515,8 @@ $(document).ready(function() {
                             <td>${index + 1}</td>
                             <td>${item.product.name}</td>
                             <td>${item.quantity}</td>
-                            <td>$${parseFloat(item.price).toFixed(2)}</td>
-                            <td>$${(parseFloat(item.price) * item.quantity).toFixed(2)}</td>
+                            <td>Tsh${Number(item.price).toLocaleString()}</td>
+                            <td>Tsh${Number(item.total).toLocaleString()}</td>
                         </tr>
                     `;
                 });
@@ -515,10 +535,10 @@ $(document).ready(function() {
                         </div>
                         <div class="col-md-6">
                             <h6>Order Summary</h6>
-                            <p><strong>Subtotal:</strong> $${parseFloat(order.subtotal).toFixed(2)}</p>
-                            <p><strong>Shipping:</strong> $${parseFloat(order.shipping_cost).toFixed(2)}</p>
-                            <p><strong>Tax:</strong> $${parseFloat(order.tax_amount).toFixed(2)}</p>
-                            <p><strong>Total:</strong> $${parseFloat(order.total_amount).toFixed(2)}</p>
+                            <p><strong>Seller Items:</strong> Tsh${Number(order.seller_subtotal).toLocaleString()}</p>
+                            <p><strong>Order Shipping:</strong> Tsh${Number(order.shipping_cost).toLocaleString()}</p>
+                            <p><strong>Order Tax:</strong> Tsh${Number(order.tax_amount).toLocaleString()}</p>
+                            <p><strong>Order Total:</strong> Tsh${Number(order.total_amount).toLocaleString()}</p>
                         </div>
                     </div>
                 ` : '<p>No shipping information available</p>';
@@ -533,7 +553,7 @@ $(document).ready(function() {
                                     <p><strong>Customer:</strong> ${order.user.name}</p>
                                     <p><strong>Email:</strong> ${order.user.email}</p>
                                     <p><strong>Phone:</strong> ${order.user.phone || 'N/A'}</p>
-                                    <p><strong>Status:</strong> <span class="order-status-badge status-${order.status}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span></p>
+                                    <p><strong>Status:</strong> <span class="order-status-badge status-${order.status}">${formatOrderStatus(order.status)}</span></p>
                                     <p><strong>Payment Status:</strong> <span class="badge bg-${order.payment_status == 'paid' ? 'success' : 'warning'}">${order.payment_status.charAt(0).toUpperCase() + order.payment_status.slice(1)}</span></p>
                                     <p><strong>Order Date:</strong> ${new Date(order.created_at).toLocaleString()}</p>
                                     <p><strong>Notes:</strong> ${order.notes || 'No notes'}</p>
@@ -559,7 +579,7 @@ $(document).ready(function() {
                                                 ${itemsHtml}
                                                 <tr class="table-active">
                                                     <td colspan="4"><strong>Order Total</strong></td>
-                                                    <td><strong>$${parseFloat(order.total_amount).toFixed(2)}</strong></td>
+                                                    <td><strong>Tsh${Number(order.seller_subtotal).toLocaleString()}</strong></td>
                                                 </tr>
                                             </tbody>
                                         </table>

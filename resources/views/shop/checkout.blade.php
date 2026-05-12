@@ -2,6 +2,7 @@
 
 @section('title', 'Checkout - Bravus Market')
 
+@section('css')
 <style>
     /* Full page height */
     html, body {
@@ -780,6 +781,7 @@
         }
     }
 </style>
+@endsection
 
 @section('content')
     <main class="shop-container">
@@ -1014,7 +1016,7 @@
                                         </div>
                                     @else
                                         <div class="alert alert-info py-2 mb-3">
-                                            <small><i class="bi bi-truck me-1"></i>Add Tsh{{ number_format(100000 - $subtotal, 2) }} more for FREE shipping</small>
+                                            <small><i class="bi bi-truck me-1"></i>Delivery fee is set by the seller.</small>
                                         </div>
                                     @endif
 
@@ -1025,13 +1027,25 @@
                                             <span>Tsh{{ number_format($subtotal, 2) }}</span>
                                         </div>
                                         <div class="d-flex justify-content-between mb-2">
-                                            <span>Tax (18% VAT)</span>
+                                            <span>Tax / VAT</span>
                                             <span>Tsh{{ number_format($taxAmount, 2) }}</span>
                                         </div>
                                         <div class="d-flex justify-content-between mb-3">
                                             <span>Shipping</span>
                                             <span>{{ $shippingCost > 0 ? 'Tsh' . number_format($shippingCost, 2) : 'Free' }}</span>
                                         </div>
+                                        @if(!empty($deliverySummary) || !empty($taxSummary))
+                                            <div class="small text-muted mb-3">
+                                                @foreach($taxSummary as $taxLine)
+                                                    <div>{{ $taxLine['seller'] }} VAT: {{ is_numeric($taxLine['rate']) ? number_format($taxLine['rate'], 2) . '%' : $taxLine['rate'] }}</div>
+                                                @endforeach
+                                                @foreach($deliverySummary as $deliveryLine)
+                                                    <div>{{ $deliveryLine['seller'] }} delivery:
+                                                        {{ $deliveryLine['payment'] === 'free' ? 'Free' : 'Tsh' . number_format($deliveryLine['fee'], 2) }}
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @endif
                                         <hr class="my-3">
                                         <div class="d-flex justify-content-between">
                                             <strong class="fs-5">Total</strong>
@@ -1244,7 +1258,7 @@
                                 <div><strong>Subtotal:</strong> Tsh${subtotal.toLocaleString()}</div>
                             </div>
                             <div class="info-item">
-                                <div><strong>Tax (18%):</strong> Tsh${taxAmount.toLocaleString()}</div>
+                                <div><strong>Tax / VAT:</strong> Tsh${taxAmount.toLocaleString()}</div>
                             </div>
                             <div class="info-item">
                                 <div><strong>Shipping:</strong> ${shippingCost > 0 ? 'Tsh' + shippingCost.toLocaleString() : 'FREE!'}</div>

@@ -3,27 +3,17 @@
 @section('title', $product->name . ' - Bravus Market')
 @section('css')
     <style>
-        :root {
-            --primary-color: #2563EB;
-            --secondary-color: #764ba2;
-            --accent-color: #667eea;
-            --success-color: #22c55e;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --light-bg: #f8f9fa;
-            --dark-bg: #1f2937;
-            --text-dark: #1f2937;
-            --text-light: #ffffff;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-        }
-
         .product-details {
+            --product-text: var(--text-color);
+            --product-muted: color-mix(in srgb, var(--text-color) 62%, #ffffff);
+            --product-soft-bg: rgba(255, 255, 255, 0.72);
+            --product-border: rgba(15, 23, 42, 0.08);
+            --product-shadow-sm: var(--shadow-softest);
+            --product-shadow-lg: var(--shadow-soft);
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 28px 20px 56px;
+            color: var(--product-text);
         }
 
         .breadcrumb {
@@ -55,12 +45,12 @@
         }
 
         .breadcrumb-item a:hover {
-            color: #e63869;
+            color: var(--primary-color);
             text-decoration: underline;
         }
 
         .breadcrumb-item.active {
-            color: var(--text-dark);
+            color: var(--product-text);
             font-weight: 600;
         }
 
@@ -187,10 +177,10 @@
         .main-image {
             border-radius: 15px;
             overflow: hidden;
-            background: var(--light-bg);
+            background: var(--surface-color);
             width: 100%;
             height: 330px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--product-shadow-lg);
             margin-top: 0;
             /* hakuna nafasi kati ya sidebar na image */
         }
@@ -210,7 +200,7 @@
         .product-title {
             font-size: 2.5rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: var(--product-text);
             margin-bottom: 15px;
         }
 
@@ -246,7 +236,7 @@
         .current-price {
             font-size: 2.2rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: var(--product-text);
         }
 
         .old-price {
@@ -314,18 +304,18 @@
         }
 
         .btn-add-cart:hover {
-            background: #e63869;
+            background: color-mix(in srgb, var(--primary-color) 86%, #000000);
             transform: translateY(-2px);
         }
 
         .btn-wishlist {
             background: white;
-            color: var(--text-dark);
+            color: var(--product-text);
             border: 2px solid #e5e7eb;
         }
 
         .btn-wishlist:hover {
-            background: var(--light-bg);
+            background: var(--product-soft-bg);
             border-color: var(--primary-color);
             color: var(--primary-color);
         }
@@ -337,8 +327,8 @@
         }
 
         .btn-wishlist.in-wishlist:hover {
-            background: #e63869;
-            border-color: #e63869;
+            background: color-mix(in srgb, var(--primary-color) 86%, #000000);
+            border-color: color-mix(in srgb, var(--primary-color) 86%, #000000);
             color: white;
         }
 
@@ -421,7 +411,7 @@
         }
 
         .tab-content h4 {
-            color: var(--text-dark);
+            color: var(--product-text);
             margin-bottom: 15px;
             font-weight: 600;
         }
@@ -449,7 +439,7 @@
             text-align: center;
             font-size: 2rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: var(--product-text);
             margin-bottom: 30px;
         }
 
@@ -479,7 +469,7 @@
         }
 
         .related-grid::-webkit-scrollbar-thumb:hover {
-            background-color: #e63869;
+            background-color: color-mix(in srgb, var(--primary-color) 86%, #000000);
         }
 
         .related-card {
@@ -487,14 +477,14 @@
             background: white;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--product-shadow-sm);
             transition: all 0.3s ease;
             text-decoration: none;
             color: inherit;
         }
 
         .related-card:hover {
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--product-shadow-lg);
             transform: translateY(-3px);
         }
 
@@ -634,10 +624,10 @@
                 </li>
                 <li class="breadcrumb-item">
                     <a href="{{ route('shop') }}?category={{ $product->category_id }}" class="text-decoration-none">
-                        Shoes
+                        {{ $product->category->name ?? 'Category' }}
                     </a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Air Force Shoe</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $product->name }}</li>
             </ol>
         </nav>
 

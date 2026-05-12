@@ -305,10 +305,10 @@
                                     <td>{{ $product->category->name ?? 'N/A' }}</td>
                                     <td>
                                         <div class="d-flex flex-column">
-                                            <strong>${{ number_format($product->new_price, 2) }}</strong>
+                                            <strong>Tsh{{ number_format($product->new_price, 2) }}</strong>
                                             @if($product->old_price)
                                                 <small class="text-decoration-line-through text-muted">
-                                                    ${{ number_format($product->old_price, 2) }}
+                                                    Tsh{{ number_format($product->old_price, 2) }}
                                                 </small>
                                             @endif
                                         </div>
@@ -437,15 +437,41 @@
                                 <div class="col-12">
                                     <label for="addNewPrice" class="form-label">New Price <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <span class="input-group-text">$</span>
+                                        <span class="input-group-text">Tsh</span>
                                         <input type="number" step="0.01" class="form-control" id="addNewPrice" name="new_price" required>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <label for="addOldPrice" class="form-label">Old Price (Optional)</label>
                                     <div class="input-group">
-                                        <span class="input-group-text">$</span>
+                                        <span class="input-group-text">Tsh</span>
                                         <input type="number" step="0.01" class="form-control" id="addOldPrice" name="old_price">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="border rounded p-3">
+                                        <div class="form-check form-switch mb-3">
+                                            <input type="hidden" name="vat_enabled" value="0">
+                                            <input class="form-check-input" type="checkbox" id="addVatEnabled" name="vat_enabled" value="1" {{ auth()->user()->seller_vat_enabled ?? true ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="addVatEnabled">Charge VAT for this product</label>
+                                        </div>
+                                        <div class="row g-2">
+                                            <div class="col-6">
+                                                <label for="addVatRate" class="form-label">VAT %</label>
+                                                <input type="number" step="0.01" min="0" max="100" class="form-control" id="addVatRate" name="vat_rate" value="{{ auth()->user()->seller_vat_rate ?? 18 }}">
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="addDeliveryPayment" class="form-label">Delivery</label>
+                                                <select class="form-select delivery-payment" id="addDeliveryPayment" name="delivery_payment" data-fee-target="#addDeliveryFee">
+                                                    <option value="customer" {{ (auth()->user()->seller_delivery_payment ?? 'customer') === 'customer' ? 'selected' : '' }}>Customer pays</option>
+                                                    <option value="free" {{ (auth()->user()->seller_delivery_payment ?? 'customer') === 'free' ? 'selected' : '' }}>Free delivery</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="addDeliveryFee" class="form-label">Delivery fee (TZS)</label>
+                                                <input type="number" step="0.01" min="0" class="form-control" id="addDeliveryFee" name="delivery_fee" value="{{ auth()->user()->seller_delivery_fee ?? 5000 }}">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -524,15 +550,41 @@
                                 <div class="col-12">
                                     <label for="editNewPrice" class="form-label">New Price <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <span class="input-group-text">$</span>
+                                        <span class="input-group-text">Tsh</span>
                                         <input type="number" step="0.01" class="form-control" id="editNewPrice" name="new_price" required>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <label for="editOldPrice" class="form-label">Old Price (Optional)</label>
                                     <div class="input-group">
-                                        <span class="input-group-text">$</span>
+                                        <span class="input-group-text">Tsh</span>
                                         <input type="number" step="0.01" class="form-control" id="editOldPrice" name="old_price">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="border rounded p-3">
+                                        <div class="form-check form-switch mb-3">
+                                            <input type="hidden" name="vat_enabled" value="0">
+                                            <input class="form-check-input" type="checkbox" id="editVatEnabled" name="vat_enabled" value="1">
+                                            <label class="form-check-label" for="editVatEnabled">Charge VAT for this product</label>
+                                        </div>
+                                        <div class="row g-2">
+                                            <div class="col-6">
+                                                <label for="editVatRate" class="form-label">VAT %</label>
+                                                <input type="number" step="0.01" min="0" max="100" class="form-control" id="editVatRate" name="vat_rate">
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="editDeliveryPayment" class="form-label">Delivery</label>
+                                                <select class="form-select delivery-payment" id="editDeliveryPayment" name="delivery_payment" data-fee-target="#editDeliveryFee">
+                                                    <option value="customer">Customer pays</option>
+                                                    <option value="free">Free delivery</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="editDeliveryFee" class="form-label">Delivery fee (TZS)</label>
+                                                <input type="number" step="0.01" min="0" class="form-control" id="editDeliveryFee" name="delivery_fee">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -670,6 +722,21 @@ $(document).ready(function() {
         location.reload();
     });
 
+    function syncDeliveryFee(select) {
+        const feeInput = $($(select).data('fee-target'));
+        const isFree = $(select).val() === 'free';
+        feeInput.prop('disabled', isFree);
+        feeInput.closest('.col-12').css('opacity', isFree ? 0.45 : 1);
+    }
+
+    $('.delivery-payment').each(function() {
+        syncDeliveryFee(this);
+    });
+
+    $(document).on('change', '.delivery-payment', function() {
+        syncDeliveryFee(this);
+    });
+
     // Add Product Form Submission
     $('#addProductForm').submit(function(e) {
         e.preventDefault();
@@ -778,6 +845,11 @@ $(document).ready(function() {
                     $('#editOldPrice').val(product.old_price || '');
                     $('#editStock').val(product.stock);
                     $('#editIsAdvertised').prop('checked', product.is_advertised);
+                    $('#editVatEnabled').prop('checked', Boolean(product.vat_enabled));
+                    $('#editVatRate').val(product.vat_rate || 18);
+                    $('#editDeliveryPayment').val(product.delivery_payment || 'customer');
+                    $('#editDeliveryFee').val(product.delivery_fee || 0);
+                    syncDeliveryFee(document.getElementById('editDeliveryPayment'));
 
                     // Set description data
                     if (product.description) {
@@ -970,10 +1042,10 @@ $(document).ready(function() {
                     }
 
                     // Set price
-                    var priceHtml = '$' + parseFloat(product.new_price).toFixed(2);
+                    var priceHtml = 'Tsh' + parseFloat(product.new_price).toFixed(2);
                     if (product.old_price) {
-                        priceHtml += ' <small class="text-decoration-line-through text-muted">$' + parseFloat(product.old_price).toFixed(2) + '</small>';
-                        $('#viewOldPrice').text('$' + parseFloat(product.old_price).toFixed(2)).show();
+                        priceHtml += ' <small class="text-decoration-line-through text-muted">Tsh' + parseFloat(product.old_price).toFixed(2) + '</small>';
+                        $('#viewOldPrice').text('Tsh' + parseFloat(product.old_price).toFixed(2)).show();
                     } else {
                         $('#viewOldPrice').hide();
                     }
@@ -1005,7 +1077,10 @@ $(document).ready(function() {
                     }
 
                     // Set status
+                    $('.view-checkout-badge').remove();
                     $('#viewStatus').text(product.is_advertised ? 'Advertised' : 'Normal');
+                    $('#viewStatus').after(`<span class="badge bg-secondary ms-1 view-checkout-badge">${product.delivery_payment === 'free' ? 'Free delivery' : 'Delivery Tsh' + Number(product.delivery_fee || 0).toLocaleString()}</span>`);
+                    $('#viewStatus').after(`<span class="badge bg-secondary ms-1 view-checkout-badge">${product.vat_enabled ? product.vat_rate + '% VAT' : 'No VAT'}</span>`);
 
                     // Set discount
                     if (product.discount > 0) {

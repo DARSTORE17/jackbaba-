@@ -69,6 +69,10 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'is_advertised' => 'boolean',
+            'vat_enabled' => 'nullable|boolean',
+            'vat_rate' => 'required|numeric|min:0|max:100',
+            'delivery_payment' => 'required|in:free,customer',
+            'delivery_fee' => 'required_if:delivery_payment,customer|numeric|min:0|max:999999999',
             'description' => 'nullable|string',
             'specifications' => 'nullable|string',
             'details' => 'nullable|string',
@@ -106,6 +110,10 @@ class ProductController extends Controller
                 'rate' => 0,
                 'stock' => $request->stock,
                 'is_advertised' => $request->is_advertised ?? false,
+                'vat_enabled' => $request->boolean('vat_enabled'),
+                'vat_rate' => $request->vat_rate,
+                'delivery_payment' => $request->delivery_payment,
+                'delivery_fee' => $request->delivery_payment === 'customer' ? ($request->delivery_fee ?? 0) : 0,
             ]);
 
             // Handle thumbnail upload
@@ -205,6 +213,10 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'is_advertised' => 'boolean',
+            'vat_enabled' => 'nullable|boolean',
+            'vat_rate' => 'required|numeric|min:0|max:100',
+            'delivery_payment' => 'required|in:free,customer',
+            'delivery_fee' => 'required_if:delivery_payment,customer|numeric|min:0|max:999999999',
             'description' => 'nullable|string',
             'specifications' => 'nullable|string',
             'details' => 'nullable|string',
@@ -240,6 +252,10 @@ class ProductController extends Controller
                 'discount' => $request->old_price ? round((($request->old_price - $request->new_price) / $request->old_price) * 100) : 0,
                 'stock' => $request->stock,
                 'is_advertised' => $request->is_advertised ?? false,
+                'vat_enabled' => $request->boolean('vat_enabled'),
+                'vat_rate' => $request->vat_rate,
+                'delivery_payment' => $request->delivery_payment,
+                'delivery_fee' => $request->delivery_payment === 'customer' ? ($request->delivery_fee ?? 0) : 0,
                 'rate' => $request->rate ?? $product->rate ?? 0,
             ]);
 

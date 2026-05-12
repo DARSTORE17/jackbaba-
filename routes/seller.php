@@ -106,10 +106,21 @@ Route::middleware(['auth'])->prefix('seller')->group(function () {
     Route::delete('/categories/{id}', [\App\Http\Controllers\seller\CategoryController::class, 'destroy'])->name('seller.categories.destroy');
 
     Route::get('/my-store', function () {
-        return view('seller.my-store');
+        $seller = Auth::user();
+        $sellerId = Auth::id();
+        $productCount = Product::where('seller_id', $sellerId)->count();
+        $orderCount = Order::whereHas('orderItems.product', function ($query) use ($sellerId) {
+            $query->where('seller_id', $sellerId);
+        })->count();
+        $revenue = DB::table('order_items')
+            ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->where('products.seller_id', $sellerId)
+            ->sum('order_items.total_price');
+        $recentProducts = Product::where('seller_id', $sellerId)->latest()->take(5)->get();
+
+        return view('seller.my-store', compact('seller', 'productCount', 'orderCount', 'revenue', 'recentProducts'));
     })->name('seller.my-store');
 
-    Route::get('/settings', function () {
-        return view('seller.settings');
-    })->name('seller.settings');
+    Route::get('/settings', [\App\Http\Controllers\seller\SettingsController::class, 'edit'])->name('seller.settings');
+    Route::put('/settings', [\App\Http\Controllers\seller\SettingsController::class, 'update'])->name('seller.settings.update');
 });
