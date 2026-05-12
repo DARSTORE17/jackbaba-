@@ -60,6 +60,28 @@ Route::middleware(['auth'])->prefix('seller')->group(function () {
             ->limit(12)
             ->get();
 
+        $monthlyRows = $monthlyStats->keyBy('month');
+        $monthlyChart = collect(range(11, 0))->map(function ($monthsAgo) use ($monthlyRows) {
+            $date = now()->subMonths($monthsAgo);
+            $key = $date->format('Y-m');
+            $row = $monthlyRows->get($key);
+
+            return [
+                'label' => $date->format('M Y'),
+                'revenue' => $row ? (float) $row->revenue : 0,
+                'orders' => $row ? (int) $row->orders_count : 0,
+            ];
+        });
+
+        $statusBreakdown = Order::whereHas('orderItems.product', function ($query) use ($sellerId) {
+            $query->where('seller_id', $sellerId);
+        })
+            ->select('status', DB::raw('COUNT(*) as total'))
+            ->groupBy('status')
+            ->get();
+
+        $lowStockCount = Product::where('seller_id', $sellerId)->where('stock', '<=', 10)->count();
+
         // Total products cost (estimate: assuming product has cost field, else use 30% of price)
         $totalProductsCost = Product::where('seller_id', $sellerId)->sum('new_price') * 0.3; // Estimate 30% as cost
 
@@ -70,6 +92,7 @@ Route::middleware(['auth'])->prefix('seller')->group(function () {
         return view('seller.dashboard', compact(
             'productCount', 'categoryCount', 'orderCount', 'recentProducts', 
             'recentOrders', 'totalRevenue', 'topProducts', 'monthlyStats',
+            'monthlyChart', 'statusBreakdown', 'lowStockCount',
             'totalProductsCost', 'profit', 'profitMargin'
         ));
     })->name('seller.dashboard');
@@ -96,7 +119,100 @@ Route::middleware(['auth'])->prefix('seller')->group(function () {
     Route::delete('/customers/{id}', [\App\Http\Controllers\seller\CustomerController::class, 'destroy'])->name('seller.customers.destroy');
 
     Route::get('/analytics', function () {
-        return view('seller.analytics');
+        $sellerId = Auth::id();
+
+        $sellerOrderQuery = Order::whereHas('orderItems.product', function ($query) use ($sellerId) {
+            $query->where('seller_id', $sellerId);
+        });
+
+        $totalRevenue = DB::table('order_items')
+            ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->where('products.seller_id', $sellerId)
+            ->sum('order_items.total_price');
+
+        $completedRevenue = DB::table('order_items')
+            ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('products.seller_id', $sellerId)
+            ->where('orders.status', 'completed')
+            ->sum('order_items.total_price');
+
+        $totalOrders = (clone $sellerOrderQuery)->count();
+        $totalCustomers = (clone $sellerOrderQuery)->distinct('user_id')->count('user_id');
+        $averageRating = Product::where('seller_id', $sellerId)->where('rate', '>', 0)->avg('rate') ?? 0;
+        $productCount = Product::where('seller_id', $sellerId)->count();
+        $lowStockCount = Product::where('seller_id', $sellerId)->where('stock', '<=', 10)->count();
+        $itemsSold = DB::table('order_items')
+            ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->where('products.seller_id', $sellerId)
+            ->sum('order_items.quantity');
+
+        $monthlyRows = DB::table('order_items')
+            ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('products.seller_id', $sellerId)
+            ->where('orders.created_at', '>=', now()->subMonths(11)->startOfMonth())
+            ->select(
+                DB::raw('DATE_FORMAT(orders.created_at, "%Y-%m") as month_key'),
+                DB::raw('SUM(order_items.total_price) as revenue'),
+                DB::raw('COUNT(DISTINCT orders.id) as orders_count')
+            )
+            ->groupBy(DB::raw('DATE_FORMAT(orders.created_at, "%Y-%m")'))
+            ->orderBy(DB::raw('DATE_FORMAT(orders.created_at, "%Y-%m")'))
+            ->get()
+            ->keyBy('month_key');
+
+        $monthlyStats = collect(range(11, 0))->map(function ($monthsAgo) use ($monthlyRows) {
+            $date = now()->subMonths($monthsAgo);
+            $key = $date->format('Y-m');
+            $row = $monthlyRows->get($key);
+
+            return [
+                'label' => $date->format('M Y'),
+                'revenue' => $row ? (float) $row->revenue : 0,
+                'orders' => $row ? (int) $row->orders_count : 0,
+            ];
+        });
+
+        $topProducts = DB::table('order_items')
+            ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->where('products.seller_id', $sellerId)
+            ->select(
+                'products.name',
+                DB::raw('SUM(order_items.quantity) as quantity'),
+                DB::raw('SUM(order_items.total_price) as revenue')
+            )
+            ->groupBy('products.id', 'products.name')
+            ->orderByDesc('revenue')
+            ->limit(8)
+            ->get();
+
+        $statusBreakdown = (clone $sellerOrderQuery)
+            ->select('status', DB::raw('COUNT(*) as total'))
+            ->groupBy('status')
+            ->orderByDesc('total')
+            ->get();
+
+        $recentOrders = (clone $sellerOrderQuery)
+            ->with(['user', 'orderItems.product'])
+            ->latest()
+            ->take(8)
+            ->get();
+
+        return view('seller.analytics', compact(
+            'totalRevenue',
+            'completedRevenue',
+            'totalOrders',
+            'totalCustomers',
+            'averageRating',
+            'productCount',
+            'lowStockCount',
+            'itemsSold',
+            'monthlyStats',
+            'topProducts',
+            'statusBreakdown',
+            'recentOrders'
+        ));
     })->name('seller.analytics');
 
     Route::get('/categories', [\App\Http\Controllers\seller\CategoryController::class, 'index'])->name('seller.categories');

@@ -5,38 +5,38 @@
 @section('styles')
 <style>
     .wishlist-container {
-        max-width: 1200px;
+        max-width: 980px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 16px;
     }
 
     .wishlist-header {
         text-align: center;
-        margin-bottom: 40px;
+        margin-bottom: 22px;
     }
 
     .wishlist-title {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
         font-weight: 700;
         color: #2563EB;
         margin-bottom: 10px;
     }
 
     .wishlist-subtitle {
-        font-size: 1.1rem;
+        font-size: 0.92rem;
         color: #6b7280;
     }
 
     .wishlist-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 20px;
-        margin-bottom: 40px;
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 12px;
+        margin-bottom: 24px;
     }
 
     .wishlist-item {
         background: white;
-        border-radius: 15px;
+        border-radius: 10px;
         overflow: hidden;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -50,7 +50,7 @@
 
     .wishlist-image {
         position: relative;
-        height: 200px;
+        height: 105px;
         overflow: hidden;
     }
 
@@ -67,14 +67,14 @@
 
     .wishlist-remove {
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 7px;
+        right: 7px;
         background: rgba(239, 68, 68, 0.9);
         color: white;
         border: none;
         border-radius: 50%;
-        width: 35px;
-        height: 35px;
+        width: 26px;
+        height: 26px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -89,14 +89,14 @@
     }
 
     .wishlist-content {
-        padding: 20px;
+        padding: 10px;
     }
 
     .wishlist-product-title {
-        font-size: 1.1rem;
+        font-size: 0.86rem;
         font-weight: 600;
         color: #1f2937;
-        margin-bottom: 10px;
+        margin-bottom: 6px;
         line-height: 1.3;
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -105,24 +105,25 @@
     }
 
     .wishlist-price {
-        font-size: 1.3rem;
+        font-size: 0.96rem;
         font-weight: 700;
         color: #2563EB;
-        margin-bottom: 15px;
+        margin-bottom: 9px;
     }
 
     .wishlist-actions {
         display: flex;
-        gap: 10px;
+        gap: 7px;
         flex-direction: column;
     }
 
     .btn-add-to-cart {
         background: linear-gradient(135deg, #2563EB, #1D4ED8);
         border: none;
-        border-radius: 8px;
-        padding: 10px 15px;
+        border-radius: 7px;
+        padding: 7px 9px;
         color: white;
+        font-size: 0.78rem;
         font-weight: 600;
         text-decoration: none;
         display: inline-flex;
@@ -144,8 +145,9 @@
         background: white;
         border: 2px solid #2563EB;
         color: #2563EB;
-        border-radius: 8px;
-        padding: 10px 15px;
+        border-radius: 7px;
+        padding: 6px 9px;
+        font-size: 0.78rem;
         font-weight: 600;
         text-decoration: none;
         display: inline-flex;
@@ -226,12 +228,12 @@
         }
 
         .wishlist-grid {
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
         }
 
         .wishlist-title {
-            font-size: 2rem;
+            font-size: 1.55rem;
         }
 
         .wishlist-actions {
@@ -240,18 +242,18 @@
 
         .btn-add-to-cart,
         .btn-view-product {
-            padding: 12px 15px;
-            font-size: 0.9rem;
+            padding: 7px 8px;
+            font-size: 0.74rem;
         }
     }
 
     @media (max-width: 576px) {
         .wishlist-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
         .wishlist-title {
-            font-size: 1.8rem;
+            font-size: 1.35rem;
         }
     }
 </style>

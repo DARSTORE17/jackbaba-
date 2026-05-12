@@ -2,6 +2,11 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    $aboutStoreImageUrl = !empty($systemSettings['about_store_image_path'])
+        ? asset('storage/' . $systemSettings['about_store_image_path'])
+        : null;
+@endphp
 
 <!-- ================= About Hero Section ================= -->
 <section class="about-hero-section position-relative"
@@ -58,13 +63,20 @@
             </div>
             <div class="col-lg-6">
                 <div class="story-image-wrapper" style="position: relative;">
-                    <div class="story-image-placeholder"
-                        style="height: 400px; background: linear-gradient(135deg, var(--blue-600), var(--blue-700)); border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;">
-                        <div style="text-align: center; color: var(--white);">
-                            <i class="bi bi-images" style="font-size: 4rem;"></i>
-                            <p style="margin-top: 20px; font-size: 1.2rem; font-weight: bold;">Our Store Image</p>
-                            <p style="font-size: 0.9rem; opacity: 0.9;">Coming Soon</p>
-                        </div>
+                    <div class="story-image-card">
+                        @if($aboutStoreImageUrl)
+                            <img src="{{ $aboutStoreImageUrl }}" alt="{{ $systemSettings['about_store_image_title'] ?? 'Our store' }}">
+                            <div class="story-image-caption">
+                                <strong>{{ $systemSettings['about_store_image_title'] ?? 'Our Store Image' }}</strong>
+                                <span>{{ $systemSettings['about_store_image_subtitle'] ?? '' }}</span>
+                            </div>
+                        @else
+                            <div class="story-image-empty">
+                                <i class="bi bi-images"></i>
+                                <p>{{ $systemSettings['about_store_image_title'] ?? 'Our Store Image' }}</p>
+                                <span>{{ $systemSettings['about_store_image_subtitle'] ?? 'Coming Soon' }}</span>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -191,7 +203,7 @@
                 style="background: linear-gradient(135deg, var(--blue-600), var(--blue-700)); border: none; border-radius: 12px; padding: 15px 40px; font-weight: bold; font-size: 1.1rem;">
                 Start Shopping <i class="bi bi-arrow-right"></i>
             </a>
-            <a href="/contact" class="btn btn-outline-primary"
+            <a href="{{ route('contact') }}" class="btn btn-outline-primary"
                 style="border-color: var(--blue-600); color: var(--blue-600); border-radius: 12px; padding: 15px 40px; font-weight: bold; font-size: 1.1rem;">
                 Contact Us <i class="bi bi-chat-dots"></i>
             </a>
@@ -247,5 +259,74 @@
 /* Section styling consistency */
 .section-title {
     font-weight: bold;
+}
+
+.story-image-card {
+    position: relative;
+    min-height: 400px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.1);
+}
+
+.story-image-card img {
+    display: block;
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+.story-image-caption {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+    padding: 16px 18px;
+    border-radius: 14px;
+    color: #ffffff;
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(12px);
+}
+
+.story-image-caption strong,
+.story-image-caption span {
+    display: block;
+}
+
+.story-image-caption strong {
+    font-size: 1.15rem;
+}
+
+.story-image-caption span {
+    margin-top: 4px;
+    opacity: 0.86;
+}
+
+.story-image-empty {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 32px;
+    text-align: center;
+    color: var(--blue-600);
+    background: #ffffff;
+}
+
+.story-image-empty i {
+    font-size: 4.5rem;
+}
+
+.story-image-empty p {
+    margin: 22px 0 8px;
+    font-size: 1.45rem;
+    font-weight: 900;
+}
+
+.story-image-empty span {
+    font-size: 1rem;
+    color: var(--blue-700);
 }
 </style>

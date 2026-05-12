@@ -1,4 +1,6 @@
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+
     :root {
         --primary-color: {{ $systemColors['primary'] ?? '#4fbb89' }};
         --secondary-color: {{ $systemColors['secondary'] ?? '#96d6ab' }};
@@ -15,6 +17,7 @@
         --radius-lg: 22px;
         --radius-md: 16px;
         --radius-sm: 12px;
+        --font-sans: "Plus Jakarta Sans", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     *, *::before, *::after {
@@ -26,9 +29,44 @@
         margin: 0;
         color: var(--text-color);
         background: var(--background-color);
-        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-family: var(--font-sans);
+        font-weight: 500;
+        letter-spacing: 0;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .navbar-brand,
+    .card-title,
+    .modal-title,
+    .table thead th {
+        font-family: var(--font-sans);
+        font-weight: 800;
+        letter-spacing: 0;
+    }
+
+    h1,
+    .display-1,
+    .display-2,
+    .display-3,
+    .display-4,
+    .display-5,
+    .display-6 {
+        font-weight: 900;
+    }
+
+    a,
+    button,
+    input,
+    select,
+    textarea {
+        font-family: inherit;
     }
 
     .card,
@@ -43,6 +81,28 @@
         border: 1px solid rgba(15, 23, 42, 0.08) !important;
         background-color: var(--surface-color) !important;
         box-shadow: var(--shadow-softest) !important;
+    }
+
+    .card {
+        font-weight: 600;
+    }
+
+    .btn,
+    .badge,
+    .nav-link,
+    .dropdown-item,
+    label,
+    .form-label {
+        font-weight: 700;
+        letter-spacing: 0;
+    }
+
+    .btn {
+        text-transform: none;
+    }
+
+    .table {
+        font-weight: 600;
     }
 
     .btn-primary,

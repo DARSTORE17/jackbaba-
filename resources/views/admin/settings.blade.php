@@ -81,7 +81,7 @@
                         <h5 class="mb-3">Storefront Media</h5>
 
                         <div class="row gy-3">
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-6">
                                 <label class="form-label" for="logo">Logo</label>
                                 <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
                                 @if(!empty($settings['logo_path']))
@@ -91,7 +91,7 @@
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-6">
                                 <label class="form-label" for="hero_image">Hero Image</label>
                                 <input type="file" class="form-control" id="hero_image" name="hero_image" accept="image/*">
                                 @if(!empty($settings['hero_image_path']))
@@ -101,13 +101,37 @@
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-md-6">
+                                <label class="form-label" for="about_store_image">About Store Card Image</label>
+                                <input type="file" class="form-control" id="about_store_image" name="about_store_image" accept="image/*">
+                                @if(!empty($settings['about_store_image_path']))
+                                    <img src="{{ asset('storage/' . $settings['about_store_image_path']) }}" alt="Current about store image" class="img-fluid rounded mt-2" style="max-height: 110px;">
+                                @endif
+                                @error('about_store_image')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-12 col-md-6">
                                 <label class="form-label" for="hero_video">Hero Background Video</label>
                                 <input type="file" class="form-control" id="hero_video" name="hero_video" accept="video/mp4,video/webm,video/ogg">
                                 @if(!empty($settings['hero_video_path']))
                                     <video src="{{ asset('storage/' . $settings['hero_video_path']) }}" class="w-100 rounded mt-2" style="max-height: 90px;" muted controls></video>
                                 @endif
                                 @error('hero_video')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label" for="about_store_image_title">About Store Card Title</label>
+                                <input type="text" class="form-control" id="about_store_image_title" name="about_store_image_title" value="{{ old('about_store_image_title', $settings['about_store_image_title'] ?? '') }}">
+                                @error('about_store_image_title')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label" for="about_store_image_subtitle">About Store Card Subtitle</label>
+                                <input type="text" class="form-control" id="about_store_image_subtitle" name="about_store_image_subtitle" value="{{ old('about_store_image_subtitle', $settings['about_store_image_subtitle'] ?? '') }}">
+                                @error('about_store_image_subtitle')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -188,9 +212,17 @@
 
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="mb-3">Contact and Social Links</h5>
+                        <h5 class="mb-3">Contact Page and Social Links</h5>
 
                         <div class="row gy-3">
+                            <div class="col-12 col-md-6">
+                                <label class="form-label" for="contact_title">Contact Page Title</label>
+                                <input type="text" class="form-control" id="contact_title" name="contact_title" value="{{ old('contact_title', $settings['contact_title'] ?? '') }}">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="contact_description">Contact Page Description</label>
+                                <textarea class="form-control" id="contact_description" name="contact_description" rows="3">{{ old('contact_description', $settings['contact_description'] ?? '') }}</textarea>
+                            </div>
                             <div class="col-12 col-md-6">
                                 <label class="form-label" for="phone">Phone</label>
                                 <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone', $settings['phone'] ?? '') }}">

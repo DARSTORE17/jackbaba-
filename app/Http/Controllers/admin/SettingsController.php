@@ -33,7 +33,10 @@ class SettingsController extends AdminController
             'site_description' => ['required', 'string', 'max:500'],
             'logo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'hero_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+            'about_store_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
             'hero_video' => ['nullable', 'file', 'mimes:mp4,webm,ogg', 'max:51200'],
+            'about_store_image_title' => ['required', 'string', 'max:120'],
+            'about_store_image_subtitle' => ['required', 'string', 'max:180'],
             'hero_kicker' => ['required', 'string', 'max:120'],
             'hero_title' => ['required', 'string', 'max:120'],
             'hero_description' => ['required', 'string', 'max:300'],
@@ -45,6 +48,8 @@ class SettingsController extends AdminController
             'shop_kicker' => ['required', 'string', 'max:120'],
             'shop_title' => ['required', 'string', 'max:160'],
             'shop_description' => ['required', 'string', 'max:300'],
+            'contact_title' => ['required', 'string', 'max:120'],
+            'contact_description' => ['required', 'string', 'max:500'],
             'phone' => ['required', 'string', 'max:40'],
             'whatsapp' => ['required', 'string', 'max:40'],
             'email' => ['required', 'email', 'max:120'],
@@ -63,7 +68,7 @@ class SettingsController extends AdminController
         $settings = SystemSettings::load();
         $data = $validator->validated();
 
-        foreach (['logo' => 'logo_path', 'hero_image' => 'hero_image_path', 'hero_video' => 'hero_video_path'] as $input => $settingKey) {
+        foreach (['logo' => 'logo_path', 'hero_image' => 'hero_image_path', 'about_store_image' => 'about_store_image_path', 'hero_video' => 'hero_video_path'] as $input => $settingKey) {
             unset($data[$input]);
 
             if (!$request->hasFile($input)) {

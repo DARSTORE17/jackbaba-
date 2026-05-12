@@ -40,7 +40,7 @@
     position: relative;
     z-index: 4;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(340px, 0.82fr);
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.48fr);
     gap: clamp(2rem, 5vw, 5rem);
     align-items: center;
     padding-top: 5rem;
@@ -168,13 +168,16 @@
 
 .home-showcase {
     position: relative;
-    min-height: 520px;
+    min-height: 300px;
+    max-width: 340px;
+    width: 100%;
+    justify-self: end;
 }
 
 .showcase-card {
     position: absolute;
     overflow: hidden;
-    border-radius: 28px;
+    border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.32);
     background: rgba(255, 255, 255, 0.18);
     box-shadow: 0 30px 90px rgba(0, 0, 0, 0.34);
@@ -182,7 +185,7 @@
 }
 
 .showcase-card--main {
-    inset: 2rem 1rem 1rem 1rem;
+    inset: 1.35rem 0.6rem 0.6rem 0.6rem;
     display: flex;
     flex-direction: column;
     animation: floatSoft 7s ease-in-out infinite;
@@ -196,19 +199,20 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding: 1.1rem 1.2rem;
+    padding: 0.62rem 0.75rem;
 }
 
 .showcase-card__top {
     color: rgba(255, 255, 255, 0.86);
     font-weight: 800;
+    font-size: 0.78rem;
 }
 
 .showcase-card img {
     flex: 1;
     min-height: 0;
     width: 100%;
-    padding: 1rem;
+    padding: 0.5rem;
     object-fit: contain;
     filter: saturate(1.08);
     background: rgba(255, 255, 255, 0.72);
@@ -225,20 +229,21 @@
 
 .showcase-card__bottom strong {
     color: #ffffff;
-    font-size: 1rem;
+    font-size: 0.82rem;
 }
 
 .showcase-card__bottom small {
     color: rgba(255, 255, 255, 0.72);
+    font-size: 0.72rem;
 }
 
 .showcase-card__bottom a {
-    width: 44px;
-    height: 44px;
+    width: 32px;
+    height: 32px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    flex: 0 0 44px;
+    flex: 0 0 32px;
     border-radius: 50%;
     color: var(--primary-color);
     background: #ffffff;
@@ -251,13 +256,14 @@
     display: inline-flex;
     align-items: center;
     gap: 0.52rem;
-    padding: 0.82rem 1rem;
+    padding: 0.52rem 0.68rem;
     border-radius: 999px;
     color: var(--primary-color);
     background: rgba(255, 255, 255, 0.88);
     box-shadow: 0 18px 45px rgba(0, 0, 0, 0.14);
     backdrop-filter: blur(16px);
     font-weight: 800;
+    font-size: 0.76rem;
     animation: chipFloat 6s ease-in-out infinite;
 }
 
@@ -602,7 +608,8 @@
     }
 
     .home-showcase {
-        min-height: 460px;
+        min-height: 280px;
+        justify-self: center;
     }
 
     .offer-grid,
@@ -633,7 +640,8 @@
     }
 
     .home-showcase {
-        min-height: 360px;
+        min-height: 240px;
+        max-width: 280px;
     }
 
     .showcase-card--main {
