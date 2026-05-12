@@ -1,5 +1,6 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+    @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css');
 
     :root {
         --primary-color: {{ $systemColors['primary'] ?? '#4fbb89' }};
@@ -10,6 +11,15 @@
         --danger-color: var(--primary-color);
         --background-color: var(--secondary-color);
         --text-color: var(--primary-color);
+        --blue-600: #2563eb;
+        --blue-700: #1d4ed8;
+        --slate-50: #f8fafc;
+        --slate-100: #f1f5f9;
+        --slate-600: #475569;
+        --slate-700: #334155;
+        --slate-800: #1e293b;
+        --slate-900: #0f172a;
+        --white: #ffffff;
         --surface-color: rgba(255, 255, 255, 0.96);
         --surface-strong: rgba(255, 255, 255, 1);
         --shadow-soft: 0 20px 50px rgba(34, 77, 47, 0.08);

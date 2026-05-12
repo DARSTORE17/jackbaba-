@@ -91,7 +91,7 @@
                                        onfocus="this.style.borderColor='var(--blue-600)'; this.parentElement.querySelector('label').style.color='var(--blue-600)';"
                                        onblur="this.style.borderColor='transparent'; this.parentElement.querySelector('label').style.color='var(--slate-700)';">
                                 <label for="password" style="color: var(--slate-700); font-weight: 500; padding-left: 0.75rem; pointer-events: none; transition: all 0.2s ease;">Password</label>
-                                <button type="button" class="btn btn-sm btn-outline-secondary position-absolute end-0 top-50 translate-middle-y me-2 border-0" onclick="togglePasswordVisibility('password', this)"
+                                <button type="button" class="password-toggle-btn btn btn-sm btn-outline-secondary position-absolute end-0 top-50 translate-middle-y me-2 border-0" onclick="togglePasswordVisibility('password', this)"
                                         style="background: transparent; color: var(--slate-600); border: none; padding: 0; line-height: 1; z-index: 10; width: 40px; height: 100%; display: flex; align-items: center; justify-content: center;">
                                     <i class="bi bi-eye-fill"></i>
                                 </button>
@@ -227,6 +227,13 @@
     align-items: center;
     justify-content: center;
     z-index: 10;
+}
+
+.password-toggle-btn i {
+    color: var(--slate-700);
+    display: inline-block;
+    font-size: 1.18rem;
+    line-height: 1;
 }
 
 .password-toggle-btn:hover {

@@ -110,7 +110,30 @@
     }
 
     .action-btn {
+        width: 34px;
+        height: 34px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         transition: all 0.2s ease;
+    }
+
+    .action-btn i {
+        display: inline-block;
+        font-size: 1rem;
+        line-height: 1;
+    }
+
+    .view-btn {
+        color: #0f172a !important;
+        border-color: #94a3b8 !important;
+        background: #ffffff !important;
+    }
+
+    .view-btn:hover {
+        color: #ffffff !important;
+        background: #0f172a !important;
+        border-color: #0f172a !important;
     }
 
     .action-btn:hover {
