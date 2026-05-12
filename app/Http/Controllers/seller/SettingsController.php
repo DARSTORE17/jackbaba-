@@ -5,6 +5,9 @@ namespace App\Http\Controllers\seller;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class SettingsController extends Controller
 {
@@ -29,6 +32,12 @@ class SettingsController extends Controller
     public function update(Request $request)
     {
         $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore(Auth::id())],
+            'phone' => ['nullable', 'string', 'max:40'],
+            'passport' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'current_password' => ['required_with:password', 'nullable', 'string'],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'seller_vat_enabled' => 'nullable|boolean',
             'seller_vat_rate' => 'required|numeric|min:0|max:100',
             'seller_delivery_payment' => 'required|in:free,customer',
@@ -36,17 +45,41 @@ class SettingsController extends Controller
         ]);
 
         $seller = Auth::user();
-        $seller->update([
+        if (!empty($validated['password']) && !Hash::check($validated['current_password'] ?? '', $seller->password)) {
+            return back()
+                ->withErrors(['current_password' => 'Current password is incorrect.'])
+                ->withInput();
+        }
+
+        $profileData = [
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? null,
+        ];
+
+        if ($request->hasFile('passport')) {
+            if (!empty($seller->passport)) {
+                Storage::disk('public')->delete($seller->passport);
+            }
+
+            $profileData['passport'] = $request->file('passport')->store('profiles', 'public');
+        }
+
+        if (!empty($validated['password'])) {
+            $profileData['password'] = Hash::make($validated['password']);
+        }
+
+        $seller->forceFill(array_merge($profileData, [
             'seller_vat_enabled' => $request->boolean('seller_vat_enabled'),
             'seller_vat_rate' => $validated['seller_vat_rate'],
             'seller_delivery_payment' => $validated['seller_delivery_payment'],
             'seller_delivery_fee' => $validated['seller_delivery_payment'] === 'customer'
                 ? ($validated['seller_delivery_fee'] ?? 0)
                 : 0,
-        ]);
+        ]))->save();
 
         return redirect()
             ->route('seller.settings')
-            ->with('success', 'Checkout settings updated successfully.');
+            ->with('success', 'Profile and store settings updated successfully.');
     }
 }
