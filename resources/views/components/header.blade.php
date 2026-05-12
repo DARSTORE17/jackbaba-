@@ -1,25 +1,24 @@
-<!-- Header Component for Bravus Market - Modern Electronics Theme -->
+@php
+    $siteName = $systemSettings['site_name'] ?? config('app.name', 'Bravus Market');
+    $siteTagline = $systemSettings['site_tagline'] ?? 'Premium electronics, phones, laptops, and accessories';
+    $logoUrl = !empty($systemSettings['logo_path']) ? asset('storage/' . $systemSettings['logo_path']) : asset('img/logo.png');
+@endphp
+
 <header class="header">
-    <!-- Particle Network Background -->
-    <div class="particles-container" id="particlesContainer"></div>
-    
     <div class="header-container">
-        <!-- Left Section - Logo and Shop Info -->
         <div class="brand-section">
             <div class="logo-container">
                 <div class="logo-main">
-                    <img src="{{ asset('img/logo.png') }}" alt="Bravus Market Logo" class="logo-img">
+                    <img src="{{ $logoUrl }}" alt="{{ $siteName }} Logo" class="logo-img">
                 </div>
                 <div class="logo-text">
-                    <h1 class="school-name">Bravus Market</h1>
-                    <p class="school-subtitle">Premium Electronics Store in Tanzania</p>
+                    <h1 class="school-name">{{ $siteName }}</h1>
+                    <p class="school-subtitle">{{ $siteTagline }}</p>
                 </div>
             </div>
         </div>
 
-        <!-- Right Section - Navigation and Actions -->
         <div class="header-right-section">
-            <!-- Navigation -->
             <nav class="navigation-right">
                 <ul class="nav-menu" id="navMenu">
                     <li class="nav-item">
@@ -84,27 +83,22 @@
             </nav>
         </div>
 
-        <!-- Mobile Menu Button -->
-        <button class="mobile-toggle" id="mobileToggle">
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Open navigation">
             <span></span>
             <span></span>
             <span></span>
         </button>
     </div>
 
-    <!-- Mobile Navigation -->
     <div class="mobile-nav" id="mobileNav">
-        <!-- Particle Network Background for Mobile Sidebar -->
-        <div class="mobile-particles-container" id="mobileParticlesContainer"></div>
-        
         <div class="mobile-nav-header">
             <div class="mobile-logo">
                 <div class="mobile-logo-main">
-                    <img src="{{ asset('img/logo.png') }}" alt="Bravus Market Logo" class="mobile-logo-img">
+                    <img src="{{ $logoUrl }}" alt="{{ $siteName }} Logo" class="mobile-logo-img">
                 </div>
-                <span>Bravus Market</span>
+                <span>{{ $siteName }}</span>
             </div>
-            <button class="mobile-close" id="mobileClose">
+            <button class="mobile-close" id="mobileClose" aria-label="Close navigation">
                 <i class="bi bi-x-lg"></i>
             </button>
         </div>

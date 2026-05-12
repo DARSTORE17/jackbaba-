@@ -43,7 +43,16 @@ class ShopController extends Controller
             $query->where('discount', '>', 0);
         }
 
+        if ($request->has('sort_by') && $request->has('sort_order')) {
+            $sortBy = $request->sort_by;
+            $sortOrder = $request->sort_order === 'asc' ? 'asc' : 'desc';
 
+            if (in_array($sortBy, ['name', 'new_price', 'created_at', 'rate'])) {
+                $query->orderBy($sortBy, $sortOrder);
+            }
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
 
         $products = $query->paginate(24)->withQueryString();
 

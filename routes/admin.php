@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\SellerController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\SettingsController;
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
@@ -35,7 +36,6 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::put('/products/{id}', [\App\Http\Controllers\admin\ProductController::class, 'update'])->name('admin.products.update');
     Route::delete('/products/{id}', [\App\Http\Controllers\admin\ProductController::class, 'destroy'])->name('admin.products.destroy');
 
-    Route::get('/settings', function () {
-        return view('admin.settings');
-    })->name('admin.settings');
+    Route::get('/settings', [SettingsController::class, 'edit'])->name('admin.settings');
+    Route::post('/settings', [SettingsController::class, 'update'])->name('admin.settings.update');
 });

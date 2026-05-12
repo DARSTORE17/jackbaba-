@@ -1,1156 +1,308 @@
-<!-- Categories Page - Bravus Market -->
 @extends('layouts.app')
 
-@section('title', 'Categories - Bravus Market')
+@section('title', 'Categories - ' . ($systemSettings['site_name'] ?? 'Bravus Market'))
 
 @section('css')
 <style>
-    :root {
-        --primary-color: #2563eb;
-        --secondary-color: #5ed1c7;
-        --accent-color: #3b82f6;
-        --success-color: #22c55e;
-        --light-bg: #f8fafc;
-        --text-dark: #1e293b;
-        --text-light: #ffffff;
-        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-        --cyan-500: #06b6d4;
-        --cyan-600: #0891b2;
-        --blue-600: #2563eb;
-        --blue-700: #1d4ed8;
-        --aqua-500: #5ed1c7;
-        --slate-100: #f1f5f9;
-        --slate-700: #334155;
-        --slate-900: #0f172a;
-        --white: #ffffff;
+    .categories-page {
+        min-height: 100vh;
+        padding: clamp(2.5rem, 6vw, 5rem) 0;
+        background: var(--background-color);
     }
 
-    body {
-        background: linear-gradient(135deg, var(--slate-100) 0%, var(--light-bg) 100%);
-        font-family: 'Inter', sans-serif;
-        color: var(--text-dark);
-        overflow-x: hidden;
+    .categories-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
     }
 
-    /* Animated Background Elements */
-    .page-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        overflow: hidden;
+    .categories-head h1 {
+        margin: 0.8rem 0 0;
+        color: var(--primary-color);
+        font-size: clamp(2rem, 5vw, 4rem);
+        line-height: 1;
+        font-weight: 950;
     }
 
-    .bg-bubble {
-        position: absolute;
-        border-radius: 50%;
-        background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.08));
-        animation: floatBubble 8s ease-in-out infinite;
+    .categories-head p {
+        max-width: 680px;
+        margin: 0.8rem 0 0;
+        color: var(--primary-color);
+        font-weight: 700;
+        line-height: 1.7;
     }
 
-    .bg-bubble-1 {
-        width: 300px;
-        height: 300px;
-        top: -150px;
-        right: -150px;
-        animation-delay: 0s;
-    }
-
-    .bg-bubble-2 {
-        width: 200px;
-        height: 200px;
-        top: 20%;
-        left: -100px;
-        animation-delay: 2s;
-    }
-
-    .bg-bubble-3 {
-        width: 150px;
-        height: 150px;
-        bottom: 10%;
-        right: 10%;
-        animation-delay: 4s;
-    }
-
-    .bg-bubble-4 {
-        width: 100px;
-        height: 100px;
-        bottom: -50px;
-        left: 20%;
-        animation-delay: 6s;
-    }
-
-    /* Particle Effects */
-    .particles-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        overflow: hidden;
-        pointer-events: none;
-    }
-
-    .particle {
-        position: absolute;
-        background: radial-gradient(circle, rgba(59, 130, 246, 0.6) 0%, rgba(37, 99, 235, 0.3) 100%);
-        border-radius: 50%;
-        animation: particleFloat 12s linear infinite;
-    }
-
-    .particle:nth-child(1) {
-        width: 4px;
-        height: 4px;
-        top: 20%;
-        left: 10%;
-        animation-delay: 0s;
-    }
-
-    .particle:nth-child(2) {
-        width: 6px;
-        height: 6px;
-        top: 60%;
-        left: 20%;
-        animation-delay: 2s;
-    }
-
-    .particle:nth-child(3) {
-        width: 3px;
-        height: 3px;
-        top: 40%;
-        left: 70%;
-        animation-delay: 4s;
-    }
-
-    .particle:nth-child(4) {
-        width: 5px;
-        height: 5px;
-        top: 80%;
-        left: 50%;
-        animation-delay: 6s;
-    }
-
-    .particle:nth-child(5) {
-        width: 4px;
-        height: 4px;
-        top: 30%;
-        left: 90%;
-        animation-delay: 8s;
-    }
-
-    .particle:nth-child(6) {
-        width: 3px;
-        height: 3px;
-        top: 70%;
-        left: 5%;
-        animation-delay: 10s;
-    }
-
-    .page-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-        position: relative;
-        z-index: 2;
-    }
-
-    .page-header {
-        text-align: center;
-        margin-bottom: 60px;
-        position: relative;
-    }
-
-    .page-title {
-        font-size: 3.5rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, var(--blue-600), var(--blue-600));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 15px;
-        animation: slideInDown 1s ease-out;
-        position: relative;
-        display: inline-block;
-    }
-
-    .page-title::after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100px;
-        height: 4px;
-        background: linear-gradient(90deg, var(--blue-600), var(--blue-700));
-        border-radius: 2px;
-        animation: growWidth 1.2s ease-out 0.5s forwards;
-        animation-fill-mode: both;
-    }
-
-    .page-subtitle {
-        font-size: 1.2rem;
-        color: var(--slate-700);
-        max-width: 700px;
-        margin: 0 auto;
-        animation: fadeInUp 1s ease-out 0.3s both;
-        font-weight: 500;
-    }
-
-    .breadcrumbs {
-        margin-bottom: 30px;
-        text-align: center;
-        animation: fadeInUp 1s ease-out 0.6s both;
-    }
-
-    .breadcrumb {
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: 25px;
-        padding: 8px 20px;
+    .soft-kicker {
         display: inline-flex;
         align-items: center;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: var(--shadow-sm);
+        gap: 0.55rem;
+        width: fit-content;
+        padding: 0.62rem 0.9rem;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 999px;
+        color: var(--primary-color);
+        background: #ffffff;
+        box-shadow: var(--shadow-softest);
+        font-size: 0.88rem;
+        font-weight: 900;
     }
 
-    .breadcrumb-item + .breadcrumb-item::before {
-        content: "→";
-        color: var(--blue-600);
-        font-weight: bold;
-    }
-
-    .breadcrumb-item a {
-        color: var(--blue-600);
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-    .breadcrumb-item a:hover {
-        color: var(--blue-600);
-    }
-
-    .breadcrumb-item.active {
-        color: var(--slate-900);
-        font-weight: 600;
-    }
-
-    .search-container {
-        margin-bottom: 60px;
-        text-align: center;
-        animation: fadeInUp 1s ease-out 0.8s both;
-        position: sticky;
-        top: 60px;
-        z-index: 10;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border-radius: 25px;
-        padding: 20px;
-        box-shadow: var(--shadow-md);
-        border: 1px solid rgba(255, 255, 255, 0.8);
-    }
-
-    .search-bar {
+    .categories-search {
         position: relative;
-        max-width: 600px;
-        margin: 0 auto;
+        min-width: min(420px, 100%);
     }
 
-    .search-bar input {
+    .categories-search input {
         width: 100%;
-        padding: 18px 60px 18px 25px;
-        border: 2px solid rgba(59, 130, 246, 0.2);
-        border-radius: 50px;
-        font-size: 16px;
-        transition: all 0.3s ease;
-        background: rgba(255, 255, 255, 0.9);
-        box-shadow: var(--shadow-md);
-        backdrop-filter: blur(10px);
-        font-weight: 500;
+        min-height: 54px;
+        padding: 0 3.4rem 0 1rem;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 999px;
+        color: var(--primary-color);
+        background: #ffffff;
+        box-shadow: var(--shadow-softest);
+        font-weight: 800;
+        outline: 0;
     }
 
-    .search-bar input:focus {
-        outline: none;
-        border-color: var(--blue-600);
-        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), var(--shadow-lg);
-        transform: scale(1.02);
-    }
-
-    .search-bar input::placeholder {
-        color: var(--slate-700);
-        opacity: 0.7;
-    }
-
-    .search-bar button {
+    .categories-search button {
         position: absolute;
-        right: 8px;
         top: 50%;
-        transform: translateY(-50%);
-        background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 48px;
-        height: 48px;
-        display: flex;
+        right: 0.4rem;
+        width: 44px;
+        height: 44px;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-    }
-
-    .search-bar button:hover {
-        transform: translateY(-50%) scale(1.05);
-        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
-    }
-
-    .search-bar button i {
-        font-size: 1.1rem;
+        border: 0;
+        border-radius: 50%;
+        color: #ffffff;
+        background: var(--primary-color);
+        transform: translateY(-50%);
     }
 
     .categories-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 30px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1rem;
     }
 
     .category-card {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 25px;
+        display: flex;
+        min-height: 390px;
         overflow: hidden;
-        box-shadow: var(--shadow-md);
-        transition: all 0.3s ease;
+        flex-direction: column;
+        border-radius: 24px;
+        color: var(--primary-color);
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        box-shadow: var(--shadow-softest);
         text-decoration: none;
-        color: inherit;
-        display: block;
-        border: 1px solid rgba(229, 231, 235, 0.8);
-        position: relative;
-        animation: slideInUp 0.8s ease-out both;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .category-card:hover {
+        color: var(--primary-color);
         transform: translateY(-6px);
-        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+        box-shadow: var(--shadow-soft);
     }
 
-    .category-header {
-        background: none;
-        padding: 40px 25px;
-        text-align: center;
-        color: white;
-        position: relative;
+    .category-media {
+        height: 190px;
+        margin: 0.85rem 0.85rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         overflow: hidden;
-        min-height: 320px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        border-radius: 18px;
+        background: var(--secondary-color);
     }
 
-    .category-header::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 200%;
-        height: 200%;
-        background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.1) 0deg 90deg, transparent 90deg 180deg);
-        animation: rotatePattern 20s linear infinite;
-        z-index: 1;
-    }
-
-    .category-header::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(180deg, rgba(15, 23, 42, 0.35), rgba(15, 23, 42, 0.55));
-        z-index: 1;
-    }
-
-    .category-icon {
-        width: 80px;
-        height: 80px;
-        background: rgba(255,255,255,0.2);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 20px;
-        font-size: 2rem;
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(255,255,255,0.3);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-        position: relative;
-        z-index: 2;
-    }
-
-    .category-card:hover .category-icon {
-        transform: scale(1.05);
-        background: rgba(255,255,255,0.3);
-    }
-
-    .category-name {
-        font-size: 1.8rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-        position: relative;
-        z-index: 2;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    .category-description {
-        font-size: 1rem;
-        opacity: 0.95;
-        margin-bottom: 20px;
-        line-height: 1.6;
-        position: relative;
-        z-index: 2;
-        max-width: 90%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .category-stats {
-        position: relative;
-        z-index: 2;
-    }
-
-    .category-stats span {
-        background: rgba(255, 255, 255, 0.2);
-        padding: 8px 16px;
-        border-radius: 9999px;
-        font-size: 0.95rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        border: 1px solid rgba(255,255,255,0.3);
-    }
-
-    .category-footer {
-        padding: 25px;
-        text-align: center;
-        background: #ffffff;
-    }
-
-    .explore-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
-        color: white;
-        padding: 12px 25px;
-        border-radius: 9999px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.3s ease;
-    }
-
-    .explore-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.2);
-    }
-
-    .explore-btn i {
-        font-size: 1rem;
-    }
-
-    @media (max-width: 960px) {
-        .categories-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    @media (max-width: 640px) {
-        .categories-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .category-header {
-            padding: 30px 20px;
-        }
-
-        .category-name {
-            font-size: 1.5rem;
-        }
-    }
-
-    .category-header {
-        background: none;
-        padding: 40px 25px;
-        text-align: center;
-        color: white;
-        position: relative;
-        overflow: hidden;
-        min-height: 320px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .category-header::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 200%;
-        height: 200%;
-        background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.1) 0deg 90deg, transparent 90deg 180deg);
-        animation: rotatePattern 20s linear infinite;
-        z-index: 1;
-    }
-
-    .category-header::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(180deg, rgba(15, 23, 42, 0.35), rgba(15, 23, 42, 0.55));
-        z-index: 1;
-    }
-
-    .category-icon {
-        width: 80px;
-        height: 80px;
-        background: rgba(255,255,255,0.2);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 20px;
-        font-size: 2rem;
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(255,255,255,0.3);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-        position: relative;
-        z-index: 2;
-    }
-
-    .category-card:hover .category-icon {
-        transform: scale(1.1) rotateY(180deg);
-        background: rgba(255,255,255,0.3);
-        box-shadow: 0 12px 35px rgba(0,0,0,0.2);
-    }
-
-    .category-image {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 20px;
-        border: 3px solid rgba(255,255,255,0.4);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-        position: relative;
-        z-index: 2;
-        overflow: hidden;
-    }
-
-    .category-card:hover .category-image {
-        transform: scale(1.1);
-        box-shadow: 0 12px 35px rgba(0,0,0,0.2);
-        border-color: rgba(255,255,255,0.6);
-    }
-
-    .category-name {
-        font-size: 1.8rem;
-        font-weight: 700;
-        margin-bottom: 8px;
-        position: relative;
-        z-index: 2;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    .category-description {
-        font-size: 1rem;
-        opacity: 0.95;
-        margin-bottom: 20px;
-        line-height: 1.6;
-        position: relative;
-        z-index: 2;
-    }
-
-    .category-stats {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.95rem;
-        opacity: 0.9;
-        background: rgba(255,255,255,0.1);
-        padding: 8px 15px;
-        border-radius: 20px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255,255,255,0.2);
-        position: relative;
-        z-index: 2;
-    }
-
-    .category-footer {
-        padding: 25px;
-        text-align: center;
-        background: linear-gradient(135deg, rgba(241, 245, 249, 0.8), rgba(248, 250, 252, 0.9));
-        position: relative;
-    }
-
-    .explore-btn {
-        background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
-        color: white;
-        padding: 12px 30px;
-        border-radius: 25px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-        border: 2px solid transparent;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .explore-btn::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
+    .category-media img {
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: left 0.5s;
+        padding: 0.75rem;
+        object-fit: contain;
+        transition: transform 0.28s ease;
     }
 
-    .explore-btn:hover::before {
-        left: 100%;
+    .category-card:hover .category-media img {
+        transform: scale(1.04);
     }
 
-    .explore-btn:hover {
-        background: linear-gradient(135deg, var(--blue-700), var(--blue-700));
-        color: white;
-        text-decoration: none;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+    .category-placeholder {
+        width: 74px;
+        height: 74px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 22px;
+        color: #ffffff;
+        background: var(--primary-color);
+        font-size: 2rem;
     }
 
-    .explore-btn i {
-        font-size: 1.1rem;
-        transition: transform 0.3s ease;
+    .category-body {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding: 1.1rem;
     }
 
-    .explore-btn:hover i {
-        transform: translateX(3px);
+    .category-body h2 {
+        margin: 0;
+        color: var(--primary-color);
+        font-size: 1.22rem;
+        line-height: 1.25;
+        font-weight: 950;
+    }
+
+    .category-body p {
+        margin: 0.7rem 0 0;
+        color: var(--primary-color);
+        line-height: 1.65;
+        font-weight: 700;
+    }
+
+    .category-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-top: auto;
+        padding-top: 1rem;
+        font-weight: 950;
+    }
+
+    .category-count {
+        min-height: 34px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 0.7rem;
+        border-radius: 999px;
+        background: var(--secondary-color);
+    }
+
+    .category-arrow {
+        width: 38px;
+        height: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        color: #ffffff;
+        background: var(--primary-color);
     }
 
     .empty-state {
+        padding: 4rem 1rem;
+        border-radius: 24px;
+        background: #ffffff;
+        box-shadow: var(--shadow-softest);
         text-align: center;
-        padding: 100px 30px;
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 25px;
-        box-shadow: var(--shadow-lg);
-        margin-top: 60px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        animation: bounceIn 1s ease-out;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .empty-state::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(circle at center, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
-        z-index: -1;
     }
 
     .empty-state i {
-        font-size: 5rem;
-        background: linear-gradient(135deg, var(--blue-600), var(--blue-600));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 25px;
-        animation: bounce 2s infinite;
-    }
-
-    .empty-state h3 {
-        color: var(--text-dark);
-        margin-bottom: 15px;
-        font-weight: 700;
-        font-size: 1.8rem;
-    }
-
-    .empty-state p {
-        color: var(--slate-700);
-        margin-bottom: 30px;
-        font-size: 1.1rem;
-        line-height: 1.6;
-    }
-
-    .empty-state .btn {
-        background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
-        color: white;
-        padding: 15px 30px;
-        border-radius: 25px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-        border: none;
-    }
-
-    .empty-state .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
-        color: white;
-    }
-
-    /* Floating Decorative Elements */
-    .floating-decoration {
-        position: absolute;
-        z-index: 0;
-        pointer-events: none;
-        animation: floatRotate 8s ease-in-out infinite;
-    }
-
-    .floating-decoration.decoration-1 {
-        top: 10%;
-        left: 5%;
-        animation-delay: 0s;
-    }
-
-    .floating-decoration.decoration-1 i {
+        color: var(--primary-color);
         font-size: 3rem;
-        color: rgba(59, 130, 246, 0.3);
     }
 
-    .floating-decoration.decoration-2 {
-        top: 5%;
-        right: 10%;
-        animation-delay: 2s;
+    .empty-state h2,
+    .empty-state p {
+        color: var(--primary-color);
     }
 
-    .floating-decoration.decoration-2 i {
-        font-size: 4rem;
-        color: rgba(37, 99, 235, 0.25);
-    }
-
-    .floating-decoration.decoration-3 {
-        bottom: 15%;
-        left: 3%;
-        animation-delay: 4s;
-    }
-
-    .floating-decoration.decoration-3 i {
-        font-size: 3.5rem;
-        color: rgba(37, 99, 235, 0.2);
-    }
-
-    .floating-decoration.decoration-4 {
-        bottom: 10%;
-        right: 5%;
-        animation-delay: 6s;
-    }
-
-    .floating-decoration.decoration-4 i {
-        font-size: 4.2rem;
-        color: rgba(37, 99, 235, 0.3);
-    }
-
-    /* Animations */
-    @keyframes slideInDown {
-        from {
-            transform: translateY(-50px);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1;
+    @media (max-width: 1199px) {
+        .categories-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
         }
     }
 
-    @keyframes growWidth {
-        from {
-            width: 0;
+    @media (max-width: 900px) {
+        .categories-head {
+            align-items: stretch;
+            flex-direction: column;
         }
-        to {
-            width: 100px;
+
+        .categories-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
     }
 
-    @keyframes fadeInUp {
-        from {
-            transform: translateY(30px);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-
-    @keyframes slideInUp {
-        from {
-            transform: translateY(50px);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-
-    @keyframes bounceIn {
-        0% {
-            transform: scale(0.3);
-            opacity: 0;
-        }
-        50% {
-            transform: scale(1.05);
-        }
-        70% {
-            transform: scale(0.9);
-        }
-        100% {
-            transform: scale(1);
-            opacity: 1;
-        }
-    }
-
-    @keyframes rotatePattern {
-        from {
-            transform: rotate(0deg);
-        }
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
-    @keyframes floatBubble {
-        0%, 100% {
-            transform: translateY(0px) scale(1);
-        }
-        50% {
-            transform: translateY(-30px) scale(1.1);
-        }
-    }
-
-    @keyframes particleFloat {
-        0% {
-            transform: translateY(0px) translateX(0px);
-            opacity: 0;
-        }
-        10% {
-            opacity: 0.7;
-        }
-        90% {
-            opacity: 0.7;
-        }
-        100% {
-            transform: translateY(-100vh) translateX(-50px);
-            opacity: 0;
-        }
-    }
-
-    @keyframes floatRotate {
-        0%, 100% {
-            transform: translateY(0px) rotate(0deg);
-        }
-        50% {
-            transform: translateY(-20px) rotate(180deg);
-        }
-    }
-
-    @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% {
-            transform: translateY(0);
-        }
-        40% {
-            transform: translateY(-10px);
-        }
-        60% {
-            transform: translateY(-5px);
-        }
-    }
-
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
+    @media (max-width: 560px) {
         .categories-grid {
             grid-template-columns: 1fr;
-            gap: 30px;
-        }
-
-        .page-title {
-            font-size: 2.5rem;
-        }
-
-        .page-subtitle {
-            font-size: 1rem;
         }
 
         .category-card {
-            margin-bottom: 20px;
-        }
-
-        .floating-decoration {
-            display: none;
-        }
-
-        .bg-bubble {
-            display: none;
-        }
-
-        .breadcrumb {
-            padding: 6px 15px;
-            font-size: 0.9rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .page-container {
-            padding: 15px;
-        }
-
-        .page-title {
-            font-size: 2rem;
-        }
-
-        .category-header {
-            padding: 30px 20px;
-        }
-
-        .category-name {
-            font-size: 1.5rem;
-        }
-
-        .category-icon {
-            width: 70px;
-            height: 70px;
-            font-size: 1.8rem;
+            min-height: 0;
         }
     }
 </style>
 @endsection
 
 @section('content')
-<!-- Animated Background Elements -->
-<div class="page-background">
-    <div class="bg-bubble bg-bubble-1"></div>
-    <div class="bg-bubble bg-bubble-2"></div>
-    <div class="bg-bubble bg-bubble-3"></div>
-    <div class="bg-bubble bg-bubble-4"></div>
-    <div class="particles-container">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
-</div>
+<main class="categories-page">
+    <div class="container">
+        <div class="categories-head">
+            <div>
+                <span class="soft-kicker">
+                    <i class="bi bi-grid-3x3-gap-fill"></i>
+                    {{ $systemSettings['site_name'] ?? '' }}
+                </span>
+                <h1>Shop by Category</h1>
+                <p>{{ $systemSettings['site_description'] ?? '' }}</p>
+            </div>
 
-<!-- Floating Decorative Elements -->
-<div class="floating-decoration decoration-1">
-    <i class="bi bi-star-fill"></i>
-</div>
-<div class="floating-decoration decoration-2">
-    <i class="bi bi-heart-fill"></i>
-</div>
-<div class="floating-decoration decoration-3">
-    <i class="bi bi-balloon-fill"></i>
-</div>
-<div class="floating-decoration decoration-4">
-    <i class="bi bi-emoji-smile-fill"></i>
-</div>
-
-<div class="page-container">
-    <!-- Breadcrumbs -->
-    <div class="breadcrumbs">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="/">
-                        <i class="bi bi-house-door me-1"></i>Home
-                    </a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    Categories
-                </li>
-            </ol>
-        </nav>
-    </div>
-
-    <div class="page-header">
-        <h1 class="page-title">
-            <i class="bi bi-grid-3x3-gap me-3"></i>
-            Shop by Category
-        </h1>
-        <p class="page-subtitle">
-           Chagua vifaa vya electronics vinavyorahisisha maisha yako ya kidigitali.<br>
-            <span style="font-size: 1rem; color: var(--blue-600); font-weight: 600;">
-               Smart Electronics • Accessories & More
-            </span>
-        </p>
-    </div>
-
-    <!-- Search Bar -->
-    <div class="search-container">
-        <form method="GET" action="{{ route('categories') }}">
-            <div class="search-bar">
-                <input type="text" name="search"
-                       placeholder="Search for categories like 'laptop', 'cell phones', 'cameras'..."
-                       value="{{ request('search') }}">
-                <button type="submit" title="Search Categories">
+            <form method="GET" action="{{ route('categories') }}" class="categories-search">
+                <input type="text" name="search" placeholder="Search categories..." value="{{ request('search') }}">
+                <button type="submit" aria-label="Search categories">
                     <i class="bi bi-search"></i>
                 </button>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
 
-    <!-- Categories Grid -->
-    <div class="categories-grid">
-        @forelse($categories as $category)
-            @php
-                $icons = [
-                    'baby-clothes' => 'bi-t-shirt',
-                    'kids-toys' => 'bi-rocket-takeoff',
-                    'gifts-hampers' => 'bi-gift',
-                ];
-                $colors = [
-                    'baby-clothes' => ['--blue-600', '--cyan-500'],
-                    'kids-toys' => ['--cyan-600', '--aqua-500'],
-                    'gifts-hampers' => ['--blue-700', '--cyan-600'],
-                ];
-                $icon = $icons[$category->slug] ?? 'bi-circle';
-                $gradient = $colors[$category->slug] ?? ['--blue-600', '--cyan-500'];
-                $categoryImageUrl = $category->image ? asset('storage/' . $category->image) : null;
-                $headerStyle = $categoryImageUrl
-                    ? "background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.35), rgba(15, 23, 42, 0.15)), url('" . $categoryImageUrl . "'); background-size: cover; background-position: center; background-repeat: no-repeat;"
-                    : "background: linear-gradient(135deg, " . $gradient[0] . ", " . $gradient[1] . ");";
-            @endphp
+        <div class="categories-grid">
+            @forelse($categories as $category)
+                @php
+                    $hasImage = !empty($category->image)
+                        && \Illuminate\Support\Facades\Storage::disk('public')->exists($category->image);
+                    $imageUrl = $hasImage ? asset('storage/' . $category->image) : null;
+                @endphp
 
-            <a href="{{ route('category.show', $category->slug) }}" class="category-card">
-                <div class="category-header" data-bg-style="{{ $headerStyle }}">
-                    <div class="category-icon">
-                        <i class="bi {{ $icon }}"></i>
+                <a href="{{ route('category.show', $category->slug) }}" class="category-card">
+                    <div class="category-media">
+                        @if($imageUrl)
+                            <img src="{{ $imageUrl }}" alt="{{ $category->name }}" loading="lazy">
+                        @else
+                            <span class="category-placeholder">
+                                <i class="bi bi-grid"></i>
+                            </span>
+                        @endif
                     </div>
-                    <h2 class="category-name">{{ $category->name }}</h2>
-                    @if($category->description)
-                        <p class="category-description">{{ Str::limit($category->description, 100) }}</p>
-                    @endif
-                    <div class="category-stats">
-                        <span>
-                            <i class="bi bi-box-seam me-1"></i>
-                            {{ $category->products_count }} {{ Str::plural('product', $category->products_count) }}
-                        </span>
+                    <div class="category-body">
+                        <h2>{{ $category->name }}</h2>
+                        @if($category->description)
+                            <p>{{ Str::limit($category->description, 95) }}</p>
+                        @endif
+                        <div class="category-bottom">
+                            <span class="category-count">{{ $category->products_count }} {{ Str::plural('product', $category->products_count) }}</span>
+                            <span class="category-arrow">
+                                <i class="bi bi-arrow-right"></i>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="category-footer">
-                    <span class="explore-btn">
-                        Explore {{ $category->name }}
-                        <i class="bi bi-arrow-right"></i>
-                    </span>
-                </div>
-            </a>
-        @empty
-            <div class="empty-state">
-                <i class="bi bi-search-heart"></i>
-                <h3>Oops! No categories found</h3>
-                <p>
-                    We couldn't find any categories matching your search.
-                    <br><strong>Try searching for:</strong> toys, clothes, gifts, or hampers
-                </p>
-                <a href="{{ route('shop') }}" class="btn">
-                    <i class="bi bi-shop me-2"></i>Browse All Products
                 </a>
-                <br><br>
-                <a href="{{ route('categories') }}" class="text-decoration-none">
-                    <small style="color: var(--blue-600); font-weight: 500;">
-                        <i class="bi bi-arrow-counterclockwise me-1"></i>Clear search & show all categories
-                    </small>
-                </a>
-            </div>
-        @endforelse
-    </div>
-
-    <!-- Fun Footer Call-to-Action -->
-    @if($categories->isNotEmpty())
-    <div style="text-align: center; margin-top: 80px; padding: 40px 20px; animation: fadeInUp 1s ease-out 1s both;">
-        <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(59, 130, 246, 0.04));
-                    border-radius: 25px; padding: 40px; backdrop-filter: blur(10px);
-                    border: 1px solid rgba(255, 255, 255, 0.2); max-width: 600px; margin: 0 auto;
-                    box-shadow: var(--shadow-lg);">
-            <h3 style="color: var(--slate-900); margin-bottom: 15px; font-weight: 700;">
-                Can't find what you're looking for?
-            </h3>
-            <p style="color: var(--slate-700); margin-bottom: 25px; line-height: 1.6;">
-                Browse our complete collection of amazing kids' products!
-            </p>
-            <a href="{{ route('shop') }}" class="explore-btn"
-               style="background: linear-gradient(135deg, var(--blue-600), var(--blue-700)); color: white;">
-                Explore All Products
-                <i class="bi bi-arrow-right"></i>
-            </a>
+            @empty
+                <div class="empty-state">
+                    <i class="bi bi-search"></i>
+                    <h2>No categories found</h2>
+                    <p>Try another search term or clear your search.</p>
+                </div>
+            @endforelse
         </div>
     </div>
-    @endif
-</div>
+</main>
 @endsection
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Auto-search functionality
-    const searchInput = document.querySelector('input[name="search"]');
-    const searchForm = searchInput.closest('form');
-    let searchTimeout;
-
-    searchInput.addEventListener('input', function(e) {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-            const searchValue = e.target.value.trim();
-            if (searchValue.length >= 2 || searchValue.length === 0) {
-                searchForm.submit();
-            }
-        }, 800); // Wait 800ms after user stops typing
-    });
-
-    // Enter key behavior
-    searchInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault(); // Prevent form submission
-            searchForm.submit();
-        }
-    });
-
-    // Clear search button
-    const searchButton = searchForm.querySelector('button[type="submit"]');
-    searchButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        searchForm.submit();
-    });
-
-    // Enhance search input styling
-    searchInput.addEventListener('focus', function() {
-        this.parentElement.classList.add('search-focused');
-    });
-
-    searchInput.addEventListener('blur', function() {
-        this.parentElement.classList.remove('search-focused');
-    });
-
-    // Apply dynamic category header backgrounds safely after Blade rendering
-    document.querySelectorAll('.category-header[data-bg-style]').forEach(function(header) {
-        header.style.cssText = header.dataset.bgStyle;
-    });
-});
-</script>

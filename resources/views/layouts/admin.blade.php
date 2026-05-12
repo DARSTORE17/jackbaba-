@@ -21,6 +21,36 @@
     <link href="{{ asset('css/sellerSidebar.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sellerLayout.css') }}" rel="stylesheet">
 
+    @include('components.system-colors')
+
+    <style>
+        .navbar,
+        .offcanvas {
+            border-radius: var(--radius-md) !important;
+            border: 1px solid rgba(15, 23, 42, 0.06) !important;
+            background-color: var(--surface-color) !important;
+            box-shadow: var(--shadow-soft) !important;
+        }
+
+        .card {
+            overflow: hidden;
+        }
+
+        .text-success,
+        .text-warning,
+        .text-danger {
+            color: inherit !important;
+        }
+
+        .border-start.border-4 {
+            border-left-width: 0.5rem !important;
+        }
+
+        .table thead th {
+            background: rgba(255, 255, 255, 0.92);
+        }
+    </style>
+
     @yield('styles')
 </head>
 

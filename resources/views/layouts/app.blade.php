@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'TotoNest') }}</title>
+    <title>@yield('title', $systemSettings['site_name'] ?? config('app.name', 'Bravus Market'))</title>
 
     {{-- Bootstrap 5 CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -20,17 +20,12 @@
     <link href="{{ asset('css/header.css') }}" rel="stylesheet">
     <link href="{{ asset('css/footer.css') }}" rel="stylesheet">
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
+    @include('components.system-colors')
 
+    <style>
         .hero-section {
             margin-top: 0;
-            /* remove any default spacing */
             padding-top: 0;
-            /* optional: hero padding top */
         }
 
         .whatsapp-float {
@@ -78,7 +73,7 @@
     {{-- Footer Component --}}
     @include('components.footer')
 
-    <a href="https://wa.me/255754321987?text=Hello%2C%20I%20want%20to%20order%20a%20product" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+    <a href="https://wa.me/{{ preg_replace('/\D+/', '', $systemSettings['whatsapp'] ?? '255754321987') }}?text=Hello%2C%20I%20want%20to%20order%20a%20product" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
         <i class="bi bi-whatsapp"></i>
     </a>
 

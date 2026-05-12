@@ -1,45 +1,12 @@
-/* Blue/White Site Palette */
-/* Color variable names kept for compatibility with existing styles. */
-:root {
-    --blue-600: #2563EB;     /* Strong Blue */
-    --blue-700: #1D4ED8;     /* Deep Blue */
-    --blue-800: #1E40AF;     /* Dark Blue */
-
-    --cyan-500: #BFDBFE;     /* Light Sky */
-    --cyan-600: #93C5FD;     /* Medium Sky */
-
-    --aqua-400: #3B82F6;     /* Bright Blue */
-    --aqua-500: #2563EB;     /* Solid Blue */
-
-    --slate-50: #FFFFFF;     /* Clean White */
-    --slate-100: #F8FAFC;    /* Soft Grey */
-    --slate-200: #E2E8F0;    /* Light Border */
-
-    --slate-800: #475569;    /* Dark Grey */
-    --slate-900: #1E293B;    /* Deep Grey */
-
-    --white: #FFFFFF;
-    --black: #000000;
-}
-
-
-
-
-/* Base Header Styles with Blue/Cyan/Aqua Gradient */
 .header {
-    background: linear-gradient(
-        135deg,
-        var(--aqua-400) 0%,
-        var(--blue-700) 50%,
-        var(--blue-800) 100%
-    );
-    border-bottom: none;
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
     position: sticky;
     top: 0;
     z-index: 1000;
-    font-family: "Inter", "Segoe UI", sans-serif;
     overflow: visible;
+    background: var(--surface-strong);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+    font-family: "Inter", "Segoe UI", sans-serif;
 }
 
 .header-container {
@@ -47,15 +14,13 @@
     align-items: center;
     justify-content: space-between;
     max-width: 1280px;
+    height: 74px;
     margin: 0 auto;
     padding: 0 2rem;
-    height: 70px;
-    position: relative;
-    z-index: 2;
 }
 
-/* Brand Section */
-.brand-section {
+.brand-section,
+.navigation-right {
     flex: 0 0 auto;
 }
 
@@ -65,26 +30,24 @@
     gap: 12px;
 }
 
-.logo-main {
-    width: 70px; /* Match header height */
-    height: 70px; /* Match header height */
-    background: linear-gradient(135deg, var(--blue-600), var(--blue-600));
-    border-radius: 50%; /* Perfect circle */
+.logo-main,
+.mobile-logo-main {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--white);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    border: 2px solid rgba(255, 255, 255, 0.2);
     overflow: hidden;
+    border-radius: 50%;
+    background: var(--background-color);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
 }
 
-.logo-img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.logo-main {
+    width: 58px;
+    height: 58px;
 }
 
+.logo-img,
 .mobile-logo-img {
     width: 100%;
     height: 100%;
@@ -94,353 +57,184 @@
 .logo-text {
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 .school-name {
-    font-size: 1.2rem; /* Slightly smaller for better fit */
-    font-weight: 700;
-    color: var(--white);
     margin: 0;
-    line-height: 1.2;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: var(--text-color);
+    font-size: 1.12rem;
+    font-weight: 900;
+    line-height: 1.1;
 }
 
 .school-subtitle {
-    font-size: 0.7rem; /* Slightly smaller for better fit */
-    color: rgba(255, 255, 255, 0.8);
-    margin: 0;
-    font-weight: 500;
+    max-width: 270px;
+    margin: 0.18rem 0 0;
+    color: var(--primary-color);
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* Right Section - Navigation and Actions */
 .header-right-section {
     display: flex;
     align-items: center;
-    gap: 2rem;
-}
-
-/* Right Navigation */
-.navigation-right {
-    flex: 0 0 auto;
 }
 
 .nav-menu {
     display: flex;
-    list-style: none;
-    gap: 1.5rem;
+    align-items: center;
+    gap: 0.4rem;
     margin: 0;
     padding: 0;
-    align-items: center;
+    list-style: none;
 }
 
 .nav-link {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 12px 0;
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    font-size: 0.9rem;
-    border: none;
+    gap: 0.45rem;
+    min-height: 42px;
+    padding: 0 0.72rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    color: var(--primary-color);
     background: transparent;
+    text-decoration: none;
+    font-size: 0.86rem;
+    font-weight: 800;
+    transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
 }
 
-.nav-link:hover {
-    color: var(--white);
-    transform: translateY(-1px);
-}
-
+.nav-link:hover,
 .nav-link.active {
-    color: var(--white);
-    font-weight: 600;
-}
-
-/* Underline Animation for Active Nav */
-.nav-link::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        var(--aqua-400),
-        transparent
-    );
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
-    width: 100%;
+    color: var(--primary-color);
+    background: var(--background-color);
+    border-color: rgba(15, 23, 42, 0.08);
+    transform: translateY(-1px);
 }
 
 .nav-link i {
     font-size: 1rem;
-    transition: transform 0.3s ease;
 }
 
-.nav-link:hover i {
-    transform: scale(1.1);
-}
-
-/* Dropdown Menu Styles */
-.dropdown {
-    position: relative;
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 9999; /* Very high z-index to appear above all main content */
-    display: none;
-    min-width: 220px;
-    padding: 0.5rem 0;
-    margin: 0;
-    font-size: 0.9rem;
-    color: var(--slate-900);
-    text-align: left;
-    background-color: var(--white);
-    background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: 0.5rem;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    margin-top: 10px; /* Add some spacing from header */
-}
-
-.dropdown-menu.show {
-    display: block;
-}
-
-.dropdown-item {
-    display: block;
-    width: 100%;
-    padding: 0.75rem 1.5rem;
-    clear: both;
-    font-weight: 400;
-    color: var(--slate-700);
-    text-align: inherit;
-    text-decoration: none;
-    white-space: nowrap;
-    background-color: transparent;
-    border: 0;
-    transition: all 0.3s ease;
+.logout-btn {
     cursor: pointer;
 }
 
-.dropdown-item:hover,
-.dropdown-item:focus {
-    color: var(--slate-900);
-    text-decoration: none;
-    background-color: var(--slate-100);
-}
-
-.dropdown-item i {
-    width: 18px;
-    margin-right: 8px;
-    font-size: 0.9rem;
-    opacity: 0.7;
-}
-
-.dropdown-divider {
-    height: 0;
-    margin: 0.5rem 0;
-    overflow: hidden;
-    border-top: 1px solid var(--slate-200);
-}
-
-/* Mobile category links styling */
-.mobile-category-links {
-    border-left: 3px solid rgba(255, 255, 255, 0.2);
-    margin-left: 15px;
-    padding-left: 15px;
-}
-
-/* Particle Network Background */
-.particles-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    overflow: hidden;
-}
-
-.particle {
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-.particle-line {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.15);
-    transform-origin: 0 0;
-    pointer-events: none;
-}
-
-/* Mobile Toggle Button */
 .mobile-toggle {
     display: none;
     flex-direction: column;
-    background: transparent;
-    border: none;
-    width: 30px;
-    height: 24px;
     justify-content: space-between;
-    cursor: pointer;
+    width: 34px;
+    height: 26px;
     padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
 }
 
 .mobile-toggle span {
     display: block;
-    height: 3px;
     width: 100%;
-    background: var(--white);
-    border-radius: 2px;
-    transition: all 0.3s ease;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--text-color);
+    transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-/* Mobile Navigation */
 .mobile-nav {
     position: fixed;
-    top: 0;
-    left: -100%;
-    width: 100%;
+    inset: 0 auto 0 -100%;
+    width: min(380px, 100%);
     height: 100vh;
-    background: linear-gradient(
-        135deg,
-        var(--blue-800) 0%,
-        var(--blue-700) 50%,
-        var(--aqua-400) 100%
-    );
     z-index: 1001;
-    transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
-    overflow: hidden;
+    overflow-y: auto;
+    background: var(--surface-strong);
+    border-right: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 20px 0 60px rgba(15, 23, 42, 0.14);
+    transition: left 0.32s ease;
 }
 
 .mobile-nav.active {
     left: 0;
 }
 
-.mobile-particles-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    overflow: hidden;
-}
-
 .mobile-nav-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    position: relative;
-    z-index: 2;
+    justify-content: space-between;
+    padding: 1.2rem;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
 }
 
 .mobile-logo {
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--white);
+    gap: 0.8rem;
+    color: var(--text-color);
+    font-weight: 900;
 }
 
 .mobile-logo-main {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, var(--blue-600), var(--blue-600));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    overflow: hidden;
+    width: 48px;
+    height: 48px;
 }
 
 .mobile-close {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    font-size: 1.5rem;
-    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 50%;
+    color: var(--text-color);
+    background: var(--background-color);
     cursor: pointer;
-    padding: 8px;
-    border-radius: 8px;
-    transition: background 0.3s ease;
-    backdrop-filter: blur(10px);
-    position: relative;
-    z-index: 2;
-}
-
-.mobile-close:hover {
-    background: rgba(255, 255, 255, 0.2);
 }
 
 .mobile-nav-menu {
     display: flex;
     flex-direction: column;
-    padding: 1.5rem;
-    gap: 8px;
-    position: relative;
-    z-index: 2;
+    gap: 0.45rem;
+    padding: 1rem;
 }
 
 .mobile-nav-link {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 18px;
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    font-weight: 500;
-    font-size: 0.9rem;
-    border: none;
+    gap: 0.75rem;
+    min-height: 48px;
+    padding: 0 1rem;
+    border-radius: 14px;
+    color: var(--primary-color);
     background: transparent;
-    position: relative;
-    z-index: 2;
+    border: 0;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 800;
+    transition: color 0.22s ease, background-color 0.22s ease, transform 0.22s ease;
 }
 
 .mobile-nav-link:hover {
-    color: var(--white);
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateX(5px);
+    color: var(--primary-color);
+    background: var(--background-color);
+    transform: translateX(4px);
 }
 
 .mobile-nav-link i {
-    font-size: 1.1rem;
-    width: 20px;
+    width: 22px;
     text-align: center;
+    font-size: 1.1rem;
 }
 
-/* Responsive dropdown behavior on smaller screens */
-@media (max-width: 1200px) {
-    .dropdown-menu {
-        min-width: 200px;
-        left: -50px; /* Center dropdown better on smaller screens */
-    }
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
+@media (max-width: 1120px) {
     .header-right-section {
         display: none;
     }
@@ -448,64 +242,25 @@
     .mobile-toggle {
         display: flex;
     }
-
-    .header-container {
-        padding: 0 1.5rem;
-    }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 520px) {
     .header-container {
+        height: 68px;
         padding: 0 1rem;
-        height: 65px;
     }
 
     .logo-main {
-        width: 65px;
-        height: 65px;
+        width: 52px;
+        height: 52px;
     }
 
     .school-name {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 
     .school-subtitle {
-        font-size: 0.65rem;
+        max-width: 190px;
+        font-size: 0.68rem;
     }
-}
-
-/* Animation for mobile menu */
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.mobile-nav-link {
-    animation: slideIn 0.3s ease forwards;
-    opacity: 0;
-}
-
-.mobile-nav-link:nth-child(1) {
-    animation-delay: 0.1s;
-}
-.mobile-nav-link:nth-child(2) {
-    animation-delay: 0.15s;
-}
-.mobile-nav-link:nth-child(3) {
-    animation-delay: 0.2s;
-}
-.mobile-nav-link:nth-child(4) {
-    animation-delay: 0.25s;
-}
-.mobile-nav-link:nth-child(5) {
-    animation-delay: 0.3s;
-}
-.mobile-nav-link:nth-child(6) {
-    animation-delay: 0.35s;
 }

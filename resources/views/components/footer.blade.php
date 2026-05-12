@@ -1,112 +1,107 @@
-<!-- Footer Component - Bravus Market Edition -->
+@php
+    $siteName = $systemSettings['site_name'] ?? config('app.name', 'Bravus Market');
+    $siteTagline = $systemSettings['site_tagline'] ?? '';
+    $siteDescription = $systemSettings['site_description'] ?? '';
+    $logoUrl = !empty($systemSettings['logo_path']) ? asset('storage/' . $systemSettings['logo_path']) : asset('img/logo.png');
+    $socialLinks = [
+        'facebook_url' => 'bi-facebook',
+        'instagram_url' => 'bi-instagram',
+        'tiktok_url' => 'bi-tiktok',
+        'youtube_url' => 'bi-youtube',
+    ];
+@endphp
+
 <footer class="footer">
     <div class="footer-container">
-        
-        <!-- Top Section -->
         <div class="footer-top">
-            
-            <!-- Brand Section -->
             <div class="footer-brand">
                 <div class="footer-logo">
+                    <img src="{{ $logoUrl }}" alt="{{ $siteName }} Logo" class="footer-logo-img">
                     <div class="footer-logo-text">
-                        <h3 class="footer-school-name">Bravus Market</h3>
-                        <p class="footer-school-subtitle">Premium electronics, phones, laptops, and accessories</p>
+                        <h3 class="footer-school-name">{{ $siteName }}</h3>
+                        <p class="footer-school-subtitle">{{ $siteTagline }}</p>
                     </div>
                 </div>
 
-                <p class="footer-description">
-                    Bravus Market brings trusted, original electronics to Tanzania with fast delivery and great prices.
-                </p>
+                <p class="footer-description">{{ $siteDescription }}</p>
 
                 <div class="footer-social-links">
-                    <a href="#" class="footer-social-link">
-                        <i class="bi bi-facebook"></i>
-                    </a>
-                    <a href="#" class="footer-social-link">
-                        <i class="bi bi-instagram"></i>
-                    </a>
-                    <a href="#" class="footer-social-link">
-                        <i class="bi bi-tiktok"></i>
-                    </a>
-                    <a href="#" class="footer-social-link">
-                        <i class="bi bi-youtube"></i>
-                    </a>
+                    @foreach($socialLinks as $key => $icon)
+                        @if(!empty($systemSettings[$key]))
+                            <a href="{{ $systemSettings[$key] }}" class="footer-social-link" target="_blank" rel="noopener noreferrer">
+                                <i class="bi {{ $icon }}"></i>
+                            </a>
+                        @endif
+                    @endforeach
                 </div>
             </div>
 
-            <!-- Footer Links -->
             <div class="footer-links-grid">
-                
-                <!-- Quick Links -->
                 <div class="footer-column footer-quick-links">
                     <h4 class="footer-column-title">Quick Links</h4>
                     <ul class="footer-menu">
                         <li><a href="/" class="footer-link">Home</a></li>
-                        <li><a href="/products" class="footer-link">Shop</a></li>
-                        <li><a href="/categories" class="footer-link">Categories</a></li>
+                        <li><a href="{{ route('shop') }}" class="footer-link">Shop</a></li>
+                        <li><a href="{{ route('categories') }}" class="footer-link">Categories</a></li>
                         <li><a href="/about" class="footer-link">About Us</a></li>
-                        <li><a href="/contact" class="footer-link">Contact</a></li>
+                        <li><a href="/cart" class="footer-link">Cart</a></li>
                     </ul>
                 </div>
 
-                <!-- Programs (Replaced with Shop Categories) -->
                 <div class="footer-column footer-programs">
                     <h4 class="footer-column-title">Top Categories</h4>
                     <ul class="footer-menu">
-                        <li><a href="/categories" class="footer-link">Phones</a></li>
-                        <li><a href="/categories" class="footer-link">Laptops</a></li>
-                        <li><a href="/categories" class="footer-link">Accessories</a></li>
-                        <li><a href="/shop" class="footer-link">All Products</a></li>
-                        <li><a href="/contact" class="footer-link">Contact</a></li>
+                        @forelse($footerCategories ?? [] as $category)
+                            <li>
+                                <a href="{{ route('category.show', $category->slug) }}" class="footer-link">
+                                    {{ $category->name }}
+                                </a>
+                            </li>
+                        @empty
+                            <li><a href="{{ route('categories') }}" class="footer-link">Browse Categories</a></li>
+                        @endforelse
                     </ul>
                 </div>
 
-                <!-- Contact Section -->
                 <div class="footer-column footer-contact">
                     <h4 class="footer-column-title">Contact Us</h4>
                     <div class="footer-contact-info">
-
                         <div class="footer-contact-item">
                             <i class="bi bi-geo-alt"></i>
-                            <span>Kids Plaza, Dar es Salaam, Tanzania</span>
+                            <span>{{ $systemSettings['address'] ?? '' }}</span>
                         </div>
 
                         <div class="footer-contact-item">
                             <i class="bi bi-telephone"></i>
-                            <span>+255 754 321 987</span>
+                            <span>{{ $systemSettings['phone'] ?? '' }}</span>
                         </div>
 
                         <div class="footer-contact-item">
                             <i class="bi bi-envelope"></i>
-                            <span>support@bravusmarket.co.tz</span>
+                            <span>{{ $systemSettings['email'] ?? '' }}</span>
                         </div>
 
                         <div class="footer-contact-item">
                             <i class="bi bi-clock"></i>
-                            <span>Mon - Sat: 9:00 AM - 7:00 PM</span>
+                            <span>{{ $systemSettings['business_hours'] ?? '' }}</span>
                         </div>
-
                     </div>
                 </div>
-
             </div>
         </div>
 
-        <!-- Bottom Section -->
         <div class="footer-bottom">
             <div class="footer-bottom-content">
                 <p class="footer-copyright">
-                    &copy; 2026 Bravus Market. All rights reserved.
+                    &copy; {{ date('Y') }} {{ $siteName }}. All rights reserved.
                 </p>
 
                 <div class="footer-bottom-links">
-                    <a href="#" class="footer-bottom-link">Privacy Policy</a>
-                    <a href="#" class="footer-bottom-link">Terms of Service</a>
-                    <a href="#" class="footer-bottom-link">Returns</a>
+                    <a href="{{ route('shop') }}" class="footer-bottom-link">Shop</a>
+                    <a href="{{ route('categories') }}" class="footer-bottom-link">Categories</a>
+                    <a href="/about" class="footer-bottom-link">About</a>
                 </div>
-
             </div>
         </div>
-
     </div>
 </footer>
