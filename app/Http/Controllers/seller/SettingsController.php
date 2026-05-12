@@ -14,12 +14,26 @@ class SettingsController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            if (!Auth::check() || Auth::user()->role !== 'seller') {
-                abort(403);
+            if (!Auth::check()) {
+                return redirect()->route('login');
+            }
+
+            if (Auth::user()->role !== 'seller') {
+                return redirect($this->redirectForRole(Auth::user()->role))
+                    ->with('error', 'Please login with a seller account to manage seller profile settings.');
             }
 
             return $next($request);
         });
+    }
+
+    private function redirectForRole(?string $role): string
+    {
+        return match ($role) {
+            'admin' => route('admin.dashboard'),
+            'customer' => route('shop'),
+            default => route('login'),
+        };
     }
 
     public function edit()
