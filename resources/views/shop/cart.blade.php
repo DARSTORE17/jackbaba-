@@ -112,8 +112,50 @@
         font-weight: bold;
     }
 
+    .cart-page-header {
+        gap: 12px;
+    }
+
+    .cart-continue-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 10px 16px;
+        border: 0 !important;
+        border-radius: 12px !important;
+        color: #ffffff !important;
+        background: #2563eb !important;
+        box-shadow: 0 12px 28px rgba(37, 99, 235, 0.24) !important;
+        font-weight: 800;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .cart-continue-btn:hover {
+        color: #ffffff !important;
+        background: #1d4ed8 !important;
+        transform: translateY(-1px);
+    }
+
+    .cart-continue-btn i {
+        color: inherit;
+        font-size: 1rem;
+        line-height: 1;
+    }
+
     /* Improved button styling for small screens */
     @media (max-width: 768px) {
+        .cart-page-header {
+            align-items: stretch !important;
+            flex-direction: column;
+        }
+
+        .cart-continue-btn {
+            width: 100%;
+        }
+
         .quantity-btn, .action-btn {
             min-width: 48px;
             min-height: 48px;
@@ -195,10 +237,10 @@
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10">
                 <!-- Page Header -->
-                <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="cart-page-header d-flex justify-content-between align-items-center mb-4">
                     <h1 class="h2 mb-0 text-primary">Shopping Cart</h1>
                     @if($cartItems->count() > 0)
-                        <a href="{{ route('shop') }}" class="btn btn-primary">
+                        <a href="{{ route('shop') }}" class="cart-continue-btn">
                             <i class="bi bi-plus-circle"></i> Continue Shopping
                         </a>
                     @endif

@@ -147,6 +147,10 @@
         font-weight: 700 !important;
         color: white !important;
         width: 100% !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0.35rem !important;
         transition: all 0.3s ease !important;
         cursor: pointer !important;
         text-transform: uppercase !important;
@@ -157,6 +161,14 @@
         transform: translateY(-3px) !important;
         box-shadow: 0 8px 25px rgba(255, 111, 145, 0.4) !important;
         background: linear-gradient(135deg, #1D4ED8, #2563EB) !important;
+    }
+
+    .btn-place-order i,
+    .btn-outline-primary i,
+    .order-confirmation-modal .btn-confirm i,
+    .order-confirmation-modal .btn-edit i {
+        color: inherit !important;
+        line-height: 1 !important;
     }
 
     .btn-place-order:active {
@@ -279,9 +291,14 @@
     .btn-outline-primary {
         border-color: #2563EB !important;
         color: #2563EB !important;
+        background: #ffffff !important;
         border-radius: 25px !important;
         padding: 8px 20px !important;
         font-weight: 600 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0.35rem !important;
         transition: all 0.3s ease !important;
     }
 
@@ -747,6 +764,10 @@
         padding: 10px 20px !important;
         font-size: 0.9rem !important;
         font-weight: bold !important;
+        color: #ffffff !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 
     .order-confirmation-modal .btn-confirm:hover {
@@ -761,6 +782,9 @@
         font-size: 0.9rem !important;
         font-weight: bold !important;
         color: white !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 
     .order-confirmation-modal .btn-edit:hover {
