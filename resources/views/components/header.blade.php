@@ -50,6 +50,13 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{ route('contact') }}" class="nav-link {{ request()->is('contact') ? 'active' : '' }}">
+                            <i class="bi bi-chat-dots"></i>
+                            <span>Contact</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a href="/cart" class="nav-link {{ request()->is('cart') ? 'active' : '' }}">
                             <i class="bi bi-cart-fill"></i>
                             <span>Cart</span>
@@ -123,6 +130,11 @@
             <a href="/about" class="mobile-nav-link">
                 <i class="bi bi-emoji-smile"></i>
                 <span>About Us</span>
+            </a>
+
+            <a href="{{ route('contact') }}" class="mobile-nav-link">
+                <i class="bi bi-chat-dots"></i>
+                <span>Contact</span>
             </a>
 
             <a href="/cart" class="mobile-nav-link">
