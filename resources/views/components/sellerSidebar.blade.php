@@ -60,7 +60,7 @@
             <li class="nav-item">
                 <a href="{{ route('seller.settings') }}"
                     class="nav-link {{ request()->is('seller/settings') ? 'active' : '' }}">
-                    <i class="bi bi-gear-fill"></i> Settings
+                    <i class="bi bi-person-gear"></i> Profile & Settings
                 </a>
             </li>
         </ul>

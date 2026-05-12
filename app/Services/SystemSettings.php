@@ -27,6 +27,7 @@ class SystemSettings
             'hero_video_path' => '',
             'hero_image_path' => '',
             'about_store_image_path' => '',
+            'about_store_image_2_path' => '',
             'about_store_image_title' => 'Our Store Image',
             'about_store_image_subtitle' => 'Original electronics, trusted service, and fast support.',
             'hero_kicker' => 'Premium electronics in Tanzania',

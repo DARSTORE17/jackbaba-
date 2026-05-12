@@ -102,12 +102,22 @@
                                 @enderror
                             </div>
                             <div class="col-12 col-md-6">
-                                <label class="form-label" for="about_store_image">About Store Card Image</label>
+                                <label class="form-label" for="about_store_image">About Store Card Image 1</label>
                                 <input type="file" class="form-control" id="about_store_image" name="about_store_image" accept="image/*">
                                 @if(!empty($settings['about_store_image_path']))
                                     <img src="{{ asset('storage/' . $settings['about_store_image_path']) }}" alt="Current about store image" class="img-fluid rounded mt-2" style="max-height: 110px;">
                                 @endif
                                 @error('about_store_image')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label" for="about_store_image_2">About Store Card Image 2</label>
+                                <input type="file" class="form-control" id="about_store_image_2" name="about_store_image_2" accept="image/*">
+                                @if(!empty($settings['about_store_image_2_path']))
+                                    <img src="{{ asset('storage/' . $settings['about_store_image_2_path']) }}" alt="Current second about store image" class="img-fluid rounded mt-2" style="max-height: 110px;">
+                                @endif
+                                @error('about_store_image_2')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
                             </div>

@@ -27,7 +27,7 @@
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
             <li>
                 <a class="dropdown-item d-flex align-items-center" href="{{ route('seller.settings') }}">
-                    <i class="bi bi-person-fill text-primary me-2"></i> My Profile
+                    <i class="bi bi-person-gear text-primary me-2"></i> Profile & Settings
                 </a>
             </li>
             <li><hr class="dropdown-divider"></li>

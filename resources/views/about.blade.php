@@ -3,9 +3,10 @@
 
 @section('content')
 @php
-    $aboutStoreImageUrl = !empty($systemSettings['about_store_image_path'])
-        ? asset('storage/' . $systemSettings['about_store_image_path'])
-        : null;
+    $aboutStoreImages = collect([
+        $systemSettings['about_store_image_path'] ?? '',
+        $systemSettings['about_store_image_2_path'] ?? '',
+    ])->filter()->map(fn ($path) => asset('storage/' . $path))->values();
 @endphp
 
 <!-- ================= About Hero Section ================= -->
@@ -63,9 +64,13 @@
             </div>
             <div class="col-lg-6">
                 <div class="story-image-wrapper" style="position: relative;">
-                    <div class="story-image-card">
-                        @if($aboutStoreImageUrl)
-                            <img src="{{ $aboutStoreImageUrl }}" alt="{{ $systemSettings['about_store_image_title'] ?? 'Our store' }}">
+                    <div class="story-image-card" data-about-slider>
+                        @if($aboutStoreImages->isNotEmpty())
+                            @foreach($aboutStoreImages as $imageUrl)
+                                <img src="{{ $imageUrl }}"
+                                    alt="{{ $systemSettings['about_store_image_title'] ?? 'Our store' }}"
+                                    class="story-slide {{ $loop->first ? 'is-active' : '' }}">
+                            @endforeach
                             <div class="story-image-caption">
                                 <strong>{{ $systemSettings['about_store_image_title'] ?? 'Our Store Image' }}</strong>
                                 <span>{{ $systemSettings['about_store_image_subtitle'] ?? '' }}</span>
@@ -83,6 +88,25 @@
         </div>
     </div>
 </section>
+
+@if($aboutStoreImages->count() > 1)
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const slider = document.querySelector('[data-about-slider]');
+            if (!slider) return;
+
+            const slides = Array.from(slider.querySelectorAll('.story-slide'));
+            if (slides.length < 2) return;
+
+            let activeIndex = 0;
+            setInterval(function () {
+                slides[activeIndex].classList.remove('is-active');
+                activeIndex = (activeIndex + 1) % slides.length;
+                slides[activeIndex].classList.add('is-active');
+            }, 2000);
+        });
+    </script>
+@endif
 
 <!-- ================= Our Mission & Values Section ================= -->
 <section class="mission-values-section" style="padding: 80px 0; background-color: var(--white);">
@@ -263,18 +287,28 @@
 
 .story-image-card {
     position: relative;
-    min-height: 400px;
+    min-height: 280px;
+    max-width: 430px;
+    margin-left: auto;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 18px;
     background: #ffffff;
     box-shadow: 0 18px 45px rgba(15, 23, 42, 0.1);
 }
 
-.story-image-card img {
+.story-image-card .story-slide {
+    position: absolute;
+    inset: 0;
     display: block;
     width: 100%;
-    height: 400px;
+    height: 100%;
     object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+}
+
+.story-image-card .story-slide.is-active {
+    opacity: 1;
 }
 
 .story-image-caption {
@@ -304,7 +338,7 @@
 }
 
 .story-image-empty {
-    min-height: 400px;
+    min-height: 280px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -316,7 +350,7 @@
 }
 
 .story-image-empty i {
-    font-size: 4.5rem;
+    font-size: 3.5rem;
 }
 
 .story-image-empty p {
@@ -328,5 +362,11 @@
 .story-image-empty span {
     font-size: 1rem;
     color: var(--blue-700);
+}
+
+@media (max-width: 991px) {
+    .story-image-card {
+        margin-right: auto;
+    }
 }
 </style>
