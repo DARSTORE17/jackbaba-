@@ -54,6 +54,46 @@
                             </div>
                         </div>
 
+                        @php
+                            $sellerGroups = $order->orderItems
+                                ->groupBy(fn($item) => optional(optional($item->product)->seller)->id ?: 'store')
+                                ->map(function ($items) {
+                                    $product = optional($items->first())->product;
+                                    return [
+                                        'seller' => $product?->seller,
+                                        'items' => $items,
+                                    ];
+                                });
+                        @endphp
+
+                        <!-- Seller Information -->
+                        <h6 class="text-muted mb-3">Seller Information</h6>
+                        <div class="row g-3 mb-4">
+                            @foreach($sellerGroups as $sellerGroup)
+                                @php
+                                    $seller = $sellerGroup['seller'];
+                                    $sellerAvatar = $seller && $seller->passport
+                                        ? asset('storage/' . $seller->passport)
+                                        : 'https://ui-avatars.com/api/?name=' . urlencode($seller->name ?? 'Store') . '&background=2563eb&color=fff&size=64';
+                                @endphp
+                                <div class="col-md-6">
+                                    <div class="seller-card">
+                                        <img src="{{ $sellerAvatar }}" alt="{{ $seller->name ?? 'Store seller' }}">
+                                        <div>
+                                            <div class="fw-bold">{{ $seller->name ?? 'Bravus Market' }}</div>
+                                            <div class="small text-muted">
+                                                <i class="bi bi-envelope me-1"></i>{{ $seller->email ?? 'No email available' }}
+                                            </div>
+                                            <div class="small text-muted">
+                                                <i class="bi bi-telephone me-1"></i>{{ $seller->phone ?? 'No phone available' }}
+                                            </div>
+                                            <span class="badge bg-primary mt-2">{{ $sellerGroup['items']->sum('quantity') }} item(s)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
                         <!-- Order Items -->
                         <h6 class="text-muted mb-3">Order Items</h6>
                         <div class="table-responsive">
@@ -79,6 +119,11 @@
                                                     <div>
                                                         <h6 class="mb-0">{{ $item->product->name }}</h6>
                                                         <small class="text-muted">{{ $item->product->description ? Str::limit($item->product->description->description, 50) : 'No description' }}</small>
+                                                        <div class="small mt-1">
+                                                            <span class="badge bg-info">
+                                                                <i class="bi bi-shop me-1"></i>{{ $item->product->seller->name ?? 'Bravus Market' }}
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -465,4 +510,26 @@
             }, 5000);
         }
     </script>
+
+    <style>
+        .seller-card {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            height: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 16px;
+            background: #ffffff;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+        }
+
+        .seller-card img {
+            width: 56px;
+            height: 56px;
+            flex: 0 0 56px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
 @endsection

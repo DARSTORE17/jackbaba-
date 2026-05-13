@@ -119,7 +119,52 @@
     .bg-primary {
         background-color: var(--primary-color) !important;
         border-color: transparent !important;
+        color: #ffffff !important;
         box-shadow: 0 12px 24px rgba(79, 187, 137, 0.16);
+    }
+
+    .btn-success,
+    .bg-success {
+        background-color: #16a34a !important;
+        border-color: transparent !important;
+        color: #ffffff !important;
+    }
+
+    .btn-danger,
+    .bg-danger {
+        background-color: #dc2626 !important;
+        border-color: transparent !important;
+        color: #ffffff !important;
+    }
+
+    .btn-warning,
+    .bg-warning {
+        background-color: #f59e0b !important;
+        border-color: transparent !important;
+        color: #1f2937 !important;
+    }
+
+    .btn-secondary,
+    .bg-secondary {
+        background-color: #64748b !important;
+        border-color: transparent !important;
+        color: #ffffff !important;
+    }
+
+    .btn-info,
+    .bg-info {
+        background-color: #0891b2 !important;
+        border-color: transparent !important;
+        color: #ffffff !important;
+    }
+
+    .btn-outline-primary,
+    .btn-outline-success,
+    .btn-outline-danger,
+    .btn-outline-warning,
+    .btn-outline-secondary,
+    .btn-outline-info {
+        background-color: #ffffff !important;
     }
 
     .btn-outline-primary {
@@ -127,9 +172,83 @@
         color: var(--primary-color) !important;
     }
 
+    .btn-outline-primary:hover {
+        background-color: var(--primary-color) !important;
+        border-color: transparent !important;
+        color: #ffffff !important;
+    }
+
+    .btn-outline-success {
+        border-color: rgba(22, 163, 74, 0.35) !important;
+        color: #15803d !important;
+    }
+
+    .btn-outline-success:hover {
+        background-color: #16a34a !important;
+        border-color: transparent !important;
+        color: #ffffff !important;
+    }
+
+    .btn-outline-danger {
+        border-color: rgba(220, 38, 38, 0.35) !important;
+        color: #dc2626 !important;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #dc2626 !important;
+        border-color: transparent !important;
+        color: #ffffff !important;
+    }
+
+    .btn-outline-warning {
+        border-color: rgba(245, 158, 11, 0.4) !important;
+        color: #b45309 !important;
+    }
+
+    .btn-outline-warning:hover {
+        background-color: #f59e0b !important;
+        border-color: transparent !important;
+        color: #1f2937 !important;
+    }
+
     .btn-outline-secondary {
-        border-color: rgba(150, 214, 171, 0.3) !important;
-        color: var(--secondary-color) !important;
+        border-color: rgba(100, 116, 139, 0.35) !important;
+        color: #475569 !important;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #64748b !important;
+        border-color: transparent !important;
+        color: #ffffff !important;
+    }
+
+    .btn-outline-info {
+        border-color: rgba(8, 145, 178, 0.35) !important;
+        color: #0891b2 !important;
+    }
+
+    .btn-outline-info:hover {
+        background-color: #0891b2 !important;
+        border-color: transparent !important;
+        color: #ffffff !important;
+    }
+
+    .btn-primary:hover,
+    .btn-success:hover,
+    .btn-danger:hover,
+    .btn-secondary:hover,
+    .btn-info:hover {
+        color: #ffffff !important;
+        filter: brightness(0.94);
+    }
+
+    .btn-warning:hover {
+        color: #1f2937 !important;
+        filter: brightness(0.96);
+    }
+
+    .btn i {
+        color: inherit !important;
     }
 
     .text-primary {
@@ -138,26 +257,6 @@
 
     .text-muted {
         color: var(--primary-color) !important;
-    }
-
-    .bg-secondary {
-        background-color: var(--secondary-color) !important;
-        border-color: transparent !important;
-    }
-
-    .bg-success {
-        background-color: var(--success-color) !important;
-        border-color: transparent !important;
-    }
-
-    .bg-warning {
-        background-color: var(--warning-color) !important;
-        border-color: transparent !important;
-    }
-
-    .bg-danger {
-        background-color: var(--danger-color) !important;
-        border-color: transparent !important;
     }
 
     footer {

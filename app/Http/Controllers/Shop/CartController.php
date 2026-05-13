@@ -164,7 +164,7 @@ class CartController extends Controller
         $taxSummary = [];
         $deliverySummary = [];
 
-        foreach ($cartItems->groupBy(fn ($item) => $item->product->seller_id ?: 'store') as $items) {
+        foreach ($cartItems->groupBy(fn ($item) => $item->product->seller?->id ?: 'store') as $items) {
             $seller = $items->first()->product->seller;
             $sellerName = $seller->name ?? 'Bravus Market';
             $sellerTax = 0;

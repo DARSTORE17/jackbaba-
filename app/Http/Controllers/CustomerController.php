@@ -8,6 +8,9 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class CustomerController extends Controller
 {
@@ -63,7 +66,7 @@ class CustomerController extends Controller
         $user = Auth::user();
 
         $query = Order::where('user_id', $user->id)
-            ->with('orderItems.product.media')
+            ->with('orderItems.product.media', 'orderItems.product.seller')
             ->orderBy('ordered_at', 'desc');
 
         // Filter by status if provided
@@ -213,7 +216,7 @@ class CustomerController extends Controller
             abort(403);
         }
 
-        $order->load('orderItems.product.media', 'orderAddresses');
+        $order->load('orderItems.product.media', 'orderItems.product.seller', 'orderAddresses');
 
         // Recalculate totals if subtotal is 0 (for existing orders)
         if ($order->subtotal == 0 && $order->orderItems->count() > 0) {
@@ -233,6 +236,44 @@ class CustomerController extends Controller
         $user = Auth::user();
 
         return view('customer.profile', compact('user'));
+    }
+
+    /**
+     * Update customer profile
+     */
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'phone' => ['nullable', 'string', 'max:40'],
+            'passport' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'password' => ['nullable', 'confirmed', 'min:8'],
+        ]);
+
+        $profileData = [
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? null,
+        ];
+
+        if ($request->hasFile('passport')) {
+            if (!empty($user->passport)) {
+                Storage::disk('public')->delete($user->passport);
+            }
+
+            $profileData['passport'] = $request->file('passport')->store('profiles', 'public');
+        }
+
+        if (!empty($validated['password'])) {
+            $profileData['password'] = Hash::make($validated['password']);
+        }
+
+        $user->forceFill($profileData)->save();
+
+        return redirect()->route('customer.profile')->with('success', 'Profile updated successfully.');
     }
 
     /**

@@ -40,6 +40,11 @@
                     <i class="bi bi-sliders"></i> Settings
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.database') }}" class="nav-link {{ request()->is('admin/database*') ? 'active' : '' }}">
+                    <i class="bi bi-database-gear"></i> Database
+                </a>
+            </li>
         </ul>
     </div>
 </aside>

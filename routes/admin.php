@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\SettingsController;
+use App\Http\Controllers\admin\DatabaseController;
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
@@ -38,4 +39,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::get('/settings', [SettingsController::class, 'edit'])->name('admin.settings');
     Route::post('/settings', [SettingsController::class, 'update'])->name('admin.settings.update');
+
+    Route::get('/database', [DatabaseController::class, 'index'])->name('admin.database');
+    Route::post('/database/backup', [DatabaseController::class, 'backup'])->name('admin.database.backup');
 });

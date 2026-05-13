@@ -47,7 +47,12 @@
                                                         <div class="d-flex align-items-center mb-1">
                                                             <img src="{{ $item->product->thumbnail ? asset('storage/' . $item->product->thumbnail) : asset('img/logo.png') }}"
                                                                  alt="{{ $item->product->name }}" class="rounded me-2" style="width: 30px; height: 30px; object-fit: cover;">
-                                                            <small>{{ Str::limit($item->product->name, 30) }} ({{ $item->quantity }})</small>
+                                                            <small>
+                                                                {{ Str::limit($item->product->name, 30) }} ({{ $item->quantity }})
+                                                                <span class="text-muted d-block">
+                                                                    <i class="bi bi-shop me-1"></i>{{ $item->product->seller->name ?? 'Bravus Market' }}
+                                                                </span>
+                                                            </small>
                                                         </div>
                                                     @endforeach
                                                 </td>

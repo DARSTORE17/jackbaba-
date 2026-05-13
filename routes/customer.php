@@ -11,6 +11,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/customer/orders/{order}/items/{orderItem}', [App\Http\Controllers\CustomerController::class, 'removeOrderItem'])->name('customer.orders.items.remove');
     Route::get('/customer/order/{order}', [App\Http\Controllers\CustomerController::class, 'orderDetails'])->name('customer.order.details');
     Route::get('/customer/profile', [App\Http\Controllers\CustomerController::class, 'profile'])->name('customer.profile');
+    Route::put('/customer/profile', [App\Http\Controllers\CustomerController::class, 'updateProfile'])->name('customer.profile.update');
     Route::get('/customer/wishlist', [App\Http\Controllers\WishlistController::class, 'index'])->name('customer.wishlist');
     Route::get('/customer/addresses', [App\Http\Controllers\CustomerController::class, 'addresses'])->name('customer.addresses');
     Route::get('/customer/support', [App\Http\Controllers\CustomerController::class, 'support'])->name('customer.support');

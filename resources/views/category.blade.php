@@ -512,21 +512,20 @@
         font-size: 11px;
         font-weight: 600;
         text-transform: uppercase;
+        color: #ffffff;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
     }
 
     .badge-discount {
-        background: var(--danger-color);
-        color: white;
+        background: #2563eb;
     }
 
     .badge-new {
-        background: var(--success-color);
-        color: white;
+        background: #16a34a;
     }
 
     .badge-advertised {
-        background: linear-gradient(135deg, #2563EB, #2563EB);
-        color: white;
+        background: #2563eb;
     }
 
     .product-info {
@@ -607,17 +606,17 @@
 
     .stock-in {
         background: rgba(34, 197, 94, 0.1);
-        color: var(--success-color);
+        color: #15803d;
     }
 
     .stock-low {
         background: rgba(251, 191, 36, 0.1);
-        color: var(--warning-color);
+        color: #b45309;
     }
 
     .stock-out {
         background: rgba(239, 68, 68, 0.1);
-        color: var(--danger-color);
+        color: #dc2626;
     }
 
     /* Pagination */

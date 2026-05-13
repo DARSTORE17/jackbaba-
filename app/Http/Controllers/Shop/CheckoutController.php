@@ -260,7 +260,7 @@ class CheckoutController extends Controller
             abort(403);
         }
 
-        $order->load('orderItems.product', 'orderAddresses');
+        $order->load('orderItems.product.media', 'orderItems.product.seller', 'orderAddresses');
 
         return view('shop.checkout-success', compact('order'));
     }
@@ -289,7 +289,7 @@ class CheckoutController extends Controller
         $taxSummary = [];
         $deliverySummary = [];
         $sellerGroups = $cartItems->groupBy(function ($item) {
-            return $item->product->seller_id ?: 'store';
+            return $item->product->seller?->id ?: 'store';
         });
 
         foreach ($sellerGroups as $sellerId => $items) {

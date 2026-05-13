@@ -116,6 +116,47 @@
             transition: all 0.3s ease;
         }
 
+        .swal-account-login,
+        .swal-account-register {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 132px;
+            min-height: 56px;
+            padding: 0 22px !important;
+            border: 0 !important;
+            border-radius: 20px !important;
+            color: #ffffff !important;
+            font-weight: 800 !important;
+            line-height: 1 !important;
+            box-shadow: 0 16px 30px rgba(15, 23, 42, 0.16) !important;
+        }
+
+        .swal-account-login {
+            background: #2563eb !important;
+        }
+
+        .swal-account-register {
+            background: #16a34a !important;
+        }
+
+        .swal-account-login:hover {
+            background: #1d4ed8 !important;
+            color: #ffffff !important;
+        }
+
+        .swal-account-register:hover {
+            background: #15803d !important;
+            color: #ffffff !important;
+        }
+
+        .swal-account-login i,
+        .swal-account-register i {
+            color: inherit !important;
+            font-size: 1.2rem;
+        }
+
         /* WRAPPER YA CHINI – ONDOA WHITE SPACE */
         .horizontal-thumbs-container {
             margin-top: 4px;
@@ -246,8 +287,8 @@
         }
 
         .discount-badge {
-            background: var(--danger-color);
-            color: white;
+            background: #dc2626;
+            color: #ffffff;
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 14px;
@@ -258,25 +299,35 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 10px 15px;
-            border-radius: 10px;
-            font-weight: 500;
+            min-height: 48px;
+            padding: 0 18px;
+            border-radius: 999px;
+            font-weight: 800;
             margin-bottom: 25px;
+            border: 1px solid transparent;
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        .stock-info i {
+            font-size: 0.72rem;
         }
 
         .stock-in {
-            background: rgba(34, 197, 94, 0.1);
-            color: var(--success-color);
+            background: #ecfdf5;
+            border-color: rgba(22, 163, 74, 0.22);
+            color: #15803d;
         }
 
         .stock-low {
-            background: rgba(251, 191, 36, 0.1);
-            color: var(--warning-color);
+            background: #fffbeb;
+            border-color: rgba(245, 158, 11, 0.28);
+            color: #b45309;
         }
 
         .stock-out {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger-color);
+            background: #fef2f2;
+            border-color: rgba(220, 38, 38, 0.24);
+            color: #dc2626;
         }
 
         .action-buttons {
@@ -343,28 +394,39 @@
             margin-bottom: 20px;
         }
 
+        .quantity-selector label {
+            color: var(--product-text);
+            font-weight: 800;
+        }
+
         .quantity-input {
             display: flex;
             align-items: center;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
+            min-height: 48px;
+            border: 1px solid rgba(15, 23, 42, 0.14);
+            border-radius: 12px;
             overflow: hidden;
+            background: #ffffff;
         }
 
         .quantity-btn {
-            background: #f8f9fa;
+            background: #f8fafc;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 52px;
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background 0.2s ease;
+            color: #0f172a;
+            font-size: 1.1rem;
+            font-weight: 900;
+            transition: background 0.2s ease, color 0.2s ease;
         }
 
         .quantity-btn:hover {
-            background: #e9ecef;
+            background: var(--primary-color);
+            color: #ffffff;
         }
 
         .quantity-input input {
@@ -372,7 +434,9 @@
             width: 60px;
             text-align: center;
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 800;
+            color: #0f172a;
+            background: #ffffff;
         }
 
         .product-tabs {
@@ -966,8 +1030,8 @@
                         cancelButtonText: '<i class="bi bi-person-plus"></i> Register',
                         customClass: {
                             popup: 'swal-wide',
-                            confirmButton: 'btn btn-primary me-5',
-                            cancelButton: 'btn btn-success'
+                            confirmButton: 'swal-account-login me-3',
+                            cancelButton: 'swal-account-register'
                         },
                         buttonsStyling: false,
                         reverseButtons: true
@@ -1151,8 +1215,8 @@
                         cancelButtonText: '<i class="bi bi-person-plus me-2"></i>Register',
                         customClass: {
                             popup: 'swal-wide',
-                            confirmButton: 'btn btn-primary me-3',
-                            cancelButton: 'btn btn-success'
+                            confirmButton: 'swal-account-login me-3',
+                            cancelButton: 'swal-account-register'
                         },
                         buttonsStyling: false,
                         reverseButtons: true

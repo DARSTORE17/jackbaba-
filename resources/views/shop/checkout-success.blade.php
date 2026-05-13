@@ -393,6 +393,13 @@
                                         Unit Price: Tsh{{ number_format($item->unit_price, 2) }} |
                                         <strong>Total: Tsh{{ number_format($item->total_price, 2) }}</strong>
                                     </p>
+                                    <p class="mb-0 text-muted small">
+                                        <i class="bi bi-shop me-1"></i>
+                                        Seller: <strong>{{ $item->product->seller->name ?? 'Bravus Market' }}</strong>
+                                        @if($item->product?->seller?->phone)
+                                            <span class="ms-2"><i class="bi bi-telephone me-1"></i>{{ $item->product->seller->phone }}</span>
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
                         </div>
