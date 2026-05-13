@@ -94,6 +94,13 @@ class CustomerController extends Controller
             return back()->with('error', 'This order cannot be cancelled.');
         }
 
+        $order->load('orderItems.product');
+        foreach ($order->orderItems as $item) {
+            if ($item->product) {
+                $item->product->increment('stock', $item->quantity);
+            }
+        }
+
         // Update order status to cancelled
         $order->update(['status' => 'cancelled']);
 
@@ -120,11 +127,21 @@ class CustomerController extends Controller
             return response()->json(['error' => 'This order cannot be updated.'], 403);
         }
 
+        $availableQuantity = $orderItem->product->stock + $orderItem->quantity;
+
         $request->validate([
-            'quantity' => 'required|integer|min:1|max:' . $orderItem->product->stock,
+            'quantity' => 'required|integer|min:1|max:' . $availableQuantity,
         ]);
 
         $quantity = $request->quantity;
+        $oldQuantity = $orderItem->quantity;
+        $quantityDifference = $quantity - $oldQuantity;
+
+        if ($quantityDifference > 0) {
+            $orderItem->product->decrement('stock', $quantityDifference);
+        } elseif ($quantityDifference < 0) {
+            $orderItem->product->increment('stock', abs($quantityDifference));
+        }
 
         // Update the order item
         $orderItem->update([
@@ -163,6 +180,10 @@ class CustomerController extends Controller
                 return response()->json(['success' => false, 'message' => 'This order cannot be updated.'], 403);
             }
             return back()->with('error', 'This order cannot be updated.');
+        }
+
+        if ($orderItem->product) {
+            $orderItem->product->increment('stock', $orderItem->quantity);
         }
 
         // Delete the order item

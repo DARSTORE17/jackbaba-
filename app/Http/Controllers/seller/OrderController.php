@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -141,10 +142,21 @@ class OrderController extends Controller
         };
 
         $sellerId = Auth::id();
-        $order = Order::whereHas('orderItems.product', function ($productQuery) use ($sellerId) {
+        $order = Order::with('orderItems.product')->whereHas('orderItems.product', function ($productQuery) use ($sellerId) {
             $productQuery->where('seller_id', $sellerId);
         })->findOrFail($id);
-        $order->update(['status' => $status]);
+
+        DB::transaction(function () use ($order, $status) {
+            if ($status === 'cancelled' && $order->status !== 'cancelled') {
+                foreach ($order->orderItems as $item) {
+                    if ($item->product) {
+                        $item->product->increment('stock', $item->quantity);
+                    }
+                }
+            }
+
+            $order->update(['status' => $status]);
+        });
 
         return response()->json([
             'success' => true,

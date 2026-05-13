@@ -20,6 +20,7 @@ class Product extends Model
         'discount',
         'rate',
         'stock',
+        'initial_stock',
         'thumbnail',
         'is_advertised',
         'vat_enabled',
@@ -35,6 +36,7 @@ class Product extends Model
         'new_price' => 'decimal:2',
         'vat_rate' => 'decimal:2',
         'delivery_fee' => 'decimal:2',
+        'initial_stock' => 'integer',
     ];
 
     public function category()

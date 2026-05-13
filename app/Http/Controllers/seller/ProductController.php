@@ -109,6 +109,7 @@ class ProductController extends Controller
                 'discount' => $request->old_price ? round((($request->old_price - $request->new_price) / $request->old_price) * 100) : 0,
                 'rate' => 0,
                 'stock' => $request->stock,
+                'initial_stock' => $request->stock,
                 'is_advertised' => $request->is_advertised ?? false,
                 'vat_enabled' => $request->boolean('vat_enabled'),
                 'vat_rate' => $request->vat_rate,
