@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use App\Models\Product;
 use App\Models\Category;
 
@@ -56,9 +57,12 @@ class ShopController extends Controller
 
         $products = $query->paginate(24)->withQueryString();
 
-        $categories = Category::withCount(['products' => function ($query) {
-            $query->where('stock', '>', 0);
-        }])->orderBy('name')->get();
+        // Cache categories for 24 hours - they don't change often
+        $categories = Cache::remember('shop_categories_with_stock', 86400, function () {
+            return Category::withCount(['products' => function ($query) {
+                $query->where('stock', '>', 0);
+            }])->orderBy('name')->get();
+        });
 
         return view('shop', compact('products', 'categories'));
     }
@@ -82,21 +86,24 @@ class ShopController extends Controller
 
     public function categories(Request $request)
     {
-        $query = Category::withCount(['products' => function ($query) {
-            $query->where('stock', '>', 0);
-        }]);
-
         // Search
         if ($request->has('search') && !empty($request->search)) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
+            $categories = Category::withCount(['products' => function ($query) {
+                $query->where('stock', '>', 0);
+            }])->where(function($q) use ($search) {
                 $q->where('name', 'like', '%' . $search . '%')
                   ->orWhere('slug', 'like', '%' . $search . '%')
                   ->orWhere('description', 'like', '%' . $search . '%');
+            })->orderBy('name')->get();
+        } else {
+            // Cache default categories view for 24 hours
+            $categories = Cache::remember('shop_all_categories', 86400, function () {
+                return Category::withCount(['products' => function ($query) {
+                    $query->where('stock', '>', 0);
+                }])->orderBy('name')->get();
             });
         }
-
-        $categories = $query->orderBy('name')->get();
 
         return view('categories', compact('categories'));
     }

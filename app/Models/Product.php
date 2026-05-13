@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Product extends Model
 {
@@ -38,6 +39,25 @@ class Product extends Model
         'delivery_fee' => 'decimal:2',
         'initial_stock' => 'integer',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Clear category caches when product is created, updated, or deleted
+        // (since product counts in categories will change)
+        static::saved(function () {
+            Cache::forget('shop_categories_with_stock');
+            Cache::forget('shop_all_categories');
+            Cache::forget('footer_categories');
+        });
+
+        static::deleted(function () {
+            Cache::forget('shop_categories_with_stock');
+            Cache::forget('shop_all_categories');
+            Cache::forget('footer_categories');
+        });
+    }
 
     public function category()
     {

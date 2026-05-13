@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Category extends Model
 {
@@ -22,6 +23,24 @@ class Category extends Model
     protected $casts = [
         // No casts needed for now
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Clear caches when category is created, updated, or deleted
+        static::saved(function () {
+            Cache::forget('shop_categories_with_stock');
+            Cache::forget('shop_all_categories');
+            Cache::forget('footer_categories');
+        });
+
+        static::deleted(function () {
+            Cache::forget('shop_categories_with_stock');
+            Cache::forget('shop_all_categories');
+            Cache::forget('footer_categories');
+        });
+    }
 
     public function products()
     {
