@@ -1,10 +1,5 @@
 [build]
-builder = "Nixpacks"
 buildCommand = "npm install && npm run build && composer install --optimize-autoloader --no-dev"
 
 [deploy]
 startCommand = "php artisan serve --host=0.0.0.0 --port=$PORT"
-
-[environment]
-NODE_ENV = "production"
-NODE_VERSION = "22"
