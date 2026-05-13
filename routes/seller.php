@@ -230,11 +230,109 @@ Route::middleware(['auth'])->prefix('seller')->group(function () {
         })->count();
         $revenue = DB::table('order_items')
             ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
             ->where('products.seller_id', $sellerId)
+            ->where('orders.status', '!=', 'cancelled')
             ->sum('order_items.total_price');
         $recentProducts = Product::where('seller_id', $sellerId)->latest()->take(5)->get();
 
-        return view('seller.my-store', compact('seller', 'productCount', 'orderCount', 'revenue', 'recentProducts'));
+        $soldByProduct = DB::table('order_items')
+            ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('products.seller_id', $sellerId)
+            ->where('orders.status', '!=', 'cancelled')
+            ->select('products.id', DB::raw('SUM(order_items.quantity) as sold_quantity'), DB::raw('SUM(order_items.total_price) as revenue'))
+            ->groupBy('products.id');
+
+        $stockReport = Product::query()
+            ->leftJoinSub($soldByProduct, 'sales', function ($join) {
+                $join->on('products.id', '=', 'sales.id');
+            })
+            ->where('products.seller_id', $sellerId)
+            ->select(
+                'products.id',
+                'products.name',
+                'products.stock',
+                'products.initial_stock',
+                'products.new_price',
+                DB::raw('COALESCE(sales.sold_quantity, 0) as sold_quantity'),
+                DB::raw('COALESCE(sales.revenue, 0) as revenue')
+            )
+            ->orderByDesc('sold_quantity')
+            ->orderBy('products.name')
+            ->get();
+
+        $totalInitialStock = $stockReport->sum('initial_stock');
+        $totalCurrentStock = $stockReport->sum('stock');
+        $totalSoldQuantity = $stockReport->sum('sold_quantity');
+
+        $salesTrend = DB::table('order_items')
+            ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('products.seller_id', $sellerId)
+            ->where('orders.status', '!=', 'cancelled')
+            ->where('orders.ordered_at', '>=', now()->subDays(13)->startOfDay())
+            ->select(
+                DB::raw('DATE(orders.ordered_at) as sale_date'),
+                DB::raw('SUM(order_items.quantity) as quantity'),
+                DB::raw('SUM(order_items.total_price) as revenue')
+            )
+            ->groupBy(DB::raw('DATE(orders.ordered_at)'))
+            ->orderBy('sale_date')
+            ->get()
+            ->keyBy('sale_date');
+
+        $salesTrend = collect(range(13, 0))->map(function ($daysAgo) use ($salesTrend) {
+            $date = now()->subDays($daysAgo);
+            $key = $date->toDateString();
+            $row = $salesTrend->get($key);
+
+            return [
+                'label' => $date->format('M d'),
+                'quantity' => $row ? (int) $row->quantity : 0,
+                'revenue' => $row ? (float) $row->revenue : 0,
+            ];
+        });
+
+        $recentSales = DB::table('order_items')
+            ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->leftJoin('users', 'orders.user_id', '=', 'users.id')
+            ->leftJoin('order_addresses', function ($join) {
+                $join->on('orders.id', '=', 'order_addresses.order_id')
+                    ->where('order_addresses.type', '=', 'shipping');
+            })
+            ->where('products.seller_id', $sellerId)
+            ->where('orders.status', '!=', 'cancelled')
+            ->select(
+                'orders.id as order_id',
+                'orders.order_number',
+                'orders.ordered_at',
+                'orders.status',
+                'products.name as product_name',
+                'order_items.quantity',
+                'order_items.total_price',
+                DB::raw('COALESCE(users.name, CONCAT(order_addresses.first_name, " ", order_addresses.last_name), "Guest Customer") as buyer_name'),
+                DB::raw('COALESCE(users.email, order_addresses.email, "No email") as buyer_email'),
+                DB::raw('COALESCE(users.phone, order_addresses.phone, "No phone") as buyer_phone')
+            )
+            ->orderByDesc('orders.ordered_at')
+            ->limit(12)
+            ->get();
+
+        return view('seller.my-store', compact(
+            'seller',
+            'productCount',
+            'orderCount',
+            'revenue',
+            'recentProducts',
+            'stockReport',
+            'totalInitialStock',
+            'totalCurrentStock',
+            'totalSoldQuantity',
+            'salesTrend',
+            'recentSales'
+        ));
     })->name('seller.my-store');
 
     Route::get('/settings', [\App\Http\Controllers\seller\SettingsController::class, 'edit'])->name('seller.settings');
