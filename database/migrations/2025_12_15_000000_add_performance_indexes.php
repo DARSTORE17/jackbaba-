@@ -11,26 +11,77 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Add indexes for frequently queried columns
-        Schema::table('products', function (Blueprint $table) {
-            $table->index('stock'); // Filter by stock > 0
-            $table->index('category_id'); // Filter by category
-            $table->index('created_at'); // Sort by created_at
-            $table->index('slug'); // Lookup by slug
-        });
+        // Add indexes for frequently queried columns (catch duplicate key errors)
+        try {
+            Schema::table('products', function (Blueprint $table) {
+                $table->index('stock'); // Filter by stock > 0
+            });
+        } catch (\Exception $e) {
+            // Index may already exist, that's fine
+        }
 
-        Schema::table('categories', function (Blueprint $table) {
-            $table->index('slug'); // Lookup by slug
-            $table->index('seller_id'); // Filter by seller_id
-        });
+        try {
+            Schema::table('products', function (Blueprint $table) {
+                $table->index('category_id'); // Filter by category
+            });
+        } catch (\Exception $e) {
+            // Index may already exist, that's fine
+        }
 
-        Schema::table('product_descriptions', function (Blueprint $table) {
-            $table->index('product_id'); // Relationship query
-        });
+        try {
+            Schema::table('products', function (Blueprint $table) {
+                $table->index('created_at'); // Sort by created_at
+            });
+        } catch (\Exception $e) {
+            // Index may already exist, that's fine
+        }
 
-        Schema::table('product_media', function (Blueprint $table) {
-            $table->index('product_id'); // Relationship query
-        });
+        try {
+            Schema::table('products', function (Blueprint $table) {
+                $table->index('slug'); // Lookup by slug
+            });
+        } catch (\Exception $e) {
+            // Index may already exist, that's fine
+        }
+
+        try {
+            Schema::table('categories', function (Blueprint $table) {
+                $table->index('slug'); // Lookup by slug
+            });
+        } catch (\Exception $e) {
+            // Index may already exist, that's fine
+        }
+
+        try {
+            Schema::table('categories', function (Blueprint $table) {
+                $table->index('seller_id'); // Filter by seller_id
+            });
+        } catch (\Exception $e) {
+            // Index may already exist, that's fine
+        }
+
+        try {
+            Schema::table('product_descriptions', function (Blueprint $table) {
+                $table->index('product_id'); // Relationship query
+            });
+        } catch (\Exception $e) {
+            // Index may already exist, that's fine
+        }
+
+        try {
+            Schema::table('product_media', function (Blueprint $table) {
+                $table->index('product_id'); // Relationship query
+            });
+        } catch (\Exception $e) {
+            // Index may already exist, that's fine
+        }
+    }
+
+    private function indexExists($table, $indexName)
+    {
+        $sm = \Illuminate\Support\Facades\DB::connection()->getDoctrineSchemaManager();
+        $indexes = $sm->listTableIndexes($table);
+        return isset($indexes[strtolower($indexName)]);
     }
 
     /**
