@@ -30,6 +30,7 @@ class SystemSettings
             'about_store_image_2_path' => '',
             'about_store_image_title' => 'Our Store Image',
             'about_store_image_subtitle' => 'Original electronics, trusted service, and fast support.',
+            'images_cache_buster' => 0, // Incremented when images change
             'hero_kicker' => 'Premium electronics in Tanzania',
             'hero_title' => 'Bravus Market',
             'hero_description' => 'Shop original phones, laptops, and smart accessories with a clean, trusted, and fast buying experience.',

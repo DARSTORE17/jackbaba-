@@ -7,8 +7,9 @@
 @section('content')
     @php
         $serviceCards = isset($featuredCategories) ? $featuredCategories : collect();
-        $heroVideoUrl = !empty($systemSettings['hero_video_path']) ? asset('storage/' . $systemSettings['hero_video_path']) : asset('videos/hero-electronics.mp4');
-        $heroImageUrl = !empty($systemSettings['hero_image_path']) ? asset('storage/' . $systemSettings['hero_image_path']) : asset('img/hero-toys.png');
+        $cacheBuster = !empty($systemSettings['images_cache_buster']) ? '?v=' . $systemSettings['images_cache_buster'] : '';
+        $heroVideoUrl = !empty($systemSettings['hero_video_path']) ? asset('storage/' . $systemSettings['hero_video_path']) . $cacheBuster : asset('videos/hero-electronics.mp4');
+        $heroImageUrl = !empty($systemSettings['hero_image_path']) ? asset('storage/' . $systemSettings['hero_image_path']) . $cacheBuster : asset('img/hero-toys.png');
     @endphp
 
     <section class="home-hero">

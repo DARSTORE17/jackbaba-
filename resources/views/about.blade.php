@@ -3,10 +3,11 @@
 
 @section('content')
 @php
+    $cacheBuster = !empty($systemSettings['images_cache_buster']) ? '?v=' . $systemSettings['images_cache_buster'] : '';
     $aboutStoreImages = collect([
         $systemSettings['about_store_image_path'] ?? '',
         $systemSettings['about_store_image_2_path'] ?? '',
-    ])->filter()->map(fn ($path) => asset('storage/' . $path))->values();
+    ])->filter()->map(fn ($path) => asset('storage/' . $path) . $cacheBuster)->values();
 @endphp
 
 <!-- ================= About Hero Section ================= -->

@@ -2,7 +2,8 @@
     $siteName = $systemSettings['site_name'] ?? config('app.name', 'Bravus Market');
     $siteTagline = $systemSettings['site_tagline'] ?? '';
     $siteDescription = $systemSettings['site_description'] ?? '';
-    $logoUrl = !empty($systemSettings['logo_path']) ? asset('storage/' . $systemSettings['logo_path']) : asset('img/logo.png');
+    $cacheBuster = !empty($systemSettings['images_cache_buster']) ? '?v=' . $systemSettings['images_cache_buster'] : '';
+    $logoUrl = !empty($systemSettings['logo_path']) ? asset('storage/' . $systemSettings['logo_path']) . $cacheBuster : asset('img/logo.png');
     $socialLinks = [
         'facebook_url' => 'bi-facebook',
         'instagram_url' => 'bi-instagram',

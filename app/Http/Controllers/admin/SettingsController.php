@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\admin\AdminController;
 use App\Services\SystemSettings;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -69,6 +70,9 @@ class SettingsController extends AdminController
         $settings = SystemSettings::load();
         $data = $validator->validated();
 
+        // Track if any images were updated
+        $imagesUpdated = false;
+
         foreach (['logo' => 'logo_path', 'hero_image' => 'hero_image_path', 'about_store_image' => 'about_store_image_path', 'about_store_image_2' => 'about_store_image_2_path', 'hero_video' => 'hero_video_path'] as $input => $settingKey) {
             unset($data[$input]);
 
@@ -81,10 +85,19 @@ class SettingsController extends AdminController
             }
 
             $data[$settingKey] = $request->file($input)->store('system', 'public');
+            $imagesUpdated = true;
+        }
+
+        // Add cache-buster timestamp if images were updated
+        if ($imagesUpdated) {
+            $data['images_cache_buster'] = time();
         }
 
         SystemSettings::save(array_merge($settings, $data));
 
-        return redirect()->route('admin.settings')->with('success', 'System colors updated successfully.');
+        // Clear all caches to force refresh
+        Cache::flush();
+
+        return redirect()->route('admin.settings')->with('success', 'System settings updated successfully.');
     }
 }
