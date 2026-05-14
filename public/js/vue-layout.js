@@ -28,6 +28,7 @@
     const pageScriptContainerId = 'vue-runtime-page-scripts';
     const headStartMarker = 'vue-page-head-start';
     const headEndMarker = 'vue-page-head-end';
+    const pageCache = new Map();
 
     function normalizePath(pathname) {
         return pathname.replace(/\/+$/, '') || '/';
@@ -140,6 +141,31 @@
         });
     }
 
+    async function prefetchPage(url) {
+        if (!canUseVueNavigation(url) || pageCache.has(url.href)) {
+            return;
+        }
+
+        try {
+            const response = await fetch(url.href, {
+                credentials: 'same-origin',
+                headers: {
+                    'X-Requested-With': 'Vue-Navigation',
+                    'Accept': 'text/html, application/xhtml+xml',
+                },
+            });
+
+            if (!response.ok || !response.headers.get('content-type')?.includes('text/html')) {
+                return;
+            }
+
+            const html = await response.text();
+            pageCache.set(url.href, html);
+        } catch (error) {
+            // Ignore prefetch failures silently.
+        }
+    }
+
     function closeMobileNav() {
         const mobileNav = document.getElementById('mobileNav');
 
@@ -162,6 +188,7 @@
             document.addEventListener('click', this.handleClick);
             document.addEventListener('submit', this.handleSubmit, true);
             window.addEventListener('popstate', this.handlePopState);
+            document.addEventListener('mouseover', this.handleMouseOver);
             window.VueLayout = {
                 visit: this.visit,
             };
@@ -176,6 +203,7 @@
         beforeUnmount() {
             document.removeEventListener('click', this.handleClick);
             document.removeEventListener('submit', this.handleSubmit, true);
+            document.removeEventListener('mouseover', this.handleMouseOver);
             window.removeEventListener('popstate', this.handlePopState);
         },
 
@@ -259,6 +287,22 @@
                 this.visit(url.href);
             },
 
+            handleMouseOver(event) {
+                const link = event.target.closest('a[href]');
+
+                if (!link || link.dataset.noVue !== undefined || !link.href) {
+                    return;
+                }
+
+                const url = new URL(link.href, window.location.origin);
+
+                if (url.origin !== window.location.origin || !canUseVueNavigation(url) || url.href === window.location.href) {
+                    return;
+                }
+
+                prefetchPage(url);
+            },
+
             handlePopState() {
                 this.visit(window.location.href, {
                     push: false,
@@ -288,23 +332,31 @@
                 closeMobileNav();
 
                 try {
-                    const response = await fetch(url.href, {
-                        credentials: 'same-origin',
-                        headers: {
-                            'X-Requested-With': 'Vue-Navigation',
-                            'Accept': 'text/html, application/xhtml+xml',
-                        },
-                        signal: this.currentController.signal,
-                    });
+                    let html = null;
 
-                    const contentType = response.headers.get('content-type') || '';
+                    if (pageCache.has(url.href)) {
+                        html = pageCache.get(url.href);
+                    } else {
+                        const response = await fetch(url.href, {
+                            credentials: 'same-origin',
+                            headers: {
+                                'X-Requested-With': 'Vue-Navigation',
+                                'Accept': 'text/html, application/xhtml+xml',
+                            },
+                            signal: this.currentController.signal,
+                        });
 
-                    if (!response.ok || !contentType.includes('text/html')) {
-                        window.location.href = url.href;
-                        return;
+                        const contentType = response.headers.get('content-type') || '';
+
+                        if (!response.ok || !contentType.includes('text/html')) {
+                            window.location.href = url.href;
+                            return;
+                        }
+
+                        html = await response.text();
+                        pageCache.set(url.href, html);
                     }
 
-                    const html = await response.text();
                     const doc = new DOMParser().parseFromString(html, 'text/html');
                     const nextPage = doc.querySelector('[data-vue-page]');
                     const currentPage = document.querySelector('[data-vue-page]');

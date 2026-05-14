@@ -73,7 +73,7 @@
                                 @php
                                     $seller = $sellerGroup['seller'];
                                     $sellerAvatar = $seller && $seller->passport
-                                        ? asset('storage/' . $seller->passport)
+                                        ? media_url($seller->passport)
                                         : 'https://ui-avatars.com/api/?name=' . urlencode($seller->name ?? 'Store') . '&background=2563eb&color=fff&size=64';
                                 @endphp
                                 <div class="col-md-6">
@@ -114,7 +114,7 @@
                                         <tr>
                                             <td>
                                                 <div class="d-flex align-items-center">
-                                                    <img src="{{ $item->product->thumbnail ? asset('storage/' . $item->product->thumbnail) : asset('img/logo.png') }}"
+                                                    <img src="{{ media_url($item->product->thumbnail, asset('img/logo.png')) }}"
                                                          alt="{{ $item->product->name }}" class="rounded me-3" style="width: 50px; height: 50px; object-fit: cover;">
                                                     <div>
                                                         <h6 class="mb-0">{{ $item->product->name }}</h6>

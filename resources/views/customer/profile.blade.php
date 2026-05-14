@@ -5,7 +5,7 @@
 @section('content')
     @php
         $avatarUrl = !empty($user->passport)
-            ? asset('storage/' . $user->passport)
+            ? media_url($user->passport)
             : 'https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&background=2563eb&color=fff&size=120';
     @endphp
 

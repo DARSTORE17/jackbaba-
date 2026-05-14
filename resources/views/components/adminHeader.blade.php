@@ -12,7 +12,7 @@
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             @if(Auth::check() && Auth::user() && Auth::user()->passport)
-                <img src="{{ asset('storage/' . Auth::user()->passport) }}" alt="Profile Picture" class="profile-avatar" />
+                <img src="{{ media_url(Auth::user()->passport) }}" alt="Profile Picture" class="profile-avatar" />
             @else
                 @php $displayName = Auth::check() && Auth::user() ? Auth::user()->name : 'Admin'; @endphp
                 <img src="https://ui-avatars.com/api/?name={{ urlencode($displayName) }}&background=0d6efd&color=fff&size=40" alt="Profile Picture" class="profile-avatar" />

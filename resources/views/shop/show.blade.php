@@ -711,8 +711,8 @@
                                 @if ($primaryImage)
                                     @foreach ($images as $image)
                                         <div class="thumb-image {{ $loop->first ? 'active' : '' }}"
-                                            onclick="changeImage('{{ asset('storage/' . $image->file_path) }}', this)">
-                                            <img src="{{ asset('storage/' . $image->file_path) }}"
+                                            onclick="changeImage('{{ media_url($image->file_path) }}', this)">
+                                            <img src="{{ media_url($image->file_path) }}"
                                                 alt="{{ $product->name }}">
                                         </div>
                                     @endforeach
@@ -723,7 +723,7 @@
                         <div class="main-image">
                             @php
                                 $mainImage = $primaryImage
-                                    ? asset('storage/' . $primaryImage->file_path)
+                                    ? media_url($primaryImage->file_path)
                                     : asset('img/logo.png');
                             @endphp
                             <img id="mainImage" src="{{ $mainImage }}" alt="{{ $product->name }}">
@@ -736,8 +736,8 @@
                             <div class="gallery-thumbs-horizontal">
                                 @foreach ($images as $image)
                                     <div class="thumb-image-horizontal {{ $loop->first ? 'active' : '' }}"
-                                        onclick="changeImage('{{ asset('storage/' . $image->file_path) }}', this)">
-                                        <img src="{{ asset('storage/' . $image->file_path) }}" alt="{{ $product->name }}">
+                                        onclick="changeImage('{{ media_url($image->file_path) }}', this)">
+                                        <img src="{{ media_url($image->file_path) }}" alt="{{ $product->name }}">
                                     </div>
                                 @endforeach
                             </div>
@@ -884,7 +884,7 @@
                     @foreach ($relatedProducts as $relatedProduct)
                         <a href="{{ route('shop.show', $relatedProduct->slug) }}" class="related-card">
                             <div class="related-image">
-                                <img src="{{ $relatedProduct->thumbnail ? asset('storage/' . $relatedProduct->thumbnail) : asset('img/logo.png') }}"
+                                <img src="{{ media_url($relatedProduct->thumbnail, asset('img/logo.png')) }}"
                                     alt="{{ $relatedProduct->name }}">
                             </div>
                             <div class="related-info">

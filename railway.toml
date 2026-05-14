@@ -2,8 +2,9 @@
 buildCommand = "npm install && npm run build && composer install --optimize-autoloader --no-dev && php artisan config:clear && php artisan view:clear && php artisan cache:clear"
 
 [deploy]
-startCommand = "php artisan serve --host=0.0.0.0 --port=$PORT"
+startCommand = "php artisan migrate --force && php artisan storage:link --force && php artisan serve --host=0.0.0.0 --port=$PORT"
 
 [environment]
 NODE_ENV = "production"
 APP_URL = "https://jackbaba-production.up.railway.app"
+FILESYSTEM_DISK = "cloudinary"

@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class CustomerController extends Controller
@@ -281,11 +281,9 @@ class CustomerController extends Controller
         ];
 
         if ($request->hasFile('passport')) {
-            if (!empty($user->passport)) {
-                Storage::disk('public')->delete($user->passport);
-            }
+            MediaStorage::delete($user->passport);
 
-            $profileData['passport'] = $request->file('passport')->store('profiles', 'public');
+            $profileData['passport'] = MediaStorage::upload($request->file('passport'), 'profiles', 'image');
         }
 
         if (!empty($validated['password'])) {

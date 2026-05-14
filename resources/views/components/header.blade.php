@@ -1,7 +1,7 @@
 @php
     $siteName = $systemSettings['site_name'] ?? config('app.name', 'Bravus Market');
     $siteTagline = $systemSettings['site_tagline'] ?? 'Premium electronics, phones, laptops, and accessories';
-    $logoUrl = !empty($systemSettings['logo_path']) ? asset('storage/' . $systemSettings['logo_path']) : asset('img/logo.png');
+    $logoUrl = media_url($systemSettings['logo_path'] ?? null, asset('img/logo.png'));
 @endphp
 
 <header class="header">

@@ -6,8 +6,8 @@ use App\Http\Controllers\admin\AdminController;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductDescription;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -69,10 +69,8 @@ class ProductController extends AdminController
             ]);
 
             if ($request->hasFile('thumbnail')) {
-                if ($product->thumbnail && Storage::exists('public/' . $product->thumbnail)) {
-                    Storage::delete('public/' . $product->thumbnail);
-                }
-                $thumbnailPath = $request->file('thumbnail')->store('products/thumbnails', 'public');
+                MediaStorage::delete($product->thumbnail);
+                $thumbnailPath = MediaStorage::upload($request->file('thumbnail'), 'products/thumbnails', 'image');
                 $product->update(['thumbnail' => $thumbnailPath]);
             }
 
@@ -102,9 +100,7 @@ class ProductController extends AdminController
         DB::beginTransaction();
 
         try {
-            if ($product->thumbnail && Storage::exists('public/' . $product->thumbnail)) {
-                Storage::delete('public/' . $product->thumbnail);
-            }
+            MediaStorage::delete($product->thumbnail);
 
             $product->media()->delete();
             $product->description()->delete();

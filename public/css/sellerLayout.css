@@ -11,3 +11,54 @@ body {
     padding-left: var(--sidebar-width);
     transition: padding-left 0.3s ease;
 }
+
+/* Mobile responsive: hide sidebar and remove padding on small screens */
+@media (max-width: 768px) {
+    body {
+        padding-left: 0;
+    }
+    
+    #sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        z-index: 1050;
+    }
+    
+    #sidebar.show,
+    #sidebar.active {
+        transform: translateX(0);
+    }
+    
+    /* Ensure content is readable on mobile */
+    .container-fluid {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    
+    /* Make tables scrollable on mobile */
+    .table-responsive {
+        margin-bottom: 1rem;
+        overflow-x: auto;
+    }
+    
+    /* Ensure cards stack properly */
+    .row {
+        gap: 0.5rem;
+    }
+    
+    /* Responsive form elements */
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    input[type="date"],
+    textarea,
+    select {
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+    
+    /* Make buttons full width on small forms */
+    .btn-group-mobile .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}

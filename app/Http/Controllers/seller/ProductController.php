@@ -7,12 +7,12 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductMedia;
 use App\Models\ProductDescription;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -119,7 +119,7 @@ class ProductController extends Controller
 
             // Handle thumbnail upload
             if ($request->hasFile('thumbnail')) {
-                $thumbnailPath = $request->file('thumbnail')->store('products/thumbnails', 'public');
+                $thumbnailPath = MediaStorage::upload($request->file('thumbnail'), 'products/thumbnails', 'image');
                 $product->update(['thumbnail' => $thumbnailPath]);
             }
 
@@ -262,12 +262,9 @@ class ProductController extends Controller
 
             // Handle thumbnail upload
             if ($request->hasFile('thumbnail')) {
-                // Delete old thumbnail if exists
-                if ($product->thumbnail && Storage::exists('public/' . $product->thumbnail)) {
-                    Storage::delete('public/' . $product->thumbnail);
-                }
+                MediaStorage::delete($product->thumbnail);
 
-                $thumbnailPath = $request->file('thumbnail')->store('products/thumbnails', 'public');
+                $thumbnailPath = MediaStorage::upload($request->file('thumbnail'), 'products/thumbnails', 'image');
                 $product->update(['thumbnail' => $thumbnailPath]);
             }
 
@@ -314,11 +311,12 @@ class ProductController extends Controller
 
         try {
             // Delete thumbnail if exists
-            if ($product->thumbnail && Storage::exists('public/' . $product->thumbnail)) {
-                Storage::delete('public/' . $product->thumbnail);
-            }
+            MediaStorage::delete($product->thumbnail);
 
             // Delete related media
+            foreach ($product->media as $media) {
+                MediaStorage::delete($media->file_path);
+            }
             $product->media()->delete();
 
             // Delete description
@@ -371,10 +369,8 @@ class ProductController extends Controller
         try {
             $file = $request->file('file');
             $type = $request->type;
-            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-
             // Store file
-            $path = $file->storeAs('products/media', $filename, 'public');
+            $path = MediaStorage::upload($file, 'products/media', $type === 'video' ? 'video' : 'image');
 
             // First uncheck all primary media for this product
             ProductMedia::where('product_id', $productId)->update(['is_primary' => false]);
@@ -449,9 +445,7 @@ class ProductController extends Controller
 
         try {
             // Delete file from storage
-            if (Storage::disk('public')->exists($media->file_path)) {
-                Storage::disk('public')->delete($media->file_path);
-            }
+            MediaStorage::delete($media->file_path);
 
             // Delete media record
             $media->delete();

@@ -97,12 +97,11 @@
         }
 
         .vue-page-content {
-            transition: opacity 0.18s ease, transform 0.18s ease;
+            transition: opacity 0.18s ease;
         }
 
         .vue-page-shell.is-loading .vue-page-content {
-            opacity: 0.45;
-            transform: translateY(4px);
+            opacity: 0.92;
         }
 
         @keyframes vueLoaderSlide {

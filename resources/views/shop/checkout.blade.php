@@ -1012,9 +1012,9 @@
                                             <div class="product-item">
                                                 <div class="d-flex align-items-center">
                                                     <img src="{{ $item->product->thumbnail
-                                                        ? asset('storage/' . $item->product->thumbnail)
+                                                        ? media_url($item->product->thumbnail)
                                                         : ($item->product->media->where('is_primary', true)->first()
-                                                            ? asset('storage/' . $item->product->media->where('is_primary', true)->first()->file_path)
+                                                            ? media_url($item->product->media->where('is_primary', true)->first()->file_path)
                                                             : asset('img/logo.png')) }}"
                                                          alt="{{ $item->product->name }}"
                                                          class="rounded me-3" style="width: 50px; height: 50px; object-fit: cover;">

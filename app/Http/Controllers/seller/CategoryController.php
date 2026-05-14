@@ -4,12 +4,12 @@ namespace App\Http\Controllers\seller;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -67,7 +67,7 @@ class CategoryController extends Controller
             ]);
 
             if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('categories/images', 'public');
+                $imagePath = MediaStorage::upload($request->file('image'), 'categories/images', 'image');
                 $category->update(['image' => $imagePath]);
             }
 
@@ -136,11 +136,9 @@ class CategoryController extends Controller
             ]);
 
             if ($request->hasFile('image')) {
-                if ($category->image && Storage::disk('public')->exists($category->image)) {
-                    Storage::disk('public')->delete($category->image);
-                }
+                MediaStorage::delete($category->image);
 
-                $imagePath = $request->file('image')->store('categories/images', 'public');
+                $imagePath = MediaStorage::upload($request->file('image'), 'categories/images', 'image');
                 $category->update(['image' => $imagePath]);
             }
 

@@ -15,7 +15,7 @@
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             @if(Auth::check() && Auth::user() && Auth::user()->passport)
-                <img src="{{ asset('storage/' . Auth::user()->passport) }}"
+                <img src="{{ media_url(Auth::user()->passport) }}"
                      alt="Profile Picture" class="profile-avatar" />
             @else
                 @php $displayName = Auth::check() && Auth::user() ? Auth::user()->name : 'User'; @endphp

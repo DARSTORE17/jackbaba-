@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('products')) {
+            return;
+        }
+
         Schema::table('products', function (Blueprint $table) {
             // Add seller_id (foreign key to users table)
             if (!Schema::hasColumn('products', 'seller_id')) {
@@ -47,6 +51,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (!Schema::hasTable('products')) {
+            return;
+        }
+
         Schema::table('products', function (Blueprint $table) {
             $columns = ['seller_id', 'initial_stock', 'vat_enabled', 'vat_rate', 'delivery_payment', 'delivery_fee'];
             

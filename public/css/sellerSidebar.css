@@ -56,7 +56,20 @@
   padding: 1rem 0;
   overflow-y: auto;
   z-index: 1030;
-  transition: left var(--transition-speed) ease;
+  transition: left var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+
+@media (max-width: 768px) {
+  #sidebar {
+    width: 250px;
+    transform: translateX(-100%);
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  #sidebar.show,
+  #sidebar.active {
+    transform: translateX(0);
+  }
 }
 
 /* SIDEBAR TITLE */

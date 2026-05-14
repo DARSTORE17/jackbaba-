@@ -45,7 +45,7 @@
                                                 <td>
                                                     @foreach($order->orderItems as $item)
                                                         <div class="d-flex align-items-center mb-1">
-                                                            <img src="{{ $item->product->thumbnail ? asset('storage/' . $item->product->thumbnail) : asset('img/logo.png') }}"
+                                                            <img src="{{ media_url($item->product->thumbnail, asset('img/logo.png')) }}"
                                                                  alt="{{ $item->product->name }}" class="rounded me-2" style="width: 30px; height: 30px; object-fit: cover;">
                                                             <small>
                                                                 {{ Str::limit($item->product->name, 30) }} ({{ $item->quantity }})

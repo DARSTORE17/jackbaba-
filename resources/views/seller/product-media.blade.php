@@ -182,12 +182,12 @@
                                 <div class="col-md-3 col-sm-6">
                                     <div class="media-item" data-media-id="{{ $media->id }}">
                                         @if($media->type === 'image')
-                                            <img src="{{ asset('storage/' . $media->file_path) }}"
+                                            <img src="{{ media_url($media->file_path) }}"
                                                  alt="Product Media" class="media-preview"
-                                                 onclick="openMediaModal('{{ asset('storage/' . $media->file_path) }}', '{{ $media->type }}')">
+                                                 onclick="openMediaModal('{{ media_url($media->file_path) }}', '{{ $media->type }}')">
                                         @else
                                             <div class="bg-dark d-flex align-items-center justify-content-center media-preview"
-                                                 onclick="openMediaModal('{{ asset('storage/' . $media->file_path) }}', '{{ $media->type }}')">
+                                                 onclick="openMediaModal('{{ media_url($media->file_path) }}', '{{ $media->type }}')">
                                                 <i class="bi bi-play-circle-fill" style="font-size: 3rem; color: white;"></i>
                                             </div>
                                         @endif
@@ -390,7 +390,9 @@ $(document).ready(function() {
     function appendMediaItem(media) {
         $('.primary-badge').remove();
 
-        const src = `${window.location.origin}/storage/${media.file_path}`;
+        const src = media.file_path && media.file_path.startsWith('http')
+            ? media.file_path
+            : `${window.location.origin}/storage/${media.file_path}`;
         const mediaHtml = `
             <div class="col-md-3 col-sm-6">
                 <div class="media-item" data-media-id="${media.id}">

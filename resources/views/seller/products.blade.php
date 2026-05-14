@@ -312,7 +312,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
                                         @if($product->thumbnail)
-                                            <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }}" class="thumbnail-preview thumbnail-clickable" data-bs-toggle="modal" data-bs-target="#viewProductModal" data-product-id="{{ $product->id }}">
+                                            <img src="{{ media_url($product->thumbnail) }}" alt="{{ $product->name }}" class="thumbnail-preview thumbnail-clickable" data-bs-toggle="modal" data-bs-target="#viewProductModal" data-product-id="{{ $product->id }}">
                                         @else
                                             <div class="thumbnail-placeholder thumbnail-clickable" data-bs-toggle="modal" data-bs-target="#viewProductModal" data-product-id="{{ $product->id }}">
                                                 <i class="bi bi-image"></i>
@@ -715,6 +715,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
+    function mediaUrl(path) {
+        if (!path) {
+            return '';
+        }
+
+        return path.startsWith('http') ? path : '{{ asset("storage") }}/' + path;
+    }
+
     // Show loading overlay
     function showLoading() {
         $('#loadingOverlay').css('display', 'flex');
@@ -887,7 +895,7 @@ $(document).ready(function() {
                         thumbnailPreview = `
                             <div class="mt-2">
                                 <p>Current Thumbnail:</p>
-                                <img src="{{ asset('storage') }}/${product.thumbnail}" alt="Current Thumbnail" class="thumbnail-preview">
+                                <img src="${mediaUrl(product.thumbnail)}" alt="Current Thumbnail" class="thumbnail-preview">
                             </div>
                         `;
                     } else {
@@ -1059,7 +1067,7 @@ $(document).ready(function() {
 
                     // Set thumbnail
                     if (product.thumbnail) {
-                        $('#viewThumbnail').attr('src', '{{ asset("storage") }}/' + product.thumbnail);
+                        $('#viewThumbnail').attr('src', mediaUrl(product.thumbnail));
                     } else {
                         $('#viewThumbnail').attr('src', 'https://via.placeholder.com/200?text=No+Image');
                     }

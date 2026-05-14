@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\seller;
 
 use App\Http\Controllers\Controller;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class SettingsController extends Controller
@@ -72,11 +72,9 @@ class SettingsController extends Controller
         ];
 
         if ($request->hasFile('passport')) {
-            if (!empty($seller->passport)) {
-                Storage::disk('public')->delete($seller->passport);
-            }
+            MediaStorage::delete($seller->passport);
 
-            $profileData['passport'] = $request->file('passport')->store('profiles', 'public');
+            $profileData['passport'] = MediaStorage::upload($request->file('passport'), 'profiles', 'image');
         }
 
         if (!empty($validated['password'])) {

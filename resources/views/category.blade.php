@@ -1145,7 +1145,7 @@
         <article class="product-card">
             <div class="product-image">
                 <a href="{{ route('shop.show', $product->slug) }}">
-                    <img src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : asset('img/logo.png') }}" alt="{{ $product->name }}" loading="lazy">
+                    <img src="{{ media_url($product->thumbnail, asset('img/logo.png')) }}" alt="{{ $product->name }}" loading="lazy">
                 </a>
                 <div class="product-badges">
                     @if($product->discount > 0)

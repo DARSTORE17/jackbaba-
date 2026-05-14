@@ -85,7 +85,7 @@
                                 <label class="form-label" for="logo">Logo</label>
                                 <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
                                 @if(!empty($settings['logo_path']))
-                                    <img src="{{ asset('storage/' . $settings['logo_path']) }}" alt="Current logo" class="img-fluid rounded mt-2" style="max-height: 90px;">
+                                    <img src="{{ media_url($settings['logo_path']) }}" alt="Current logo" class="img-fluid rounded mt-2" style="max-height: 90px;">
                                 @endif
                                 @error('logo')
                                     <div class="text-danger mt-1">{{ $message }}</div>
@@ -95,7 +95,7 @@
                                 <label class="form-label" for="hero_image">Hero Image</label>
                                 <input type="file" class="form-control" id="hero_image" name="hero_image" accept="image/*">
                                 @if(!empty($settings['hero_image_path']))
-                                    <img src="{{ asset('storage/' . $settings['hero_image_path']) }}" alt="Current hero image" class="img-fluid rounded mt-2" style="max-height: 90px;">
+                                    <img src="{{ media_url($settings['hero_image_path']) }}" alt="Current hero image" class="img-fluid rounded mt-2" style="max-height: 90px;">
                                 @endif
                                 @error('hero_image')
                                     <div class="text-danger mt-1">{{ $message }}</div>
@@ -105,7 +105,7 @@
                                 <label class="form-label" for="about_store_image">About Store Card Image 1</label>
                                 <input type="file" class="form-control" id="about_store_image" name="about_store_image" accept="image/*">
                                 @if(!empty($settings['about_store_image_path']))
-                                    <img src="{{ asset('storage/' . $settings['about_store_image_path']) }}" alt="Current about store image" class="img-fluid rounded mt-2" style="max-height: 110px;">
+                                    <img src="{{ media_url($settings['about_store_image_path']) }}" alt="Current about store image" class="img-fluid rounded mt-2" style="max-height: 110px;">
                                 @endif
                                 @error('about_store_image')
                                     <div class="text-danger mt-1">{{ $message }}</div>
@@ -115,7 +115,7 @@
                                 <label class="form-label" for="about_store_image_2">About Store Card Image 2</label>
                                 <input type="file" class="form-control" id="about_store_image_2" name="about_store_image_2" accept="image/*">
                                 @if(!empty($settings['about_store_image_2_path']))
-                                    <img src="{{ asset('storage/' . $settings['about_store_image_2_path']) }}" alt="Current second about store image" class="img-fluid rounded mt-2" style="max-height: 110px;">
+                                    <img src="{{ media_url($settings['about_store_image_2_path']) }}" alt="Current second about store image" class="img-fluid rounded mt-2" style="max-height: 110px;">
                                 @endif
                                 @error('about_store_image_2')
                                     <div class="text-danger mt-1">{{ $message }}</div>
@@ -125,7 +125,7 @@
                                 <label class="form-label" for="hero_video">Hero Background Video</label>
                                 <input type="file" class="form-control" id="hero_video" name="hero_video" accept="video/mp4,video/webm,video/ogg">
                                 @if(!empty($settings['hero_video_path']))
-                                    <video src="{{ asset('storage/' . $settings['hero_video_path']) }}" class="w-100 rounded mt-2" style="max-height: 90px;" muted controls></video>
+                                    <video src="{{ media_url($settings['hero_video_path']) }}" class="w-100 rounded mt-2" style="max-height: 90px;" muted controls></video>
                                 @endif
                                 @error('hero_video')
                                     <div class="text-danger mt-1">{{ $message }}</div>

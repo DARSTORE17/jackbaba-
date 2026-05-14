@@ -108,7 +108,7 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-3">
                                     @if(Auth::user() && Auth::user()->passport)
-                                        <img src="{{ asset('storage/' . Auth::user()->passport) }}"
+                                        <img src="{{ media_url(Auth::user()->passport) }}"
                                              class="rounded-circle me-3" style="width: 50px; height: 50px; object-fit: cover;">
                                     @else
                                         <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=10b981&color=fff&size=50"
@@ -162,7 +162,7 @@
                                     @foreach($featuredProducts->take(4) as $product)
                                         <div class="col-md-3 mb-3">
                                             <div class="card h-100 border-0 shadow-sm">
-                                                <img src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : asset('img/logo.png') }}"
+                                                <img src="{{ media_url($product->thumbnail, asset('img/logo.png')) }}"
                                                      class="card-img-top" alt="{{ $product->name }}" style="height: 200px; object-fit: cover;">
                                                 <div class="card-body">
                                                     <h6 class="card-title mb-2" style="font-size: 0.9rem;">

@@ -53,9 +53,11 @@ return new class extends Migration
         }
 
         try {
-            Schema::table('categories', function (Blueprint $table) {
-                $table->index('seller_id'); // Filter by seller_id
-            });
+            if (Schema::hasColumn('categories', 'seller_id')) {
+                Schema::table('categories', function (Blueprint $table) {
+                    $table->index('seller_id'); // Filter by seller_id
+                });
+            }
         } catch (\Exception $e) {
             // Index may already exist, that's fine
         }

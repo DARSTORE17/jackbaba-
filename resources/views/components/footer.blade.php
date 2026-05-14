@@ -3,7 +3,7 @@
     $siteTagline = $systemSettings['site_tagline'] ?? '';
     $siteDescription = $systemSettings['site_description'] ?? '';
     $cacheBuster = !empty($systemSettings['images_cache_buster']) ? '?v=' . $systemSettings['images_cache_buster'] : '';
-    $logoUrl = !empty($systemSettings['logo_path']) ? asset('storage/' . $systemSettings['logo_path']) . $cacheBuster : asset('img/logo.png');
+    $logoUrl = media_url($systemSettings['logo_path'] ?? null, asset('img/logo.png'), $cacheBuster);
     $socialLinks = [
         'facebook_url' => 'bi-facebook',
         'instagram_url' => 'bi-instagram',

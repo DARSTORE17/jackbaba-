@@ -267,9 +267,8 @@
         <div class="categories-grid">
             @forelse($categories as $category)
                 @php
-                    $hasImage = !empty($category->image)
-                        && \Illuminate\Support\Facades\Storage::disk('public')->exists($category->image);
-                    $imageUrl = $hasImage ? asset('storage/' . $category->image) : null;
+                    $hasImage = media_exists($category->image);
+                    $imageUrl = $hasImage ? media_url($category->image) : null;
                 @endphp
 
                 <a href="{{ route('category.show', $category->slug) }}" class="category-card">

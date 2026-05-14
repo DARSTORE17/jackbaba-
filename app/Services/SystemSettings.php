@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
 class SystemSettings
 {
     public static function getPath(): string
@@ -63,6 +66,14 @@ class SystemSettings
 
     public static function load(): array
     {
+        if (self::databaseReady()) {
+            $data = DB::table('system_settings')->pluck('value', 'key')->all();
+
+            if (!empty($data)) {
+                return array_merge(self::defaults(), $data);
+            }
+        }
+
         $path = self::getPath();
 
         if (!file_exists($path)) {
@@ -86,11 +97,33 @@ class SystemSettings
         $allowed = array_intersect_key($data, $defaults);
         $settings = array_merge($defaults, $allowed);
 
+        if (self::databaseReady()) {
+            $now = now();
+            $rows = collect($settings)->map(fn ($value, $key) => [
+                'key' => $key,
+                'value' => is_scalar($value) || is_null($value) ? (string) $value : json_encode($value),
+                'created_at' => $now,
+                'updated_at' => $now,
+            ])->values()->all();
+
+            DB::table('system_settings')->upsert($rows, ['key'], ['value', 'updated_at']);
+            return;
+        }
+
         $directory = dirname(self::getPath());
         if (!is_dir($directory)) {
             mkdir($directory, 0755, true);
         }
 
         file_put_contents(self::getPath(), json_encode($settings, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    }
+
+    private static function databaseReady(): bool
+    {
+        try {
+            return Schema::hasTable('system_settings');
+        } catch (\Throwable) {
+            return false;
+        }
     }
 }

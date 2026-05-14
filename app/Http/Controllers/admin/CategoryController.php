@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\admin\AdminController;
 use App\Models\Category;
+use App\Services\MediaStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -38,7 +39,7 @@ class CategoryController extends AdminController
         ]);
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('categories/images', 'public');
+            $imagePath = MediaStorage::upload($request->file('image'), 'categories/images', 'image');
             $category->update(['image' => $imagePath]);
         }
 
@@ -66,11 +67,9 @@ class CategoryController extends AdminController
         ]);
 
         if ($request->hasFile('image')) {
-            if ($category->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($category->image)) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($category->image);
-            }
+            MediaStorage::delete($category->image);
 
-            $imagePath = $request->file('image')->store('categories/images', 'public');
+            $imagePath = MediaStorage::upload($request->file('image'), 'categories/images', 'image');
             $category->update(['image' => $imagePath]);
         }
 

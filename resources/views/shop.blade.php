@@ -136,7 +136,7 @@
                     @forelse($products as $product)
                         <article class="product-card reveal-up">
                             <a href="{{ route('shop.show', $product->slug) }}" class="product-image">
-                                <img src="{{ $product->thumbnail ? asset('storage/' . $product->thumbnail) : asset('img/logo.png') }}"
+                                <img src="{{ media_url($product->thumbnail, asset('img/logo.png')) }}"
                                     alt="{{ $product->name }}"
                                     loading="lazy">
 

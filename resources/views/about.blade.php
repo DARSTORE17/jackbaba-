@@ -7,7 +7,7 @@
     $aboutStoreImages = collect([
         $systemSettings['about_store_image_path'] ?? '',
         $systemSettings['about_store_image_2_path'] ?? '',
-    ])->filter()->map(fn ($path) => asset('storage/' . $path) . $cacheBuster)->values();
+    ])->filter()->map(fn ($path) => media_url($path, null, $cacheBuster))->values();
 @endphp
 
 <!-- ================= About Hero Section ================= -->

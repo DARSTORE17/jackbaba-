@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\admin\AdminController;
+use App\Services\MediaStorage;
 use App\Services\SystemSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class SettingsController extends AdminController
@@ -81,10 +81,10 @@ class SettingsController extends AdminController
             }
 
             if (!empty($settings[$settingKey])) {
-                Storage::disk('public')->delete($settings[$settingKey]);
+                MediaStorage::delete($settings[$settingKey]);
             }
 
-            $data[$settingKey] = $request->file($input)->store('system', 'public');
+            $data[$settingKey] = MediaStorage::upload($request->file($input), 'system', $input === 'hero_video' ? 'video' : 'image');
             $imagesUpdated = true;
         }
 

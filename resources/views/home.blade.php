@@ -8,14 +8,25 @@
     @php
         $serviceCards = isset($featuredCategories) ? $featuredCategories : collect();
         $cacheBuster = !empty($systemSettings['images_cache_buster']) ? '?v=' . $systemSettings['images_cache_buster'] : '';
-        $heroVideoUrl = !empty($systemSettings['hero_video_path']) ? asset('storage/' . $systemSettings['hero_video_path']) . $cacheBuster : asset('videos/hero-electronics.mp4');
-        $heroImageUrl = !empty($systemSettings['hero_image_path']) ? asset('storage/' . $systemSettings['hero_image_path']) . $cacheBuster : asset('img/hero-toys.png');
+        $heroVideoUrl = media_url($systemSettings['hero_video_path'] ?? null, asset('videos/hero-electronics.mp4'), $cacheBuster);
+        $heroImageUrl = media_url($systemSettings['hero_image_path'] ?? null, asset('img/hero-toys.png'), $cacheBuster);
     @endphp
 
     <section class="home-hero">
-        <video class="home-hero__video" autoplay muted loop playsinline preload="metadata">
-            <source src="{{ $heroVideoUrl }}" type="video/mp4">
+        <video class="home-hero__video" autoplay muted loop playsinline preload="none" poster="{{ $heroImageUrl }}">
+            <source data-src="{{ $heroVideoUrl }}" type="video/mp4">
         </video>
+
+        <script>
+            window.addEventListener('load', function () {
+                const heroVideo = document.querySelector('.home-hero__video');
+                const source = heroVideo ? heroVideo.querySelector('source[data-src]') : null;
+                if (source && source.dataset.src) {
+                    source.src = source.dataset.src;
+                    heroVideo.load();
+                }
+            });
+        </script>
 
         <div class="home-hero__veil"></div>
         <div class="home-hero__grid"></div>
@@ -96,9 +107,8 @@
                     @php
                         $hasCategoryImage = isset($featuredCategories)
                             && $featuredCategories->count()
-                            && !empty($card->image)
-                            && \Illuminate\Support\Facades\Storage::disk('public')->exists($card->image);
-                        $imageUrl = $hasCategoryImage ? asset('storage/' . $card->image) : null;
+                            && media_exists($card->image);
+                        $imageUrl = $hasCategoryImage ? media_url($card->image) : null;
                     @endphp
 
                     <a href="{{ isset($card->slug) ? route('category.show', $card->slug) : route('shop') }}"

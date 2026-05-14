@@ -383,7 +383,13 @@ $(document).ready(function() {
         }
     });
 
-    const storageRoot = '{{ asset("storage") }}';
+    function mediaUrl(path) {
+        if (!path) {
+            return '';
+        }
+
+        return path.startsWith('http') ? path : '{{ asset("storage") }}/' + path;
+    }
 
     // Edit Category
     window.editCategory = function(id) {
@@ -398,7 +404,7 @@ $(document).ready(function() {
                     $('#edit_description').val(category.description || '');
 
                     if (category.image) {
-                        $('#edit_image_preview').attr('src', storageRoot + '/' + category.image).removeClass('d-none');
+                        $('#edit_image_preview').attr('src', mediaUrl(category.image)).removeClass('d-none');
                     } else {
                         $('#edit_image_preview').attr('src', '').addClass('d-none');
                     }

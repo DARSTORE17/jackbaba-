@@ -262,9 +262,9 @@
                                                                 <!-- Product Image -->
                                                                 <div class="col-4">
                                                                     <img src="{{ $item->product->thumbnail
-                                                                        ? asset('storage/' . $item->product->thumbnail)
+                                                                        ? media_url($item->product->thumbnail)
                                                                         : ($item->product->media->where('is_primary', true)->first()
-                                                                            ? asset('storage/' . $item->product->media->where('is_primary', true)->first()->file_path)
+                                                                            ? media_url($item->product->media->where('is_primary', true)->first()->file_path)
                                                                             : asset('img/logo.png')) }}"
                                                                         alt="{{ $item->product->name }}"
                                                                         class="img-fluid rounded">

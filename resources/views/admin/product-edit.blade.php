@@ -61,7 +61,7 @@
                             <input type="file" name="thumbnail" class="form-control" accept="image/*">
                             @if($product->thumbnail)
                                 <div class="mt-2">
-                                    <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }}" style="max-width: 200px; border-radius: 5px;">
+                                    <img src="{{ media_url($product->thumbnail) }}" alt="{{ $product->name }}" style="max-width: 200px; border-radius: 5px;">
                                 </div>
                             @endif
                         </div>
