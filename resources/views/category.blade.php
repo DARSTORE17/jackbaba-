@@ -483,13 +483,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 250px;
+        aspect-ratio: 1 / 0.9;
     }
 
     .product-image img {
-        max-width: 100%;
-        max-height: 300px;
-        object-fit: contain;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
         transition: transform 0.3s ease;
     }
 
@@ -707,7 +707,7 @@
 
         .product-image {
             flex: 0 0 120px;
-            height: auto;
+            height: 120px;
             min-height: auto;
         }
 

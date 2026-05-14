@@ -110,21 +110,20 @@
     }
 
     .category-media {
-        height: 190px;
-        margin: 0.85rem 0.85rem 0;
+        aspect-ratio: 4 / 3;
+        margin: 0;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        border-radius: 18px;
+        border-radius: 0;
         background: var(--secondary-color);
     }
 
     .category-media img {
         width: 100%;
         height: 100%;
-        padding: 0.75rem;
-        object-fit: contain;
+        object-fit: cover;
         transition: transform 0.28s ease;
     }
 

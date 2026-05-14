@@ -383,15 +383,14 @@
 .offer-card img {
     display: block;
     width: 100%;
-    height: 170px;
-    padding: 0.85rem;
-    object-fit: contain;
-    background: var(--secondary-color);
+    height: 190px;
+    object-fit: cover;
+    background: #ffffff;
     transition: transform 0.45s ease;
 }
 
 .offer-card:hover img {
-    transform: scale(1.08);
+    transform: scale(1.06);
 }
 
 .offer-card__icon {
