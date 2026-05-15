@@ -10,15 +10,13 @@ Route::get('/', function () {
         ->take(6)
         ->get();
 
-    $homeFeaturedProducts = Product::whereNull('seller_id')
-        ->where('is_advertised', true)
+    $homeFeaturedProducts = Product::where('is_advertised', true)
         ->orderByDesc('rate')
         ->take(4)
         ->get();
 
     if ($homeFeaturedProducts->isEmpty()) {
-        $homeFeaturedProducts = Product::whereNull('seller_id')
-            ->orderByDesc('rate')
+        $homeFeaturedProducts = Product::orderByDesc('rate')
             ->take(4)
             ->get();
     }
