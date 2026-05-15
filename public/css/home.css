@@ -1202,6 +1202,25 @@
         padding-top: 4rem;
     }
 
+    .hero-copy {
+        max-width: 100%;
+    }
+
+    .hero-preview {
+        justify-self: center;
+        width: 100%;
+        margin-top: 2rem;
+    }
+
+    .hero-preview__card {
+        width: min(100%, 520px);
+        margin: 0 auto;
+    }
+
+    .hero-highlights {
+        grid-template-columns: 1fr;
+    }
+
     .hero-actions {
         flex-direction: column;
         align-items: stretch;
@@ -1237,6 +1256,30 @@
     .hero-inner {
         padding-top: 3rem;
         padding-bottom: 3.5rem;
+    }
+
+    .hero-copy {
+        max-width: 100%;
+    }
+
+    .hero-preview {
+        width: 100%;
+        justify-self: center;
+        margin-top: 2rem;
+    }
+
+    .hero-preview__card {
+        width: 100%;
+        min-height: auto;
+        padding: 1.35rem;
+    }
+
+    .hero-preview__image {
+        min-height: 320px;
+    }
+
+    .hero-highlights {
+        grid-template-columns: 1fr;
     }
 
     .hero-actions,
