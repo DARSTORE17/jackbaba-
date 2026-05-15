@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/home.css') }}?v={{ filemtime(public_path('css/home.css')) }}" rel="stylesheet">
 @endsection
 
 @section('content')

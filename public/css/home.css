@@ -1195,15 +1195,26 @@
 @media (max-width: 991px) {
     .home-hero {
         min-height: auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 
     .hero-inner {
         grid-template-columns: 1fr;
         padding-top: 4rem;
+        gap: 2rem;
     }
 
     .hero-copy {
         max-width: 100%;
+    }
+
+    .hero-copy h1 {
+        font-size: clamp(2.8rem, 6vw, 4rem);
+    }
+
+    .hero-copy p {
+        font-size: 1rem;
     }
 
     .hero-preview {
@@ -1215,10 +1226,21 @@
     .hero-preview__card {
         width: min(100%, 520px);
         margin: 0 auto;
+        padding: 1.4rem;
+    }
+
+    .hero-preview__image {
+        min-height: 320px;
+    }
+
+    .hero-preview__badge {
+        font-size: 0.95rem;
+        padding: 0.75rem 1rem;
     }
 
     .hero-highlights {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
     .hero-actions {
@@ -1256,30 +1278,46 @@
     .hero-inner {
         padding-top: 3rem;
         padding-bottom: 3.5rem;
+        gap: 1.5rem;
     }
 
     .hero-copy {
         max-width: 100%;
     }
 
+    .hero-copy h1 {
+        font-size: clamp(2.2rem, 9vw, 3rem);
+        line-height: 1.05;
+    }
+
+    .hero-copy p {
+        font-size: 0.98rem;
+    }
+
     .hero-preview {
         width: 100%;
         justify-self: center;
-        margin-top: 2rem;
+        margin-top: 1.75rem;
     }
 
     .hero-preview__card {
         width: 100%;
         min-height: auto;
-        padding: 1.35rem;
+        padding: 1.25rem;
     }
 
     .hero-preview__image {
-        min-height: 320px;
+        min-height: 260px;
+    }
+
+    .hero-preview__badge {
+        font-size: 0.9rem;
+        padding: 0.65rem 0.9rem;
     }
 
     .hero-highlights {
         grid-template-columns: 1fr;
+        gap: 0.9rem;
     }
 
     .hero-actions,
