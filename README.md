@@ -61,5 +61,5 @@ Role	Email	Password
 Seller	admin@seller@bravusmarket.com	bravusmarket.com	admin123
 Seller	seller123
 Customer	customer@bravusmarket.com	customer123UPDATE kids_shop.users
-SET role = 'admin'
-WHERE email = 'admin@bravusmarket.com';
+SET role = 'admin'admin@bravusmarket.com
+WHERE email = '';

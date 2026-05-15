@@ -45,6 +45,11 @@
                     <i class="bi bi-database-gear"></i> Database
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.security.index') }}" class="nav-link {{ request()->is('admin/security*') ? 'active' : '' }}">
+                    <i class="bi bi-shield-check"></i> Security
+                </a>
+            </li>
         </ul>
     </div>
 </aside>

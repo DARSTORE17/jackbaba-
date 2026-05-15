@@ -20,7 +20,7 @@
     <link href="{{ asset('css/header.css') }}" rel="stylesheet">
     <link href="{{ asset('css/footer.css') }}" rel="stylesheet">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite('resources/css/app.css')
 
     @include('components.system-colors')
 
@@ -155,6 +155,8 @@
     <script src="{{ asset('js/header.js') }}"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <script src="{{ asset('js/vue-layout.js') }}"></script>
+
+    @vite('resources/js/app.js')
 
     @auth
     {{-- Auto Logout on Inactivity --}}

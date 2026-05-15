@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\SettingsController;
 use App\Http\Controllers\admin\DatabaseController;
+use App\Http\Controllers\admin\SecurityController;
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
@@ -42,4 +43,24 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::get('/database', [DatabaseController::class, 'index'])->name('admin.database');
     Route::post('/database/backup', [DatabaseController::class, 'backup'])->name('admin.database.backup');
+    Route::get('/database/{table}/edit', [DatabaseController::class, 'editTable'])->name('admin.database.edit');
+    Route::put('/database/{table}', [DatabaseController::class, 'updateTable'])->name('admin.database.update');
+    Route::post('/database/format', [DatabaseController::class, 'format'])->name('admin.database.format');
+    Route::post('/database/import', [DatabaseController::class, 'import'])->name('admin.database.import');
+
+    Route::get('/security', [SecurityController::class, 'index'])->name('admin.security.index');
+    Route::get('/security/{log}', [SecurityController::class, 'show'])->name('admin.security.show');
+    Route::delete('/security/{log}', [SecurityController::class, 'destroy'])->name('admin.security.destroy');
+    Route::post('/security/clear', [SecurityController::class, 'clear'])->name('admin.security.clear');
+    Route::get('/security/export', [SecurityController::class, 'export'])->name('admin.security.export');
+Route::get('/security/test', function () {
+    $securityLogger = app(\App\Services\SecurityLogger::class);
+
+    // Test different security events
+    $securityLogger->logEvent('test_sql_injection', 'high', 'Test SQL injection detected: SELECT * FROM users');
+    $securityLogger->logEvent('test_xss_attempt', 'medium', 'Test XSS attempt detected: <script>alert("xss")</script>');
+    $securityLogger->logEvent('test_suspicious_pattern', 'low', 'Test suspicious pattern detected');
+
+    return response()->json(['message' => 'Test security events logged successfully']);
+})->name('admin.security.test');
 });

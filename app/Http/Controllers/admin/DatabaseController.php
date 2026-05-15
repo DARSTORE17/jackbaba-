@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class DatabaseController extends AdminController
 {
@@ -48,6 +49,153 @@ class DatabaseController extends AdminController
         }, $fileName, [
             'Content-Type' => 'application/sql',
         ]);
+    }
+
+    public function editTable(Request $request, string $table)
+    {
+        $driver = config("database.connections." . config('database.default') . ".driver");
+
+        if ($driver !== 'mysql') {
+            return back()->with('error', 'Table editing is currently available for MySQL connections only.');
+        }
+
+        // Get table structure
+        $columns = collect(DB::select("DESCRIBE `$table`"))->map(function ($column) {
+            return [
+                'field' => $column->Field,
+                'type' => $column->Type,
+                'null' => $column->Null === 'YES',
+                'key' => $column->Key,
+                'default' => $column->Default,
+                'extra' => $column->Extra,
+            ];
+        });
+
+        // Get sample data (first 10 rows)
+        $sampleData = DB::table($table)->limit(10)->get();
+
+        return view('admin.database-edit', compact('table', 'columns', 'sampleData'));
+    }
+
+    public function updateTable(Request $request, string $table)
+    {
+        $driver = config("database.connections." . config('database.default') . ".driver");
+
+        if ($driver !== 'mysql') {
+            return back()->with('error', 'Table editing is currently available for MySQL connections only.');
+        }
+
+        $request->validate([
+            'action' => 'required|in:insert,update,delete',
+            'data' => 'required|array',
+        ]);
+
+        try {
+            if ($request->action === 'insert') {
+                DB::table($table)->insert($request->data);
+                $message = 'Record inserted successfully.';
+            } elseif ($request->action === 'update') {
+                $request->validate([
+                    'where_column' => 'required|string',
+                    'where_value' => 'required',
+                ]);
+
+                DB::table($table)
+                    ->where($request->where_column, $request->where_value)
+                    ->update($request->data);
+                $message = 'Record updated successfully.';
+            } elseif ($request->action === 'delete') {
+                $request->validate([
+                    'where_column' => 'required|string',
+                    'where_value' => 'required',
+                ]);
+
+                DB::table($table)
+                    ->where($request->where_column, $request->where_value)
+                    ->delete();
+                $message = 'Record deleted successfully.';
+            }
+
+            return back()->with('success', $message);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Operation failed: ' . $e->getMessage());
+        }
+    }
+
+    public function format(Request $request)
+    {
+        $driver = config("database.connections." . config('database.default') . ".driver");
+        $database = config("database.connections." . config('database.default') . ".database");
+
+        if ($driver !== 'mysql') {
+            return back()->with('error', 'Database formatting is currently available for MySQL connections only.');
+        }
+
+        $request->validate([
+            'confirm' => 'required|in:FORMAT_DATABASE',
+        ]);
+
+        try {
+            // Get all tables
+            $tables = collect(DB::select('SHOW FULL TABLES WHERE Table_type = "BASE TABLE"'))
+                ->map(function ($row) {
+                    $values = array_values((array) $row);
+                    return $values[0] ?? null;
+                })
+                ->filter()
+                ->values();
+
+            // Disable foreign key checks
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
+            // Truncate all tables
+            foreach ($tables as $table) {
+                DB::statement("TRUNCATE TABLE `$table`");
+            }
+
+            // Re-enable foreign key checks
+            DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+            return back()->with('success', 'Database formatted successfully. All data has been cleared.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Database formatting failed: ' . $e->getMessage());
+        }
+    }
+
+    public function import(Request $request)
+    {
+        $driver = config("database.connections." . config('database.default') . ".driver");
+
+        if ($driver !== 'mysql') {
+            return back()->with('error', 'Database import is currently available for MySQL connections only.');
+        }
+
+        $request->validate([
+            'backup_file' => 'required|file|mimes:sql,txt',
+        ]);
+
+        try {
+            $file = $request->file('backup_file');
+            $sql = file_get_contents($file->getRealPath());
+
+            // Split SQL into individual statements
+            $statements = array_filter(array_map('trim', explode(';', $sql)));
+
+            DB::beginTransaction();
+
+            foreach ($statements as $statement) {
+                if (!empty($statement) && !str_starts_with(strtoupper($statement), 'SET')) {
+                    DB::statement($statement);
+                }
+            }
+
+            DB::commit();
+
+            return back()->with('success', 'Database import completed successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Database import failed: ' . $e->getMessage());
+        }
     }
 
     private function getTableStats(string $driver, ?string $database): array

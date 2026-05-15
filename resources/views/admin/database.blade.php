@@ -12,12 +12,20 @@
                 <p class="text-muted mb-0">Review database tables and download a safe SQL backup.</p>
             </div>
 
-            <form method="POST" action="{{ route('admin.database.backup') }}">
-                @csrf
-                <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-download me-1"></i>Download Backup
+            <div class="d-flex gap-2">
+                <form method="POST" action="{{ route('admin.database.backup') }}" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-download me-1"></i>Download Backup
+                    </button>
+                </form>
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#formatModal">
+                    <i class="bi bi-exclamation-triangle me-1"></i>Format Database
                 </button>
-            </form>
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#importModal">
+                    <i class="bi bi-upload me-1"></i>Import Backup
+                </button>
+            </div>
         </div>
 
         <div class="row g-3 mb-4">
@@ -80,6 +88,7 @@
                                     <th class="text-end">Size</th>
                                     <th>Collation</th>
                                     <th>Updated</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,6 +102,11 @@
                                         </td>
                                         <td>{{ $table['collation'] }}</td>
                                         <td>{{ $table['updated_at'] ?: 'n/a' }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.database.edit', $table['name']) }}" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-pencil"></i> Edit
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -108,11 +122,87 @@
         </div>
     </div>
 
+    <!-- Format Database Modal -->
+    <div class="modal fade" id="formatModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title text-dark">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Format Database
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger">
+                        <strong>Warning!</strong> This action will permanently delete ALL data from ALL tables in the database.
+                        This cannot be undone. Make sure you have a backup before proceeding.
+                    </div>
+                    <p>To confirm, type <code>FORMAT_DATABASE</code> in the field below:</p>
+                    <form method="POST" action="{{ route('admin.database.format') }}">
+                        @csrf
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="confirm" placeholder="Type FORMAT_DATABASE to confirm" required>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash me-1"></i>Format Database
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Backup Modal -->
+    <div class="modal fade" id="importModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h5 class="modal-title text-white">
+                        <i class="bi bi-upload me-2"></i>Import Database Backup
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning">
+                        <strong>Warning!</strong> Importing a backup will overwrite existing data.
+                        Make sure you have a backup of current data before proceeding.
+                    </div>
+                    <form method="POST" action="{{ route('admin.database.import') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label">Select SQL Backup File</label>
+                            <input type="file" class="form-control" name="backup_file" accept=".sql,.txt" required>
+                            <div class="form-text">Only .sql and .txt files are allowed.</div>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-info">
+                                <i class="bi bi-upload me-1"></i>Import Backup
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <style>
         @media (max-width: 768px) {
             .container-fluid {
                 margin-left: 0 !important;
                 padding: 15px !important;
+            }
+
+            .d-flex.gap-2 {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .d-flex.gap-2 .btn {
+                margin-bottom: 0.5rem;
             }
         }
     </style>

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use App\Services\SecurityLogger;
 
 class AuthController extends Controller
 {
@@ -30,6 +31,9 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
+
+            // Log successful login
+            app(SecurityLogger::class)->logSuccessfulLogin();
 
             // Merge guest cart items into user cart after successful login
             $this->mergeGuestCartToUserCart($user, $request);
@@ -56,6 +60,9 @@ class AuthController extends Controller
 
             return redirect()->intended(route('shop'));
         }
+
+        // Log failed login attempt
+        app(SecurityLogger::class)->logFailedLogin($request->email);
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
@@ -110,6 +117,14 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        // Log logout before destroying session
+        app(SecurityLogger::class)->logEvent(
+            'user_logout',
+            'User logged out successfully',
+            [],
+            'low'
+        );
+
         Auth::logout();
 
         $request->session()->invalidate();

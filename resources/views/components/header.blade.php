@@ -57,7 +57,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="/customer/dashboard" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
+                        <a href="{{ route('customer.dashboard') }}" class="nav-link {{ request()->routeIs('customer.dashboard') ? 'active' : '' }}">
                             <i class="bi bi-speedometer2"></i>
                             <span>My Dashboard</span>
                         </a>
@@ -130,7 +130,7 @@
                 <span>Cart</span>
             </a>
 
-            <a href="/customer/dashboard" class="mobile-nav-link">
+            <a href="{{ route('customer.dashboard') }}" class="mobile-nav-link">
                 <i class="bi bi-speedometer2"></i>
                 <span>My Dashboard</span>
             </a>

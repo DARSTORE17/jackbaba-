@@ -44,8 +44,8 @@
                         <li><a href="/" class="footer-link">Home</a></li>
                         <li><a href="{{ route('shop') }}" class="footer-link">Shop</a></li>
                         <li><a href="{{ route('categories') }}" class="footer-link">Categories</a></li>
-                        <li><a href="/about" class="footer-link">About Us</a></li>
-                        <li><a href="/cart" class="footer-link">Cart</a></li>
+                        <li><a href="{{ route('about') }}" class="footer-link">About Us</a></li>
+                        <li><a href="{{ route('cart.index') }}" class="footer-link">Cart</a></li>
                     </ul>
                 </div>
 
@@ -54,8 +54,8 @@
                     <ul class="footer-menu">
                         @forelse($footerCategories ?? [] as $category)
                             <li>
-                                <a href="{{ route('category.show', $category->slug) }}" class="footer-link">
-                                    {{ $category->name }}
+                                <a href="{{ route('category.show', optional($category)->slug) }}" class="footer-link">
+                                    {{ optional($category)->name }}
                                 </a>
                             </li>
                         @empty
@@ -88,6 +88,15 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="footer-column footer-newsletter">
+                    <h4 class="footer-column-title">Newsletter</h4>
+                    <p>Get offers, delivery news, and product launches delivered to your inbox.</p>
+                    <form class="footer-newsletter-form" action="#" method="POST" novalidate>
+                        <input type="email" name="email" placeholder="Enter your email" aria-label="Email address">
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -98,9 +107,10 @@
                 </p>
 
                 <div class="footer-bottom-links">
-                    <a href="{{ route('shop') }}" class="footer-bottom-link">Shop</a>
-                    <a href="{{ route('categories') }}" class="footer-bottom-link">Categories</a>
-                    <a href="/about" class="footer-bottom-link">About</a>
+                    <a href="{{ route('privacy.policy') }}" class="footer-bottom-link">Privacy Policy</a>
+                    <a href="{{ route('terms.conditions') }}" class="footer-bottom-link">Terms & Conditions</a>
+                    <a href="{{ route('refund.policy') }}" class="footer-bottom-link">Refund Policy</a>
+                    <a href="{{ route('delivery.information') }}" class="footer-bottom-link">Delivery Info</a>
                 </div>
             </div>
         </div>
